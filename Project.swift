@@ -15,7 +15,14 @@ protocol ProjectFactory {
 class BaseProjectFactory: ProjectFactory {
     let projectName: String = "DailyChaCha"
 
-    let dependencies: [TargetDependency] = []
+    let dependencies: [TargetDependency] = [
+      .external(name: "RIBs"),
+      .external(name: "Moya"),
+      .external(name: "SnapKit"),
+      .external(name: "SwiftyBeaver"),
+      .external(name: "RxDataSources"),
+      .external(name: "ReactorKit")
+    ]
 
     func generate() -> [Target] {
         [
