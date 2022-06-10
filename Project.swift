@@ -32,11 +32,13 @@ class BaseProjectFactory: ProjectFactory {
                 product: .app,
                 bundleId: "com.dailychacha.\(projectName)",
                 deploymentTarget: .iOS(targetVersion: "13.0", devices: [.iphone]),
-                infoPlist: .default,
+                infoPlist: "\(projectName)/\(projectName)/Resources/Info.plist",
                 sources: ["\(projectName)/\(projectName)/Sources/**"],
                 resources: [
-                    "\(projectName)/\(projectName)/Resources/**",
-                    "\(projectName)/\(projectName)/Sources/**"
+                    "\(projectName)/\(projectName)/**/*.storyboard",
+                    "\(projectName)/\(projectName)/**/*.xib",
+                    "\(projectName)/\(projectName)/**/*.xcassets",
+                    "\(projectName)/\(projectName)/**/*.json",
                 ],
                 dependencies: dependencies
             ),
