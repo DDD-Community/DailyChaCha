@@ -10,25 +10,37 @@ import UIKit
 
 import RIBs
 
-protocol RootInteractable: Interactable {
+protocol RootInteractable: Interactable, InitialStepListener, OnboardingListener {
   var router: RootRouting? { get set }
   var listener: RootListener? { get set }
 }
 
 protocol RootViewControllable: ViewControllable {
+    func present(viewController: ViewControllable)
+    func dismiss(viewController: ViewControllable)
 }
 
 final class RootRouter: LaunchRouter<RootInteractable, RootViewControllable>, RootRouting {
   
-  override init(
+  init(
     interactor: RootInteractable,
-    viewController: RootViewControllable
+    viewController: RootViewControllable,
+    onboardingBuilder: OnboardingBuilder
   ) {
+      self.onboardingBuilder = onboardingBuilder
     super.init(interactor: interactor, viewController: viewController)
     interactor.router = self
   }
   
   override func didLoad() {
     super.didLoad()
+      
+      routeToOnboarding()
   }
+    
+    private let onboardingBuilder: OnboardingBuilder
+    private func routeToOnboarding() {
+        let onboarding = onboardingBuilder.build(withListener: interactor)
+        attachChild(onboarding)
+    }
 }

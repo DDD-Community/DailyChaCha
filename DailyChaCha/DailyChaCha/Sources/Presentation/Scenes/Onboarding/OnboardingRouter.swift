@@ -8,7 +8,7 @@
 
 import RIBs
 
-protocol OnboardingInteractable: Interactable {
+protocol OnboardingInteractable: Interactable, OnboardingGoalListener {
     var router: OnboardingRouting? { get set }
     var listener: OnboardingListener? { get set }
 }
@@ -21,9 +21,19 @@ protocol OnboardingViewControllable: ViewControllable {
 
 final class OnboardingRouter: Router<OnboardingInteractable>, OnboardingRouting {
 
-    // TODO: Constructor inject child builder protocols to allow building children.
-    init(interactor: OnboardingInteractable, viewController: OnboardingViewControllable) {
+    init(interactor: OnboardingInteractable,
+         viewController: OnboardingViewControllable,
+         goalBuilder: OnboardingGoalBuilder,
+         habitBuilder: OnboardingHabitBuilder,
+         dateBuilder: OnboardingDateBuilder,
+         alertBuilder: OnboardingAlertBuilder,
+         welcomeBuilder: OnboardingWelcomeBuilder) {
         self.viewController = viewController
+        self.goalBuilder = goalBuilder
+        self.habitBuilder = habitBuilder
+        self.dateBuilder = dateBuilder
+        self.alertBuilder = alertBuilder
+        self.welcomeBuilder = welcomeBuilder
         super.init(interactor: interactor)
         interactor.router = self
     }
@@ -36,4 +46,44 @@ final class OnboardingRouter: Router<OnboardingInteractable>, OnboardingRouting 
     // MARK: - Private
 
     private let viewController: OnboardingViewControllable
+    private let goalBuilder: OnboardingGoalBuilder
+    private let habitBuilder: OnboardingHabitBuilder
+    private let dateBuilder: OnboardingDateBuilder
+    private let alertBuilder: OnboardingAlertBuilder
+    private let welcomeBuilder: OnboardingWelcomeBuilder
+    
+    private var currentChild: ViewableRouting?
+    /**
+     원하는 인풋과 아웃풋
+      시나리오 :
+      서버에서 저장된 정보를 불러온다
+      -> 있다. -> 완벽히 채워진 모델이다 -> 끝
+            -> 빈 모델이다 -> 부족한 모델이 있는 화면들을 구성해서 전환 시킨다. (띄엄띄엄 되어 있다?)
+      -> 없다. -> start(nil)
+      
+      input :
+      output : 완성된 구조체,
+      
+      입력한 데이터를 계속 서버에 업데이트를 해야한다.
+     */
+    override func didLoad() {
+        super.didLoad()
+        // 모든 빌더를 다 들고 있어야겠네.
+        routeToOnboarding()
+    }
+    
+    func routeToOnboarding() {
+        detachCurrentChild()
+        
+        let goal = goalBuilder.build(withListener: interactor)
+        currentChild = goal
+        attachChild(goal)
+        viewController.uiviewController.present(goal.viewControllable.uiviewController, animated: true)
+    }
+    
+    private func detachCurrentChild() {
+        if let currentChild = currentChild {
+            detachChild(currentChild)
+        }
+    }
 }

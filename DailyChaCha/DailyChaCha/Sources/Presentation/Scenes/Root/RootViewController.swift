@@ -31,4 +31,18 @@ final class RootViewController: UIViewController,
     // TODO: Remove Root 확인 위한 색상
     view.backgroundColor = .blue
   }
+    
+    func present(viewController: ViewControllable) {
+        present(viewController.uiviewController, animated: true, completion: nil)
+    }
+
+    func dismiss(viewController: ViewControllable) {
+        if presentedViewController === viewController.uiviewController {
+            dismiss(animated: true, completion: nil)
+        }
+    }
+}
+
+extension RootViewController: OnboardingViewControllable {
+
 }

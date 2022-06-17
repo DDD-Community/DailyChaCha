@@ -16,10 +16,21 @@ protocol RootDependency: Dependency { }
 
 final class RootComponent: Component<RootDependency> {
   
-  override init(dependency: RootDependency) {
-    super.init(dependency: dependency)
-  }
+    let rootViewController: RootViewController
+
+    init(dependency: RootDependency,
+         rootViewController: RootViewController) {
+        self.rootViewController = rootViewController
+        super.init(dependency: dependency)
+    }
 }
+
+extension RootComponent: OnboardingDependency {
+    var onboardingViewController: OnboardingViewControllable {
+        return rootViewController
+    }
+}
+
 
 // MARK: - Builder
 
@@ -34,16 +45,18 @@ final class RootBuilder: Builder<RootDependency>, RootBuildable {
   }
   
   func build() -> LaunchRouting {
+      let rootViewController = RootViewController()
     let component = RootComponent(
-      dependency: dependency)
+        dependency: dependency, rootViewController: rootViewController)
+    let onboardingBuilder = OnboardingBuilder(dependency: component)
     
-    let rootViewController = RootViewController()
     
     let interactor = RootInteractor(presenter: rootViewController)
     
     return RootRouter(
       interactor: interactor,
-      viewController: rootViewController
+      viewController: rootViewController,
+      onboardingBuilder: onboardingBuilder
     )
   }
 }
