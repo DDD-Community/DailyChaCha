@@ -19,9 +19,13 @@ final class RootComponent: Component<RootDependency>,
   LoginDependency
 {
   
-  override init(dependency: RootDependency) {
-    super.init(dependency: dependency)
-  }
+    let rootViewController: RootViewController
+
+    init(dependency: RootDependency,
+         rootViewController: RootViewController) {
+        self.rootViewController = rootViewController
+        super.init(dependency: dependency)
+    }
 }
 
 // MARK: - Builder
@@ -37,10 +41,10 @@ final class RootBuilder: Builder<RootDependency>, RootBuildable {
   }
   
   func build() -> LaunchRouting {
+      let rootViewController = RootViewController()
     let component = RootComponent(
-      dependency: dependency)
+        dependency: dependency, rootViewController: rootViewController)
     
-    let rootViewController = RootViewController()
     
     let interactor = RootInteractor(presenter: rootViewController)
     
