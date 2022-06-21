@@ -12,6 +12,7 @@ import RIBs
 import ReactorKit
 import RxDataSources
 import SnapKit
+import Then
 
 enum LoginAction {
   case loginButtonTapped
@@ -33,8 +34,27 @@ final class LoginViewController:
 {
   // MARK: - UI Components
   
-  private let loginButton = UIButton()
+  private let imageView = UIImageView()
   
+  private let titleLabel = UILabel().then {
+    $0.text = "오늘도 차근차근!"
+    $0.font = UIFont.systemFont(ofSize: 28, weight: .bold)
+    $0.textAlignment = .center
+  }
+  
+  private let descriptionLabel = UILabel().then {
+    $0.text = "하루 10분 운동하고 캣타워를 지어요\n평생 운동습관을 시작해요"
+    $0.font = UIFont.systemFont(
+      ofSize: 18,
+      weight: .regular
+    )
+    $0.textAlignment = .center
+  }
+  
+  private let loginButton = UIButton().then {
+    $0.setTitle("애플로 시작하기", for: .normal)
+    $0.titleLabel?.font = UIFont.systemFont(ofSize: 18, weight: .regular)
+  }
   
   func present(viewController: ViewControllable) {
     
@@ -70,7 +90,11 @@ extension LoginViewController {
 // MARK: - SetupUI
 extension LoginViewController {
   private func setupUI() {
-    view.addSubviews(loginButton)
+    view.addSubviews(
+      imageView,
+      
+      loginButton
+    )
     
     loginButton.snp.makeConstraints {
       $0.center.equalToSuperview()
