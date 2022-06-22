@@ -92,13 +92,30 @@ extension LoginViewController {
   private func setupUI() {
     view.addSubviews(
       imageView,
-      
+      titleLabel,
+      descriptionLabel,
       loginButton
     )
     
+    imageView.snp.makeConstraints {
+      $0.top.leading.trailing.equalToSuperview()
+      $0.bottom.equalTo(titleLabel.snp.top).inset(319)
+    }
+    
+    titleLabel.snp.makeConstraints {
+      $0.leading.trailing.equalToSuperview().inset(20)
+      $0.bottom.equalTo(descriptionLabel.snp.top).offset(10)
+    }
+    
+    descriptionLabel.snp.makeConstraints {
+      $0.leading.trailing.equalToSuperview().inset(20)
+      $0.bottom.equalTo(loginButton.snp.top).offset(61)
+    }
+    
     loginButton.snp.makeConstraints {
-      $0.center.equalToSuperview()
-      $0.size.equalTo(100)
+      $0.leading.trailing.equalToSuperview().inset(20)
+      $0.bottom.equalToSuperview().inset(42)
+      $0.height.equalTo(58)
     }
   }
 }
