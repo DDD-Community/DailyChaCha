@@ -24,13 +24,11 @@ final class OnboardingRouter: Router<OnboardingInteractable>, OnboardingRouting 
     init(interactor: OnboardingInteractable,
          viewController: OnboardingViewControllable,
          goalBuilder: OnboardingGoalBuilder,
-         habitBuilder: OnboardingHabitBuilder,
          dateBuilder: OnboardingDateBuilder,
          alertBuilder: OnboardingAlertBuilder,
          welcomeBuilder: OnboardingWelcomeBuilder) {
         self.viewController = viewController
         self.goalBuilder = goalBuilder
-        self.habitBuilder = habitBuilder
         self.dateBuilder = dateBuilder
         self.alertBuilder = alertBuilder
         self.welcomeBuilder = welcomeBuilder
@@ -47,7 +45,6 @@ final class OnboardingRouter: Router<OnboardingInteractable>, OnboardingRouting 
 
     private let viewController: OnboardingViewControllable
     private let goalBuilder: OnboardingGoalBuilder
-    private let habitBuilder: OnboardingHabitBuilder
     private let dateBuilder: OnboardingDateBuilder
     private let alertBuilder: OnboardingAlertBuilder
     private let welcomeBuilder: OnboardingWelcomeBuilder

@@ -39,7 +39,6 @@ final class OnboardingBuilder: Builder<OnboardingDependency>, OnboardingBuildabl
             interactor: interactor,
             viewController: component.onboardingViewController,
             goalBuilder: OnboardingGoalBuilder(dependency: component),
-            habitBuilder: OnboardingHabitBuilder(dependency: component),
             dateBuilder: OnboardingDateBuilder(dependency: component),
             alertBuilder: OnboardingAlertBuilder(dependency: component),
             welcomeBuilder: OnboardingWelcomeBuilder(dependency: component)

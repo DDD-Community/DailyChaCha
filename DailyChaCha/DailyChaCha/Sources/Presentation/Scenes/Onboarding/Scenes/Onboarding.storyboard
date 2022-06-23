@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Y6W-OH-hqX">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="uQf-8H-6jv">
     <device id="retina5_9" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
@@ -11,96 +11,34 @@
     </dependencies>
     <scenes>
         <!--Onboarding Goal View Controller-->
-        <scene sceneID="s0d-6b-0kx">
-            <objects>
-                <viewController storyboardIdentifier="OnboardingGoalViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Y6W-OH-hqX" customClass="OnboardingGoalViewController" customModule="DailyChaCha" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="5EZ-qb-Rvc">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JKq-at-xvQ" customClass="GoalTitleView" customModule="DailyChaCha" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="84" width="375" height="73"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="73" id="SeV-z3-UjO"/>
-                                </constraints>
-                            </view>
-                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="ex. 초콜릿 복근 만들기!!" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="gEb-bt-IUw">
-                                <rect key="frame" x="20" y="215" width="335" height="44"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="44" id="4ej-Yx-xHp"/>
-                                </constraints>
-                                <color key="textColor" name="black"/>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
-                                <textInputTraits key="textInputTraits"/>
-                            </textField>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KMC-eo-n5J">
-                                <rect key="frame" x="20" y="259" width="335" height="1"/>
-                                <color key="backgroundColor" name="gray_800"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="1" id="s3K-iL-tny"/>
-                                </constraints>
-                            </view>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IMO-Dc-IWY">
-                                <rect key="frame" x="20" y="700" width="335" height="58"/>
-                                <color key="backgroundColor" name="blue"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="58" id="Nl7-z7-OpF"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                <state key="normal" title="다음">
-                                    <color key="titleColor" name="white"/>
-                                </state>
-                            </button>
-                        </subviews>
-                        <viewLayoutGuide key="safeArea" id="vDu-zF-Fre"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                        <constraints>
-                            <constraint firstItem="KMC-eo-n5J" firstAttribute="top" secondItem="gEb-bt-IUw" secondAttribute="bottom" id="3jO-iw-5l7"/>
-                            <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" secondItem="IMO-Dc-IWY" secondAttribute="trailing" constant="20" id="5Ww-eH-ILr"/>
-                            <constraint firstItem="IMO-Dc-IWY" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" constant="20" id="Q5Y-WF-2vH"/>
-                            <constraint firstItem="JKq-at-xvQ" firstAttribute="top" secondItem="vDu-zF-Fre" secondAttribute="top" constant="40" id="YvR-gg-33t"/>
-                            <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" secondItem="JKq-at-xvQ" secondAttribute="trailing" id="c9g-sX-MxO"/>
-                            <constraint firstItem="KMC-eo-n5J" firstAttribute="leading" secondItem="gEb-bt-IUw" secondAttribute="leading" id="dOc-dx-m1y"/>
-                            <constraint firstItem="KMC-eo-n5J" firstAttribute="trailing" secondItem="gEb-bt-IUw" secondAttribute="trailing" id="i6L-rm-KRU"/>
-                            <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" secondItem="gEb-bt-IUw" secondAttribute="trailing" constant="20" id="moE-n8-dJT"/>
-                            <constraint firstItem="gEb-bt-IUw" firstAttribute="top" secondItem="JKq-at-xvQ" secondAttribute="bottom" constant="58" id="og7-89-YD1"/>
-                            <constraint firstItem="JKq-at-xvQ" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" id="qeP-Uf-Uy3"/>
-                            <constraint firstItem="gEb-bt-IUw" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" constant="20" id="tll-48-QOi"/>
-                            <constraint firstItem="vDu-zF-Fre" firstAttribute="bottom" secondItem="IMO-Dc-IWY" secondAttribute="bottom" constant="20" id="vFE-SI-ABg"/>
-                        </constraints>
-                    </view>
-                    <connections>
-                        <outlet property="titleView" destination="JKq-at-xvQ" id="vCU-P2-1Zo"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Ief-a0-LHa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="139" y="137"/>
-        </scene>
-        <!--Onboarding Habit View Controller-->
         <scene sceneID="x8H-Qa-1wJ">
             <objects>
-                <viewController storyboardIdentifier="OnboardingHabitViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="uQf-8H-6jv" customClass="OnboardingHabitViewController" customModule="DailyChaCha" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="OnboardingGoalViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="uQf-8H-6jv" customClass="OnboardingGoalViewController" customModule="DailyChaCha" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="iXc-hK-Qx1">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MYj-bH-XEQ" customClass="GoalTitleView" customModule="DailyChaCha" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="84" width="375" height="73"/>
+                                <rect key="frame" x="0.0" y="79" width="375" height="73"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="73" id="Dzq-Qw-0kO"/>
                                 </constraints>
                             </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="woe-H4-BjO" userLabel="Line View">
+                                <rect key="frame" x="0.0" y="186" width="375" height="1"/>
+                                <color key="backgroundColor" name="gray_200"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="1" id="XAo-V4-AEI"/>
+                                </constraints>
+                            </view>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="onX-fc-4ZY">
-                                <rect key="frame" x="0.0" y="252" width="375" height="448"/>
+                                <rect key="frame" x="0.0" y="187" width="375" height="513"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <color key="separatorColor" name="gray_800"/>
                                 <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="test1" rowHeight="64" id="ITv-06-P1r">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="OnboardingGoalSelectCell" rowHeight="64" id="ITv-06-P1r" customClass="OnboardingGoalSelectCell" customModule="DailyChaCha" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="44.666666030883789" width="375" height="64"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="ITv-06-P1r" id="JDA-qm-TWQ">
@@ -113,37 +51,46 @@
                                                         <constraint firstAttribute="height" constant="29" id="TSY-55-fOr"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="system" weight="medium" pointSize="18"/>
-                                                    <color key="textColor" name="gray_100"/>
+                                                    <color key="textColor" name="gray_600"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="img_check" translatesAutoresizingMaskIntoConstraints="NO" id="IC6-ZX-wZh">
-                                                    <rect key="frame" x="331" y="20" width="24" height="24"/>
-                                                    <color key="tintColor" name="gray_700"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="width" constant="24" id="LLx-ak-0Pv"/>
-                                                        <constraint firstAttribute="height" constant="24" id="VDo-wQ-2s4"/>
-                                                    </constraints>
-                                                </imageView>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="q9L-3R-kht" userLabel="Line View">
                                                     <rect key="frame" x="0.0" y="63" width="375" height="1"/>
-                                                    <color key="backgroundColor" name="gray_800"/>
+                                                    <color key="backgroundColor" name="gray_200"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="1" id="Hz7-hQ-QoQ"/>
                                                     </constraints>
                                                 </view>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EWK-Te-8pe">
+                                                    <rect key="frame" x="331" y="20" width="24" height="24"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="24" id="HmR-3G-dSY"/>
+                                                        <constraint firstAttribute="height" constant="24" id="UL5-rA-GHj"/>
+                                                    </constraints>
+                                                    <color key="tintColor" name="gray_300"/>
+                                                    <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                    <state key="normal" image="ic_radio_on"/>
+                                                    <state key="selected" image="ic_radio_off"/>
+                                                </button>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="nVa-9R-uet" firstAttribute="leading" secondItem="JDA-qm-TWQ" secondAttribute="leading" constant="20" id="BRT-AQ-2R3"/>
+                                                <constraint firstItem="EWK-Te-8pe" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="nVa-9R-uet" secondAttribute="trailing" constant="10" id="De6-7k-z6a"/>
                                                 <constraint firstAttribute="bottom" secondItem="q9L-3R-kht" secondAttribute="bottom" id="S5U-94-Rb4"/>
-                                                <constraint firstAttribute="trailing" secondItem="IC6-ZX-wZh" secondAttribute="trailing" constant="20" id="TCG-ch-WaE"/>
-                                                <constraint firstItem="IC6-ZX-wZh" firstAttribute="centerY" secondItem="nVa-9R-uet" secondAttribute="centerY" id="gJ4-JH-IMs"/>
+                                                <constraint firstItem="q9L-3R-kht" firstAttribute="top" secondItem="EWK-Te-8pe" secondAttribute="bottom" constant="19" id="arU-AY-ReB"/>
+                                                <constraint firstAttribute="trailing" secondItem="EWK-Te-8pe" secondAttribute="trailing" constant="20" id="fyf-zH-dfL"/>
+                                                <constraint firstItem="EWK-Te-8pe" firstAttribute="top" secondItem="JDA-qm-TWQ" secondAttribute="top" constant="20" id="hxV-ap-ucg"/>
                                                 <constraint firstAttribute="trailing" secondItem="q9L-3R-kht" secondAttribute="trailing" id="ofi-sA-dcj"/>
-                                                <constraint firstItem="nVa-9R-uet" firstAttribute="centerY" secondItem="JDA-qm-TWQ" secondAttribute="centerY" id="pTM-yX-5mC"/>
+                                                <constraint firstItem="nVa-9R-uet" firstAttribute="centerY" secondItem="EWK-Te-8pe" secondAttribute="centerY" id="rMo-LD-RkL"/>
                                                 <constraint firstItem="q9L-3R-kht" firstAttribute="leading" secondItem="JDA-qm-TWQ" secondAttribute="leading" id="yI6-zj-PXc"/>
                                             </constraints>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="selectButton" destination="EWK-Te-8pe" id="2tH-kt-i0c"/>
+                                            <outlet property="titleLabel" destination="nVa-9R-uet" id="d1k-D4-fjs"/>
+                                        </connections>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="test2" rowHeight="89" id="RXE-x3-a5w">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="OnboardingGoalWriteCell" rowHeight="89" id="RXE-x3-a5w" customClass="OnboardingGoalWriteCell" customModule="DailyChaCha" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="108.66666603088379" width="375" height="89"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="RXE-x3-a5w" id="1Df-5i-SvL">
@@ -159,18 +106,18 @@
                                                                 <constraint firstAttribute="height" constant="29" id="XLz-hI-4nc"/>
                                                             </constraints>
                                                             <color key="textColor" name="black"/>
-                                                            <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                                            <fontDescription key="fontDescription" type="system" weight="medium" pointSize="18"/>
                                                             <textInputTraits key="textInputTraits"/>
                                                         </textField>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Kd6-NP-eQ9" userLabel="Line View">
                                                             <rect key="frame" x="0.0" y="63" width="375" height="1"/>
-                                                            <color key="backgroundColor" name="gray_800"/>
+                                                            <color key="backgroundColor" name="gray_200"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="1" id="4VZ-uX-nnp"/>
                                                             </constraints>
                                                         </view>
                                                     </subviews>
-                                                    <color key="backgroundColor" name="gray_900"/>
+                                                    <color key="backgroundColor" name="gray_100"/>
                                                     <constraints>
                                                         <constraint firstItem="v0J-FF-3RW" firstAttribute="top" secondItem="IeU-cE-6hE" secondAttribute="top" constant="18" id="ADy-Xy-ekE"/>
                                                         <constraint firstItem="Kd6-NP-eQ9" firstAttribute="leading" secondItem="IeU-cE-6hE" secondAttribute="leading" id="Er2-Jj-BVi"/>
@@ -187,7 +134,7 @@
                                                         <constraint firstAttribute="height" constant="12" id="YtT-Gm-vSr"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="system" weight="medium" pointSize="12"/>
-                                                    <color key="textColor" name="gray_100"/>
+                                                    <color key="textColor" name="gray_600"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
@@ -200,38 +147,44 @@
                                                 <constraint firstItem="IeU-cE-6hE" firstAttribute="top" secondItem="1Df-5i-SvL" secondAttribute="top" id="mbD-Mq-ffU"/>
                                             </constraints>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="limitLabel" destination="rhK-0t-25L" id="vQ1-O2-DsU"/>
+                                            <outlet property="textField" destination="v0J-FF-3RW" id="WOC-ec-ls4"/>
+                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rzr-f4-VrZ">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rzr-f4-VrZ" customClass="PrimaryButton" customModule="DailyChaCha" customModuleProvider="target">
                                 <rect key="frame" x="20" y="700" width="335" height="58"/>
-                                <color key="backgroundColor" name="blue"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="58" id="CWC-tf-tHx"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <fontDescription key="fontDescription" type="system" weight="medium" pointSize="18"/>
                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                <state key="normal" title="다음">
-                                    <color key="titleColor" name="white"/>
-                                </state>
+                                <state key="normal" title="다음"/>
                             </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="RDO-eP-hEd"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="rzr-f4-VrZ" firstAttribute="top" secondItem="onX-fc-4ZY" secondAttribute="bottom" id="Cdb-7n-c44"/>
-                            <constraint firstItem="onX-fc-4ZY" firstAttribute="top" secondItem="MYj-bH-XEQ" secondAttribute="bottom" constant="95" id="HAI-VN-Jx3"/>
-                            <constraint firstItem="MYj-bH-XEQ" firstAttribute="top" secondItem="RDO-eP-hEd" secondAttribute="top" constant="40" id="JYe-PR-JtF"/>
+                            <constraint firstItem="onX-fc-4ZY" firstAttribute="top" secondItem="MYj-bH-XEQ" secondAttribute="bottom" constant="35" id="HAI-VN-Jx3"/>
+                            <constraint firstItem="MYj-bH-XEQ" firstAttribute="top" secondItem="RDO-eP-hEd" secondAttribute="top" constant="35" id="JYe-PR-JtF"/>
+                            <constraint firstAttribute="trailing" secondItem="woe-H4-BjO" secondAttribute="trailing" id="LSA-L4-jh0"/>
                             <constraint firstItem="rzr-f4-VrZ" firstAttribute="leading" secondItem="RDO-eP-hEd" secondAttribute="leading" constant="20" id="PIy-tG-x1i"/>
                             <constraint firstItem="RDO-eP-hEd" firstAttribute="trailing" secondItem="onX-fc-4ZY" secondAttribute="trailing" id="UYs-qe-1Uw"/>
                             <constraint firstItem="MYj-bH-XEQ" firstAttribute="leading" secondItem="RDO-eP-hEd" secondAttribute="leading" id="aEr-4m-Ed8"/>
+                            <constraint firstItem="woe-H4-BjO" firstAttribute="leading" secondItem="iXc-hK-Qx1" secondAttribute="leading" id="g5b-pN-Y5x"/>
                             <constraint firstItem="RDO-eP-hEd" firstAttribute="trailing" secondItem="MYj-bH-XEQ" secondAttribute="trailing" id="hUV-kp-77a"/>
                             <constraint firstItem="RDO-eP-hEd" firstAttribute="bottom" secondItem="rzr-f4-VrZ" secondAttribute="bottom" constant="20" id="hme-uB-ShT"/>
                             <constraint firstItem="RDO-eP-hEd" firstAttribute="trailing" secondItem="rzr-f4-VrZ" secondAttribute="trailing" constant="20" id="jWl-bh-cpv"/>
+                            <constraint firstItem="onX-fc-4ZY" firstAttribute="top" secondItem="woe-H4-BjO" secondAttribute="bottom" id="mis-Wo-jtV"/>
                             <constraint firstItem="onX-fc-4ZY" firstAttribute="leading" secondItem="RDO-eP-hEd" secondAttribute="leading" id="rEg-Kh-oSL"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="nextButton" destination="rzr-f4-VrZ" id="JWU-PZ-25p"/>
+                        <outlet property="tableView" destination="onX-fc-4ZY" id="e0X-Ef-4sa"/>
                         <outlet property="titleView" destination="MYj-bH-XEQ" id="sUh-6H-ZKn"/>
                     </connections>
                 </viewController>
@@ -357,7 +310,7 @@
                                     </view>
                                 </subviews>
                             </stackView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Viz-5O-JaR">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Viz-5O-JaR" customClass="PrimaryButton" customModule="DailyChaCha" customModuleProvider="target">
                                 <rect key="frame" x="20" y="700" width="335" height="58"/>
                                 <color key="backgroundColor" name="blue"/>
                                 <constraints>
@@ -407,7 +360,7 @@
                                     <constraint firstAttribute="height" constant="73" id="UZd-b3-Gxd"/>
                                 </constraints>
                             </view>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1ZJ-rf-Plt">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1ZJ-rf-Plt" customClass="PrimaryButton" customModule="DailyChaCha" customModuleProvider="target">
                                 <rect key="frame" x="20" y="700" width="335" height="58"/>
                                 <color key="backgroundColor" name="blue"/>
                                 <constraints>
@@ -495,7 +448,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rDP-XA-0yh">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rDP-XA-0yh" customClass="PrimaryButton" customModule="DailyChaCha" customModuleProvider="target">
                                 <rect key="frame" x="20" y="700" width="335" height="58"/>
                                 <color key="backgroundColor" name="blue"/>
                                 <constraints>
@@ -523,25 +476,29 @@
         </scene>
     </scenes>
     <resources>
+        <image name="ic_radio_off" width="24" height="24"/>
+        <image name="ic_radio_on" width="24" height="24"/>
         <image name="img_alert" width="226" height="226"/>
-        <image name="img_check" width="24" height="24"/>
         <namedColor name="black">
-            <color red="0.20000000298023224" green="0.20000000298023224" blue="0.20000000298023224" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="blue">
             <color red="0.0" green="0.4779999852180481" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="gray_100">
-            <color red="0.46700000762939453" green="0.46700000762939453" blue="0.46700000762939453" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.95294117647058818" green="0.95294117647058818" blue="0.95294117647058818" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
-        <namedColor name="gray_700">
-            <color red="0.83921568627450982" green="0.85098039215686272" blue="0.87450980392156863" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        <namedColor name="gray_200">
+            <color red="0.91764705882352937" green="0.91764705882352937" blue="0.91764705882352937" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="gray_300">
+            <color red="0.85490196078431369" green="0.85490196078431369" blue="0.85490196078431369" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="gray_600">
+            <color red="0.43137254901960786" green="0.43137254901960786" blue="0.43137254901960786" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="gray_800">
-            <color red="0.9179999828338623" green="0.9179999828338623" blue="0.9179999828338623" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </namedColor>
-        <namedColor name="gray_900">
-            <color red="0.95686274509803926" green="0.95686274509803926" blue="0.95686274509803926" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.23529411764705882" green="0.23529411764705882" blue="0.23529411764705882" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="white">
             <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

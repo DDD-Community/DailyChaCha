@@ -17,7 +17,7 @@
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view contentMode="scaleToFill" id="iN0-l3-epB">
-            <rect key="frame" x="0.0" y="0.0" width="407" height="73"/>
+            <rect key="frame" x="0.0" y="0.0" width="407" height="72"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="목표 이름" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="E7g-PA-9lN">
@@ -30,18 +30,18 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="구체적인 목표를 적어주세요." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dP7-c3-a35">
-                    <rect key="frame" x="0.0" y="44" width="407" height="29"/>
+                    <rect key="frame" x="0.0" y="54" width="407" height="18"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="29" id="63e-cx-Q5h"/>
+                        <constraint firstAttribute="height" constant="18" id="63e-cx-Q5h"/>
                     </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                    <color key="textColor" name="gray_200"/>
+                    <color key="textColor" name="gray_500"/>
                     <nil key="highlightedColor"/>
                 </label>
             </subviews>
             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
             <constraints>
-                <constraint firstItem="dP7-c3-a35" firstAttribute="top" secondItem="E7g-PA-9lN" secondAttribute="bottom" constant="2" id="61K-Qo-X7x"/>
+                <constraint firstItem="dP7-c3-a35" firstAttribute="top" secondItem="E7g-PA-9lN" secondAttribute="bottom" constant="12" id="61K-Qo-X7x"/>
                 <constraint firstItem="E7g-PA-9lN" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="8EN-vi-5Yj"/>
                 <constraint firstItem="E7g-PA-9lN" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="AUC-8d-RJS"/>
                 <constraint firstItem="dP7-c3-a35" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="HNG-SS-JKf"/>
@@ -50,15 +50,15 @@
                 <constraint firstAttribute="trailing" secondItem="E7g-PA-9lN" secondAttribute="trailing" id="xgD-Qv-iZx"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-            <point key="canvasLocation" x="132.60869565217394" y="-122.87946428571428"/>
+            <point key="canvasLocation" x="132.60869565217394" y="-123.21428571428571"/>
         </view>
     </objects>
     <resources>
         <namedColor name="black">
-            <color red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
-        <namedColor name="gray_200">
-            <color red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        <namedColor name="gray_500">
+            <color red="0.59215686274509804" green="0.59215686274509804" blue="0.59215686274509804" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
