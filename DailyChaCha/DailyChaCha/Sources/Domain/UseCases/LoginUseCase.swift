@@ -6,11 +6,17 @@
 //  Copyright © 2022 DailyChaCha. All rights reserved.
 //
 
-import Foundation
+import RxSwift
 
 protocol LoginUseCase {
-    
+  func requestLogin(token: String) -> Single<TokenInfo>
 }
 
 final class LoginUseCaseImpl: LoginUseCase {
+  
+  let loginRepository = LoginRepositoryImpl()
+  
+  func requestLogin(token: String) -> Single<TokenInfo> {
+    loginRepository.requestLogin(token: token)
+  }
 }
