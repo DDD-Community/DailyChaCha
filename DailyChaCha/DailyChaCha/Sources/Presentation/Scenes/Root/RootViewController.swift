@@ -29,6 +29,11 @@ final class RootViewController: UIViewController,
   override func viewDidLoad() {
     super.viewDidLoad()
     // TODO: Remove Root 확인 위한 색상
-    view.backgroundColor = .blue
+    view.backgroundColor = .white
+  }
+  
+  func present(viewController: ViewControllable) {
+    viewController.uiviewController.modalPresentationStyle = .fullScreen
+    present(viewController.uiviewController, animated: false)
   }
 }
