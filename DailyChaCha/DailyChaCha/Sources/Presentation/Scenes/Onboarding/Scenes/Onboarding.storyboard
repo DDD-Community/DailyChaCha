@@ -149,6 +149,7 @@
                                         </tableViewCellContentView>
                                         <connections>
                                             <outlet property="limitLabel" destination="rhK-0t-25L" id="vQ1-O2-DsU"/>
+                                            <outlet property="lineView" destination="Kd6-NP-eQ9" id="uoL-9S-yjj"/>
                                             <outlet property="textField" destination="v0J-FF-3RW" id="WOC-ec-ls4"/>
                                         </connections>
                                     </tableViewCell>

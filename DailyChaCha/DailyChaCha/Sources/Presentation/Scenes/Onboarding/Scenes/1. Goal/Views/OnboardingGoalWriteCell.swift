@@ -28,6 +28,7 @@ final class OnboardingGoalWriteCellModel: CellModel, OnboardingGoalSelectDatable
 final class OnboardingGoalWriteCell: UITableViewCell, CellModelable {
     @IBOutlet private weak var textField: UITextField!
     @IBOutlet private weak var limitLabel: UILabel!
+    @IBOutlet private weak var lineView: UIView!
     private var disposeBag: DisposeBag = .init()
     
     override func prepareForReuse() {
@@ -62,11 +63,13 @@ final class OnboardingGoalWriteCell: UITableViewCell, CellModelable {
             textField.becomeFirstResponder()
             textField.textColor = DailyChaChaAsset.Colors.black.color
             limitLabel.isHidden = false
+            lineView.backgroundColor = DailyChaChaAsset.Colors.primary800.color
         case false:
             textField.isEnabled = false
             textField.resignFirstResponder()
             textField.textColor = DailyChaChaAsset.Colors.gray500.color
             limitLabel.isHidden = true
+            lineView.backgroundColor = DailyChaChaAsset.Colors.gray200.color
         }
     }
 }
