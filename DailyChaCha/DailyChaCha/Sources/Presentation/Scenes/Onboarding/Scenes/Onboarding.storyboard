@@ -100,7 +100,7 @@
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="IeU-cE-6hE">
                                                     <rect key="frame" x="0.0" y="0.0" width="375" height="64"/>
                                                     <subviews>
-                                                        <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="직접 적기.. " textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="v0J-FF-3RW">
+                                                        <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="직접 적기.. " textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="v0J-FF-3RW">
                                                             <rect key="frame" x="20" y="18" width="335" height="29"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="29" id="XLz-hI-4nc"/>

@@ -16,13 +16,15 @@ protocol OnboardingGoalPresentableListener: AnyObject {
     // interactor class.
 }
 
-final class OnboardingGoalViewController: UIViewController, OnboardingGoalPresentable, OnboardingGoalViewControllable {
+final class OnboardingGoalViewController: UIViewController, OnboardingGoalPresentable, OnboardingGoalViewControllable, OnboardingGoalWriteCellDelegate {
     @IBOutlet private weak var titleView: GoalTitleView!
     @IBOutlet private weak var tableView: UITableView!
     @IBOutlet private weak var nextButton: PrimaryButton!
     static var sceneable: Sceneable = OnboardingScene.goal
     weak var listener: OnboardingGoalPresentableListener?
     private let disposeBag: DisposeBag = .init()
+    /// WriteCell
+    var insideLimit: PublishSubject<Bool> = .init()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -39,17 +41,19 @@ final class OnboardingGoalViewController: UIViewController, OnboardingGoalPresen
             OnboardingGoalSelectCellModel(title: "몸도 마음도 건강한 삶을 위해"),
             OnboardingGoalSelectCellModel(title: "루틴한 삶을 위해"),
             OnboardingGoalSelectCellModel(title: "멋진 몸매를 위해"),
-            OnboardingGoalWriteCellModel(limit: 20)
+            OnboardingGoalWriteCellModel(limit: Self.Constant.WriteLimit, delegate: self)
         ])
             .bind(to: tableView.rx.cells)
             .disposed(by: disposeBag)
         
         let modelSelected = tableView.rx.modelSelected(OnboardingGoalSelectDatable.self).share()
         
-        modelSelected
-            .subscribe(onNext: {
-                print("modelSelected", $0.title)
-            })
+        Observable.merge(
+            insideLimit,
+            modelSelected
+                .map { $0.title.count > 0 && $0.title.count <= 20 }
+        )
+            .bind(to: nextButton.rx.isEnabled)
             .disposed(by: disposeBag)
         
         nextButton.rx.tap
@@ -58,5 +62,13 @@ final class OnboardingGoalViewController: UIViewController, OnboardingGoalPresen
                 print("nextButton", $0.title)
             })
             .disposed(by: disposeBag)
+        
+        
+    }
+}
+
+extension OnboardingGoalViewController {
+    struct Constant {
+        static let WriteLimit: Int = 20
     }
 }

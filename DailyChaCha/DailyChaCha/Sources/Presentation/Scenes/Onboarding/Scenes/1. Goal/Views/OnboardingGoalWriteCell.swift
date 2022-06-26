@@ -9,12 +9,18 @@
 import UIKit
 import RxSwift
 
+protocol OnboardingGoalWriteCellDelegate: AnyObject {
+    var insideLimit: PublishSubject<Bool> { get }
+}
+
 final class OnboardingGoalWriteCellModel: CellModel, OnboardingGoalSelectDatable {
     fileprivate let textLimit: Int
-    var title: String?
+    var title: String = ""
+    fileprivate weak var delegate: OnboardingGoalWriteCellDelegate?
     
-    init(limit: Int) {
+    init(limit: Int, delegate: OnboardingGoalWriteCellDelegate?) {
         textLimit = limit
+        self.delegate = delegate
         super.init(cellID: "OnboardingGoalWriteCell")
     }
 }
@@ -43,6 +49,8 @@ final class OnboardingGoalWriteCell: UITableViewCell, CellModelable {
                 self?.textField.text = text
                 cellModel.title = text
                 self?.limitLabel.text = "\(text.count) / \(cellModel.textLimit)"
+                let isInsideLimit: Bool = text.count <= cellModel.textLimit && text.count > 0
+                cellModel.delegate?.insideLimit.onNext(isInsideLimit)
             })
             .disposed(by: disposeBag)
     }

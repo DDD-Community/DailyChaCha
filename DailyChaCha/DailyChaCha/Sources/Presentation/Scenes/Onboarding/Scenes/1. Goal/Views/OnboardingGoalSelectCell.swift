@@ -9,13 +9,13 @@
 import UIKit
 
 protocol OnboardingGoalSelectDatable {
-    var title: String? { get }
+    var title: String { get }
 }
 
 final class OnboardingGoalSelectCellModel: CellModel, OnboardingGoalSelectDatable {
-    var title: String?
+    var title: String
     
-    init(title: String?) {
+    init(title: String) {
         self.title = title
         super.init(cellID: "OnboardingGoalSelectCell")
     }
