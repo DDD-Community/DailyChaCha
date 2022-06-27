@@ -8,6 +8,7 @@
 
 import RIBs
 import RxSwift
+import RxCocoa
 
 protocol OnboardingGoalRouting: ViewableRouting {
 }
@@ -38,20 +39,25 @@ final class OnboardingGoalInteractor: PresentableInteractor<OnboardingGoalPresen
     /// WriteCell
     var insideLimit: PublishSubject<Bool> = .init()
     private let disposeBag: DisposeBag = .init()
+    private let useCase: OnboardingUseCase
 
-    override init(presenter: OnboardingGoalPresentable) {
+    init(presenter: OnboardingGoalPresentable, useCase: OnboardingUseCase) {
+        self.useCase = useCase
         super.init(presenter: presenter)
         presenter.listener = self
     }
     
     func transfer(input: Input) -> Output {
         let cells: Observable<[CellModel]> = input.loadData
+            .withUnretained(self)
+            .flatMap { owner, _ in
+                owner.useCase.goals()
+            }
             .map { [weak self] in
-                [OnboardingGoalSelectCellModel(title: "몸도 마음도 건강한 삶을 위해"),
-                 OnboardingGoalSelectCellModel(title: "루틴한 삶을 위해"),
-                 OnboardingGoalSelectCellModel(title: "멋진 몸매를 위해"),
-                 OnboardingGoalWriteCellModel(limit: Self.Constant.WriteLimit, delegate: self)
-            ]}
+                var cells: [CellModel] = $0.map { OnboardingGoalSelectCellModel(title: $0) }
+                cells.append(OnboardingGoalWriteCellModel(limit: Self.Constant.WriteLimit, delegate: self))
+                return cells
+            }
         
         let isEnabledNextButton = Observable.merge(
             insideLimit,
@@ -60,8 +66,11 @@ final class OnboardingGoalInteractor: PresentableInteractor<OnboardingGoalPresen
         )
         
         input.tapNextButton
+            .withUnretained(self)
+            .flatMap { owner, goal in
+                owner.useCase.goals(goal: goal.title)
+            }
             .subscribe(onNext: { [weak self] in
-                print($0.title)
                 self?.listener?.nextStep()
             })
             .disposed(by: disposeBag)

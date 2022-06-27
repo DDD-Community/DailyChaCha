@@ -33,7 +33,7 @@ final class OnboardingGoalBuilder: Builder<OnboardingGoalDependency>, Onboarding
     func build(withListener listener: OnboardingGoalListener) -> OnboardingGoalRouting {
         _ = OnboardingGoalComponent(dependency: dependency)
         let viewController = OnboardingGoalViewController.create("Onboarding")
-        let interactor = OnboardingGoalInteractor(presenter: viewController)
+        let interactor = OnboardingGoalInteractor(presenter: viewController, useCase: OnboardingUseCase())
         interactor.listener = listener
         return OnboardingGoalRouter(interactor: interactor, viewController: viewController)
     }
