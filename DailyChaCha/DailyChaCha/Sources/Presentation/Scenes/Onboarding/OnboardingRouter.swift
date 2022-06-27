@@ -13,7 +13,7 @@ protocol OnboardingInteractable: Interactable, OnboardingGoalListener, Onboardin
     var listener: OnboardingListener? { get set }
 }
 
-protocol OnboardingViewControllable: ViewControllable {
+protocol OnboardingViewControllable: NavigateViewControllable {
     // TODO: Declare methods the router invokes to manipulate the view hierarchy. Since
     // this RIB does not own its own view, this protocol is conformed to by one of this
     // RIB's ancestor RIBs' view.
@@ -74,9 +74,10 @@ final class OnboardingRouter: Router<OnboardingInteractable>, OnboardingRouting 
     
     func routeToOnboarding() {
         detachCurrentChild()
-//        let goal = goalBuilder.build(withListener: interactor)
-//        currentChild = goal
-//        attachChild(goal)
+
+        let build = goalBuilder.build(withListener: interactor)
+        currentChild = build
+        attachChild(build)
 //        viewController.uiviewController.present(goal.viewControllable.uiviewController, animated: true)
         
 //        let build = dateBuilder.build(withListener: interactor)
@@ -94,15 +95,20 @@ final class OnboardingRouter: Router<OnboardingInteractable>, OnboardingRouting 
 //        attachChild(build)
 //        viewController.uiviewController.present(build.viewControllable.uiviewController, animated: true)
         
-        let build = welcomeBuilder.build(withListener: interactor)
-        currentChild = build
-        attachChild(build)
-        viewController.uiviewController.present(build.viewControllable.uiviewController, animated: true)
+//        let build = welcomeBuilder.build(withListener: interactor)
+//        currentChild = build
+//        attachChild(build)
+        
+        viewController.presentNavigationViewController(root: build.viewControllable, state: .fullScreen)
     }
     
     private func detachCurrentChild() {
         if let currentChild = currentChild {
             detachChild(currentChild)
         }
+    }
+    
+    func route() {
+        print("route")
     }
 }
