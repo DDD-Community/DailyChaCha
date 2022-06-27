@@ -9,6 +9,7 @@
 import RIBs
 import RxSwift
 import UIKit
+import RxKeyboard
 
 protocol OnboardingGoalPresentableListener: AnyObject {
     // TODO: Declare properties and methods that the view controller can invoke to perform
@@ -63,7 +64,11 @@ final class OnboardingGoalViewController: UIViewController, OnboardingGoalPresen
             })
             .disposed(by: disposeBag)
         
-        
+        RxKeyboard.instance.visibleHeight
+            .drive(onNext: { [tableView] height in
+                tableView?.contentInset.bottom = height
+            })
+            .disposed(by: disposeBag)
     }
 }
 

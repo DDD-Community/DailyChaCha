@@ -23,7 +23,8 @@ class BaseProjectFactory: ProjectFactory {
         .package(product: "SwiftyBeaver"),
         .package(product: "RxDataSources"),
         .package(product: "ReactorKit"),
-        .package(product: "Then")
+        .package(product: "Then"),
+        .package(product: "RxKeyboard"),
     ]
     
     let packages: [Package] = [
@@ -34,7 +35,8 @@ class BaseProjectFactory: ProjectFactory {
         .remote(url: "https://github.com/ReactiveX/RxSwift.git", requirement: .upToNextMinor(from: "6.5.0")),
         .remote(url: "https://github.com/RxSwiftCommunity/RxDataSources.git", requirement: .upToNextMinor(from: "5.0.0")),
         .remote(url: "https://github.com/ReactorKit/ReactorKit.git", requirement: .upToNextMinor(from: "3.2.0")),
-        .remote(url: "https://github.com/devxoul/Then.git", requirement: .upToNextMinor(from: "3.0.0"))
+        .remote(url: "https://github.com/devxoul/Then.git", requirement: .upToNextMinor(from: "3.0.0")),
+        .remote(url: "https://github.com/RxSwiftCommunity/RxKeyboard.git", requirement: .upToNextMinor(from: "2.0.0")),
     ]
 
     func generate() -> [Target] {
