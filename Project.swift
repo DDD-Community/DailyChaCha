@@ -25,6 +25,7 @@ class BaseProjectFactory: ProjectFactory {
         .package(product: "ReactorKit"),
         .package(product: "Then"),
         .package(product: "RxKeyboard"),
+        .package(product: "Lottie"),
     ]
     
     let packages: [Package] = [
@@ -37,6 +38,7 @@ class BaseProjectFactory: ProjectFactory {
         .remote(url: "https://github.com/ReactorKit/ReactorKit.git", requirement: .upToNextMinor(from: "3.2.0")),
         .remote(url: "https://github.com/devxoul/Then.git", requirement: .upToNextMinor(from: "3.0.0")),
         .remote(url: "https://github.com/RxSwiftCommunity/RxKeyboard.git", requirement: .upToNextMinor(from: "2.0.0")),
+        .remote(url: "https://github.com/airbnb/lottie-ios.git", requirement: .upToNextMinor(from: "3.3.0")),
     ]
 
     func generate() -> [Target] {
