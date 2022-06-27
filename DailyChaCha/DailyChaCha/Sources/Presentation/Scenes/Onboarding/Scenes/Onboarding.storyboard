@@ -228,8 +228,8 @@
                                     <constraint firstAttribute="height" constant="73" id="ZW4-6D-HhX"/>
                                 </constraints>
                             </view>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="xS8-w1-vZn">
-                                <rect key="frame" x="0.0" y="152" width="375" height="626"/>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" allowsMultipleSelection="YES" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="xS8-w1-vZn">
+                                <rect key="frame" x="0.0" y="187" width="375" height="591"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <view key="tableFooterView" contentMode="scaleToFill" id="Ujn-ph-ZP9">
                                     <rect key="frame" x="0.0" y="131.33333206176758" width="375" height="46"/>
@@ -255,7 +255,7 @@
                                     </constraints>
                                 </view>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="OnboardingGoalSelectCell" rowHeight="64" id="P4n-vc-poY" customClass="OnboardingGoalSelectCell" customModule="DailyChaCha" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="OnboardingDateSelectCell" rowHeight="64" id="P4n-vc-poY" customClass="OnboardingDateSelectCell" customModule="DailyChaCha" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="44.666666030883789" width="375" height="64"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="P4n-vc-poY" id="InC-rV-dfj">
@@ -348,19 +348,29 @@
                                     <constraint firstItem="YgN-ea-REW" firstAttribute="top" secondItem="PPc-Aa-KBa" secondAttribute="top" id="hPU-PN-fgW"/>
                                 </constraints>
                             </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="CNo-xo-aIt" userLabel="Line View">
+                                <rect key="frame" x="0.0" y="186" width="375" height="1"/>
+                                <color key="backgroundColor" name="gray_200"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="1" id="pWG-8j-dz6"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="e23-2r-bnc"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="Q8k-wS-zy9" firstAttribute="top" secondItem="e23-2r-bnc" secondAttribute="top" constant="35" id="49e-GT-5FG"/>
+                            <constraint firstAttribute="trailing" secondItem="CNo-xo-aIt" secondAttribute="trailing" id="4GZ-3t-MWF"/>
                             <constraint firstItem="PPc-Aa-KBa" firstAttribute="leading" secondItem="N5k-Qw-ERy" secondAttribute="leading" id="5fo-kx-2kc"/>
                             <constraint firstItem="e23-2r-bnc" firstAttribute="bottom" secondItem="YgN-ea-REW" secondAttribute="bottom" constant="20" id="9Hp-kB-w96"/>
                             <constraint firstItem="e23-2r-bnc" firstAttribute="bottom" secondItem="xS8-w1-vZn" secondAttribute="bottom" id="Av7-qt-XIC"/>
                             <constraint firstItem="xS8-w1-vZn" firstAttribute="leading" secondItem="N5k-Qw-ERy" secondAttribute="leading" id="C1x-cb-Z7t"/>
+                            <constraint firstItem="xS8-w1-vZn" firstAttribute="top" secondItem="CNo-xo-aIt" secondAttribute="bottom" id="Fun-fi-Vp5"/>
                             <constraint firstAttribute="bottom" secondItem="PPc-Aa-KBa" secondAttribute="bottom" id="cgT-CT-TPl"/>
                             <constraint firstItem="e23-2r-bnc" firstAttribute="trailing" secondItem="PPc-Aa-KBa" secondAttribute="trailing" id="ecT-px-wYc"/>
                             <constraint firstItem="Q8k-wS-zy9" firstAttribute="leading" secondItem="e23-2r-bnc" secondAttribute="leading" id="i8D-R0-1cE"/>
-                            <constraint firstItem="xS8-w1-vZn" firstAttribute="top" secondItem="Q8k-wS-zy9" secondAttribute="bottom" id="mnS-RC-S8d"/>
+                            <constraint firstItem="xS8-w1-vZn" firstAttribute="top" secondItem="Q8k-wS-zy9" secondAttribute="bottom" constant="35" id="mnS-RC-S8d"/>
+                            <constraint firstItem="CNo-xo-aIt" firstAttribute="leading" secondItem="N5k-Qw-ERy" secondAttribute="leading" id="u0k-1l-eyM"/>
                             <constraint firstItem="e23-2r-bnc" firstAttribute="trailing" secondItem="Q8k-wS-zy9" secondAttribute="trailing" id="uB6-UZ-AUZ"/>
                             <constraint firstAttribute="trailing" secondItem="xS8-w1-vZn" secondAttribute="trailing" id="wfo-Bl-zUS"/>
                         </constraints>

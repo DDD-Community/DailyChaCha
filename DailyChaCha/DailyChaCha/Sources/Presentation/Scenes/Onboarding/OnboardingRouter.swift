@@ -8,7 +8,7 @@
 
 import RIBs
 
-protocol OnboardingInteractable: Interactable, OnboardingGoalListener {
+protocol OnboardingInteractable: Interactable, OnboardingGoalListener, OnboardingDateListener {
     var router: OnboardingRouting? { get set }
     var listener: OnboardingListener? { get set }
 }
@@ -71,11 +71,15 @@ final class OnboardingRouter: Router<OnboardingInteractable>, OnboardingRouting 
     
     func routeToOnboarding() {
         detachCurrentChild()
+//        let goal = goalBuilder.build(withListener: interactor)
+//        currentChild = goal
+//        attachChild(goal)
+//        viewController.uiviewController.present(goal.viewControllable.uiviewController, animated: true)
         
-        let goal = goalBuilder.build(withListener: interactor)
-        currentChild = goal
-        attachChild(goal)
-        viewController.uiviewController.present(goal.viewControllable.uiviewController, animated: true)
+        let build = dateBuilder.build(withListener: interactor)
+        currentChild = build
+        attachChild(build)
+        viewController.uiviewController.present(build.viewControllable.uiviewController, animated: true)
     }
     
     private func detachCurrentChild() {
