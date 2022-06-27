@@ -31,11 +31,14 @@ final class OnboardingGoalSelectCell: UITableViewCell, CellModelable {
     }
     
     override func setSelected(_ selected: Bool, animated: Bool) {
+        super.setSelected(selected, animated: animated)
         switch selected {
         case true:
+            titleLabel.textColor = DailyChaChaAsset.Colors.primary900.color
             selectButton.tintColor = DailyChaChaAsset.Colors.primary800.color
             selectButton.isSelected = !selected
         case false:
+            titleLabel.textColor = DailyChaChaAsset.Colors.gray600.color
             selectButton.tintColor = DailyChaChaAsset.Colors.gray300.color
             selectButton.isSelected = true
         }
