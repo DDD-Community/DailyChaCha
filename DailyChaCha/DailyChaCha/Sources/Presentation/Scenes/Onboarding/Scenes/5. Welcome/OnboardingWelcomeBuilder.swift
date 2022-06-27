@@ -32,7 +32,7 @@ final class OnboardingWelcomeBuilder: Builder<OnboardingWelcomeDependency>, Onbo
 
     func build(withListener listener: OnboardingWelcomeListener) -> OnboardingWelcomeRouting {
         _ = OnboardingWelcomeComponent(dependency: dependency)
-        let viewController = OnboardingWelcomeViewController.create()
+        let viewController = OnboardingWelcomeViewController.create("Onboarding")
         let interactor = OnboardingWelcomeInteractor(presenter: viewController)
         interactor.listener = listener
         return OnboardingWelcomeRouter(interactor: interactor, viewController: viewController)

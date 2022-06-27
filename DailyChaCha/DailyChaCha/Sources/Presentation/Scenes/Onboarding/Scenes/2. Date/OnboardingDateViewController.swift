@@ -18,7 +18,6 @@ protocol OnboardingDatePresentableListener: AnyObject {
 
 final class OnboardingDateViewController: UIViewController, OnboardingDatePresentable, OnboardingDateViewControllable {
     @IBOutlet private weak var titleView: GoalTitleView!
-    static var sceneable: Sceneable = OnboardingScene.date
     weak var listener: OnboardingDatePresentableListener?
     
     override func viewDidLoad() {

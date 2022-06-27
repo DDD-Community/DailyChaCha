@@ -18,7 +18,6 @@ protocol OnboardingAlertPresentableListener: AnyObject {
 
 final class OnboardingAlertViewController: UIViewController, OnboardingAlertPresentable, OnboardingAlertViewControllable {
     @IBOutlet private weak var titleView: GoalTitleView!
-    static var sceneable: Sceneable = OnboardingScene.alert
     weak var listener: OnboardingAlertPresentableListener?
     
     override func viewDidLoad() {

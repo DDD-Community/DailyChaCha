@@ -17,6 +17,5 @@ protocol OnboardingWelcomePresentableListener: AnyObject {
 }
 
 final class OnboardingWelcomeViewController: UIViewController, OnboardingWelcomePresentable, OnboardingWelcomeViewControllable {
-    static var sceneable: Sceneable = OnboardingScene.welcome
     weak var listener: OnboardingWelcomePresentableListener?
 }

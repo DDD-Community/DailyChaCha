@@ -21,7 +21,6 @@ final class OnboardingGoalViewController: UIViewController, OnboardingGoalPresen
     @IBOutlet private weak var titleView: GoalTitleView!
     @IBOutlet private weak var tableView: UITableView!
     @IBOutlet private weak var nextButton: PrimaryButton!
-    static var sceneable: Sceneable = OnboardingScene.goal
     weak var listener: OnboardingGoalPresentableListener?
     private let disposeBag: DisposeBag = .init()
     /// WriteCell

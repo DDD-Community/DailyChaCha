@@ -9,18 +9,13 @@
 import UIKit
 import RIBs
 
-public protocol Sceneable {
-    var storyboard: String { get }
-}
-
-protocol Storyboardable: ViewControllable {
-    static var sceneable: Sceneable { get set }
-}
+protocol Storyboardable: ViewControllable { }
 
 extension Storyboardable where Self: UIViewController {
-    static func create() -> Self {
-        guard let vc = UIStoryboard(name: sceneable.storyboard, bundle: .main).instantiateInitialViewController() as? Self else {
-            fatalError("Storyboard \(sceneable.storyboard)를 찾을 수 없음.")
+    static func create(_ storyboard: String) -> Self {
+        let identifier = String(describing: self)
+        guard let vc = UIStoryboard(name: storyboard, bundle: .main).instantiateViewController(withIdentifier: identifier) as? Self else {
+            fatalError("Storyboard \(storyboard)를 찾을 수 없음.")
         }
         return vc
     }
