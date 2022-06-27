@@ -479,7 +479,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="coc-g1-eST" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2238" y="135"/>
+            <point key="canvasLocation" x="2943" y="136"/>
         </scene>
         <!--Onboarding Welcome View Controller-->
         <scene sceneID="S2A-kb-uaA">
@@ -513,7 +513,94 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1A8-Zg-Acx" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2929" y="136"/>
+            <point key="canvasLocation" x="3646" y="136"/>
+        </scene>
+        <!--Onboarding Time View Controller-->
+        <scene sceneID="3Q8-Fu-cmd">
+            <objects>
+                <viewController storyboardIdentifier="OnboardingTimeViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Kmq-Cf-mrV" customClass="OnboardingTimeViewController" customModule="DailyChaCha" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="lOF-Pn-Fy2">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YvB-oj-NQL" customClass="OnboardingTitleView" customModule="DailyChaCha" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="79" width="375" height="73"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="73" id="QoA-Tu-SZp"/>
+                                </constraints>
+                            </view>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" allowsMultipleSelection="YES" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="PS3-le-UBH">
+                                <rect key="frame" x="0.0" y="187" width="375" height="591"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                            </tableView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Y2Y-iJ-0QK" userLabel="Adjust View">
+                                <rect key="frame" x="0.0" y="700" width="375" height="112"/>
+                                <subviews>
+                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="pQe-xu-Z07">
+                                        <rect key="frame" x="20" y="0.0" width="335" height="58"/>
+                                        <subviews>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RpP-wl-4QE">
+                                                <rect key="frame" x="0.0" y="0.0" width="112.33333333333333" height="58"/>
+                                                <color key="backgroundColor" name="gray_200"/>
+                                                <fontDescription key="fontDescription" type="system" weight="medium" pointSize="18"/>
+                                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                <state key="normal" title="이전">
+                                                    <color key="titleColor" name="gray_500"/>
+                                                </state>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                        <integer key="value" value="16"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                </userDefinedRuntimeAttributes>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7nl-Ch-7Ci" customClass="PrimaryButton" customModule="DailyChaCha" customModuleProvider="target">
+                                                <rect key="frame" x="117.33333333333336" y="0.0" width="217.66666666666663" height="58"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                <state key="normal" title="다음"/>
+                                            </button>
+                                        </subviews>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="58" id="0xE-oU-2mI"/>
+                                            <constraint firstItem="7nl-Ch-7Ci" firstAttribute="width" secondItem="pQe-xu-Z07" secondAttribute="width" multiplier="0.65" id="zRo-rr-j3b"/>
+                                        </constraints>
+                                    </stackView>
+                                </subviews>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstItem="pQe-xu-Z07" firstAttribute="top" secondItem="Y2Y-iJ-0QK" secondAttribute="top" id="7EM-Kn-jFh"/>
+                                    <constraint firstItem="pQe-xu-Z07" firstAttribute="leading" secondItem="Y2Y-iJ-0QK" secondAttribute="leading" constant="20" id="jb5-qf-zvo"/>
+                                    <constraint firstAttribute="trailing" secondItem="pQe-xu-Z07" secondAttribute="trailing" constant="20" id="xOK-BM-N6F"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="eCz-DB-vwW"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="eCz-DB-vwW" firstAttribute="trailing" secondItem="YvB-oj-NQL" secondAttribute="trailing" id="5g2-Hd-ijj"/>
+                            <constraint firstItem="PS3-le-UBH" firstAttribute="leading" secondItem="lOF-Pn-Fy2" secondAttribute="leading" id="DKA-LL-bXv"/>
+                            <constraint firstItem="eCz-DB-vwW" firstAttribute="bottom" secondItem="pQe-xu-Z07" secondAttribute="bottom" constant="20" id="G4I-cX-MB0"/>
+                            <constraint firstItem="YvB-oj-NQL" firstAttribute="leading" secondItem="eCz-DB-vwW" secondAttribute="leading" id="MOZ-ln-1ha"/>
+                            <constraint firstAttribute="trailing" secondItem="PS3-le-UBH" secondAttribute="trailing" id="TTx-tm-Zy6"/>
+                            <constraint firstItem="YvB-oj-NQL" firstAttribute="top" secondItem="eCz-DB-vwW" secondAttribute="top" constant="35" id="Zg7-gl-Nsq"/>
+                            <constraint firstItem="eCz-DB-vwW" firstAttribute="trailing" secondItem="Y2Y-iJ-0QK" secondAttribute="trailing" id="art-80-k9F"/>
+                            <constraint firstItem="PS3-le-UBH" firstAttribute="top" secondItem="YvB-oj-NQL" secondAttribute="bottom" constant="35" id="d3H-KJ-L2p"/>
+                            <constraint firstItem="Y2Y-iJ-0QK" firstAttribute="leading" secondItem="lOF-Pn-Fy2" secondAttribute="leading" id="hzy-TN-sEo"/>
+                            <constraint firstItem="eCz-DB-vwW" firstAttribute="bottom" secondItem="PS3-le-UBH" secondAttribute="bottom" id="v4P-LC-6nL"/>
+                            <constraint firstAttribute="bottom" secondItem="Y2Y-iJ-0QK" secondAttribute="bottom" id="z32-rX-hd8"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="nextButton" destination="7nl-Ch-7Ci" id="cgK-gp-p2V"/>
+                        <outlet property="prevButton" destination="RpP-wl-4QE" id="FN1-Kf-MkI"/>
+                        <outlet property="tableView" destination="PS3-le-UBH" id="3Vh-Me-RvP"/>
+                        <outlet property="titleView" destination="YvB-oj-NQL" id="QQG-4v-NAo"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="c88-nN-5VP" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2238" y="136"/>
         </scene>
     </scenes>
     <resources>

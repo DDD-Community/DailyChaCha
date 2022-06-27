@@ -40,6 +40,7 @@ final class OnboardingBuilder: Builder<OnboardingDependency>, OnboardingBuildabl
             viewController: component.onboardingViewController,
             goalBuilder: OnboardingGoalBuilder(dependency: component),
             dateBuilder: OnboardingDateBuilder(dependency: component),
+            timeBuilder: OnboardingTimeBuilder(dependency: component),
             alertBuilder: OnboardingAlertBuilder(dependency: component),
             welcomeBuilder: OnboardingWelcomeBuilder(dependency: component)
         )

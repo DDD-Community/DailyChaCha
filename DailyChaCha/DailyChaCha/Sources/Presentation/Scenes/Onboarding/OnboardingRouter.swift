@@ -8,7 +8,7 @@
 
 import RIBs
 
-protocol OnboardingInteractable: Interactable, OnboardingGoalListener, OnboardingDateListener {
+protocol OnboardingInteractable: Interactable, OnboardingGoalListener, OnboardingDateListener, OnboardingTimeListener {
     var router: OnboardingRouting? { get set }
     var listener: OnboardingListener? { get set }
 }
@@ -25,11 +25,13 @@ final class OnboardingRouter: Router<OnboardingInteractable>, OnboardingRouting 
          viewController: OnboardingViewControllable,
          goalBuilder: OnboardingGoalBuilder,
          dateBuilder: OnboardingDateBuilder,
+         timeBuilder: OnboardingTimeBuilder,
          alertBuilder: OnboardingAlertBuilder,
          welcomeBuilder: OnboardingWelcomeBuilder) {
         self.viewController = viewController
         self.goalBuilder = goalBuilder
         self.dateBuilder = dateBuilder
+        self.timeBuilder = timeBuilder
         self.alertBuilder = alertBuilder
         self.welcomeBuilder = welcomeBuilder
         super.init(interactor: interactor)
@@ -46,6 +48,7 @@ final class OnboardingRouter: Router<OnboardingInteractable>, OnboardingRouting 
     private let viewController: OnboardingViewControllable
     private let goalBuilder: OnboardingGoalBuilder
     private let dateBuilder: OnboardingDateBuilder
+    private let timeBuilder: OnboardingTimeBuilder
     private let alertBuilder: OnboardingAlertBuilder
     private let welcomeBuilder: OnboardingWelcomeBuilder
     
@@ -76,7 +79,12 @@ final class OnboardingRouter: Router<OnboardingInteractable>, OnboardingRouting 
 //        attachChild(goal)
 //        viewController.uiviewController.present(goal.viewControllable.uiviewController, animated: true)
         
-        let build = dateBuilder.build(withListener: interactor)
+//        let build = dateBuilder.build(withListener: interactor)
+//        currentChild = build
+//        attachChild(build)
+//        viewController.uiviewController.present(build.viewControllable.uiviewController, animated: true)
+        
+        let build = timeBuilder.build(withListener: interactor)
         currentChild = build
         attachChild(build)
         viewController.uiviewController.present(build.viewControllable.uiviewController, animated: true)
