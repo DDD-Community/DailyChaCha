@@ -53,6 +53,7 @@ class BaseProjectFactory: ProjectFactory {
                     "\(projectName)/\(projectName)/**/*.xcassets",
                     "\(projectName)/\(projectName)/**/*.json",
                 ],
+                entitlements: "\(projectName)/\(projectName).entitlements",
                 dependencies: dependencies
             ),
 
