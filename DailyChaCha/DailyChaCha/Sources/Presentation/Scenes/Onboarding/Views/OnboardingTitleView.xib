@@ -9,7 +9,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="GoalTitleView" customModule="DailyChaCha" customModuleProvider="target">
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="OnboardingTitleView" customModule="DailyChaCha" customModuleProvider="target">
             <connections>
                 <outlet property="subTitleLabel" destination="dP7-c3-a35" id="QDj-Ll-RHd"/>
                 <outlet property="titleLabel" destination="E7g-PA-9lN" id="OhR-ES-mqx"/>
@@ -23,7 +23,7 @@
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="목표 이름" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="E7g-PA-9lN">
                     <rect key="frame" x="0.0" y="0.0" width="407" height="42"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="42" id="hMZ-cC-LiR"/>
+                        <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="42" id="hMZ-cC-LiR"/>
                     </constraints>
                     <fontDescription key="fontDescription" type="boldSystem" pointSize="28"/>
                     <color key="textColor" name="black"/>
@@ -32,7 +32,7 @@
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="구체적인 목표를 적어주세요." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dP7-c3-a35">
                     <rect key="frame" x="0.0" y="54" width="407" height="18"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="18" id="63e-cx-Q5h"/>
+                        <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="18" id="63e-cx-Q5h"/>
                     </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                     <color key="textColor" name="gray_500"/>

@@ -18,7 +18,7 @@ protocol OnboardingGoalPresentableListener: AnyObject {
 }
 
 final class OnboardingGoalViewController: UIViewController, OnboardingGoalPresentable, OnboardingGoalViewControllable, OnboardingGoalWriteCellDelegate {
-    @IBOutlet private weak var titleView: GoalTitleView!
+    @IBOutlet private weak var titleView: OnboardingTitleView!
     @IBOutlet private weak var tableView: UITableView!
     @IBOutlet private weak var nextButton: PrimaryButton!
     weak var listener: OnboardingGoalPresentableListener?
@@ -33,7 +33,7 @@ final class OnboardingGoalViewController: UIViewController, OnboardingGoalPresen
     }
     
     private func setupLayout() {
-        titleView.configure(data: GoalTitleData(title: "결심하기", subTitle: "왜 운동 습관을 가지려고 하나요?"))
+        titleView.configure(data: OnboardingTitleData(title: "결심하기", subTitle: "왜 운동 습관을 가지려고 하나요?"))
     }
     
     private func bind() {

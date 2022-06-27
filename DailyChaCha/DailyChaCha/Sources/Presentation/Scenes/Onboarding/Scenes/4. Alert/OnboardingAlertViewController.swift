@@ -17,7 +17,7 @@ protocol OnboardingAlertPresentableListener: AnyObject {
 }
 
 final class OnboardingAlertViewController: UIViewController, OnboardingAlertPresentable, OnboardingAlertViewControllable {
-    @IBOutlet private weak var titleView: GoalTitleView!
+    @IBOutlet private weak var titleView: OnboardingTitleView!
     weak var listener: OnboardingAlertPresentableListener?
     
     override func viewDidLoad() {
@@ -26,6 +26,6 @@ final class OnboardingAlertViewController: UIViewController, OnboardingAlertPres
     }
     
     private func setupLayout() {
-        titleView.configure(data: GoalTitleData(title: "도움 받기", subTitle: "알림을 설정하고 목표를 달성하세요!"))
+        titleView.configure(data: OnboardingTitleData(title: "도움 받기", subTitle: "알림을 설정하고 목표를 달성하세요!"))
     }
 }

@@ -1,5 +1,5 @@
 //
-//  GoalTitleView.swift
+//  OnboardingTitleView.swift
 //  DailyChaCha
 //
 //  Created by moon.kwon on 2022/06/10.
@@ -8,12 +8,12 @@
 
 import UIKit
 
-protocol GoalTitleDatable {
+protocol OnboardingTitleDatable {
     var title: NSAttributedString { get set }
     var subTitle: NSAttributedString { get set }
 }
 
-struct GoalTitleData: GoalTitleDatable {
+struct OnboardingTitleData: OnboardingTitleDatable {
     var title: NSAttributedString
     var subTitle: NSAttributedString
     
@@ -35,11 +35,11 @@ struct GoalTitleData: GoalTitleDatable {
     }
 }
 
-final class GoalTitleView: DesignView {
+final class OnboardingTitleView: DesignView {
     @IBOutlet private weak var titleLabel: UILabel!
     @IBOutlet private weak var subTitleLabel: UILabel!
     
-    public func configure(data: GoalTitleDatable) {
+    public func configure(data: OnboardingTitleDatable) {
         titleLabel.attributedText = data.title
         subTitleLabel.attributedText = data.subTitle
     }

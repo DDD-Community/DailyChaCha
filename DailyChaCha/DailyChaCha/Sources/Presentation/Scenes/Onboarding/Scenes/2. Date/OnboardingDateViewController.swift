@@ -26,6 +26,6 @@ final class OnboardingDateViewController: UIViewController, OnboardingDatePresen
     }
     
     private func setupLayout() {
-        titleView.configure(data: GoalTitleData(title: "날짜 및 시간", subTitle: "언제 운동하시나요?"))
+        titleView.configure(data: OnboardingTitleData(title: "날짜 정하기", subTitle: "무슨 요일에 운동할까요?"))
     }
 }
