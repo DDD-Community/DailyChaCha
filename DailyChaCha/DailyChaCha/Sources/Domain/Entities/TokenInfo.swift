@@ -14,6 +14,6 @@ struct TokenInfo: Decodable {
   
   enum CodingKeys: String, CodingKey {
     case accessToken = "access_token"
-    case expireDate = "expire_at"
+    case expireDate = "expired_at"
   }
 }

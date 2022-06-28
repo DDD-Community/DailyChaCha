@@ -17,7 +17,7 @@ extension LoginService: BaseService {
   var path: String {
     switch self {
     case .login:
-      return "apple-sign-in/"
+      return "apple-sign-in"
     }
   }
   
