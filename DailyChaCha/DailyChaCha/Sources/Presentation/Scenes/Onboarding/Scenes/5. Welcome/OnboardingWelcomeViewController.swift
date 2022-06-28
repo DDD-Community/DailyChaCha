@@ -12,9 +12,10 @@ import UIKit
 import Lottie
 
 protocol OnboardingWelcomePresentableListener: AnyObject {
-    // TODO: Declare properties and methods that the view controller can invoke to perform
-    // business logic, such as signIn(). This protocol is implemented by the corresponding
-    // interactor class.
+    typealias Input = OnboardingWelcomeInteractor.Input
+    typealias Output = OnboardingWelcomeInteractor.Output
+    
+    func transfor(input: Input) -> Output
 }
 
 final class OnboardingWelcomeViewController: UIViewController, OnboardingWelcomePresentable, OnboardingWelcomeViewControllable {
@@ -25,7 +26,7 @@ final class OnboardingWelcomeViewController: UIViewController, OnboardingWelcome
     override func viewDidLoad() {
         super.viewDidLoad()
         setupLayout()
-        bind()
+        bind(listener: listener)
     }
     
     private func setupLayout() {
@@ -34,6 +35,15 @@ final class OnboardingWelcomeViewController: UIViewController, OnboardingWelcome
         animationView.play(fromProgress: 0, toProgress: 0.75)
     }
     
-    private func bind() {
+    private func bind(listener: OnboardingWelcomePresentableListener?) {
+        guard let listener = listener else {
+            return
+        }
+
+        let input: OnboardingWelcomeInteractor.Input = .init(
+            nextStep: startButton.rx.tap.asObservable()
+        )
+        
+        _ = listener.transfor(input: input)
     }
 }

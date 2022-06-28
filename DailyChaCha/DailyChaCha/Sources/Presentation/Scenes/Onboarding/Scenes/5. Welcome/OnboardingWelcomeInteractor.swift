@@ -23,24 +23,31 @@ protocol OnboardingWelcomeListener: AnyObject {
 }
 
 final class OnboardingWelcomeInteractor: PresentableInteractor<OnboardingWelcomePresentable>, OnboardingWelcomeInteractable, OnboardingWelcomePresentableListener {
+    
+    struct Input {
+        let nextStep: Observable<Void>
+    }
+    
+    struct Output {
+        
+    }
 
     weak var router: OnboardingWelcomeRouting?
     weak var listener: OnboardingWelcomeListener?
+    private let disposeBag: DisposeBag = .init()
 
-    // TODO: Add additional dependencies to constructor. Do not perform any logic
-    // in constructor.
     override init(presenter: OnboardingWelcomePresentable) {
         super.init(presenter: presenter)
         presenter.listener = self
     }
-
-    override func didBecomeActive() {
-        super.didBecomeActive()
-        // TODO: Implement business logic here.
-    }
-
-    override func willResignActive() {
-        super.willResignActive()
-        // TODO: Pause any business logic.
+    
+    func transfor(input: Input) -> Output {
+        input.nextStep
+            .subscribe(onNext: {
+                print("nextStep")
+            })
+            .disposed(by: disposeBag)
+        
+        return .init()
     }
 }
