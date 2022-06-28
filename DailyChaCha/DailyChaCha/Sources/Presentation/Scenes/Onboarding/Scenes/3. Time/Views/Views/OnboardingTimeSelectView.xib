@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="19529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19519"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="OnboardingTimeSelectView" customModule="DailyChaCha" customModuleProvider="target">
+            <connections>
+                <outlet property="selectButton" destination="Ess-Ei-vKI" id="8E3-1C-dfp"/>
+                <outlet property="timeButton" destination="Ess-Ei-vKI" id="4s5-83-eWJ"/>
+                <outlet property="timeLabel" destination="J8v-Mx-B9G" id="gJJ-vQ-Ub2"/>
+                <outlet property="titleLabel" destination="PzF-yZ-ZO2" id="9mr-pH-Su8"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="DXH-da-YER">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="70"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <subviews>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="운동 시작 시간" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PzF-yZ-ZO2">
+                    <rect key="frame" x="20" y="22.5" width="290" height="29"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="29" id="nS7-Zh-xLF"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" weight="medium" pointSize="18"/>
+                    <color key="textColor" name="gray_600"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="P6R-Gs-rQi" userLabel="Line View">
+                    <rect key="frame" x="0.0" y="69" width="414" height="1"/>
+                    <color key="backgroundColor" name="gray_100"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="1" id="ahG-Xj-09e"/>
+                    </constraints>
+                </view>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WcS-PS-wBJ">
+                    <rect key="frame" x="320" y="20" width="74" height="34"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="19:00" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="J8v-Mx-B9G">
+                            <rect key="frame" x="14.5" y="6" width="45.5" height="22"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                            <color key="textColor" name="gray_700"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
+                    <color key="backgroundColor" name="gray_200"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="74" id="CVJ-p2-k78"/>
+                        <constraint firstItem="J8v-Mx-B9G" firstAttribute="centerY" secondItem="WcS-PS-wBJ" secondAttribute="centerY" id="fB2-bH-3kW"/>
+                        <constraint firstItem="J8v-Mx-B9G" firstAttribute="centerX" secondItem="WcS-PS-wBJ" secondAttribute="centerX" id="uUh-Wy-PkM"/>
+                        <constraint firstAttribute="height" constant="34" id="vI4-KP-nhS"/>
+                    </constraints>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                            <integer key="value" value="8"/>
+                        </userDefinedRuntimeAttribute>
+                    </userDefinedRuntimeAttributes>
+                </view>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ess-Ei-vKI">
+                    <rect key="frame" x="0.0" y="0.0" width="414" height="70"/>
+                    <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                </button>
+            </subviews>
+            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+            <constraints>
+                <constraint firstAttribute="bottom" secondItem="Ess-Ei-vKI" secondAttribute="bottom" id="1dA-QJ-03V"/>
+                <constraint firstItem="PzF-yZ-ZO2" firstAttribute="centerY" secondItem="WcS-PS-wBJ" secondAttribute="centerY" id="BNF-GB-uPu"/>
+                <constraint firstItem="Ess-Ei-vKI" firstAttribute="top" secondItem="DXH-da-YER" secondAttribute="top" id="Bne-js-b89"/>
+                <constraint firstAttribute="trailing" secondItem="P6R-Gs-rQi" secondAttribute="trailing" id="GuN-32-o7d"/>
+                <constraint firstAttribute="bottom" secondItem="P6R-Gs-rQi" secondAttribute="bottom" id="L9v-dy-MNI"/>
+                <constraint firstItem="PzF-yZ-ZO2" firstAttribute="leading" secondItem="DXH-da-YER" secondAttribute="leading" constant="20" id="Rh4-5w-Ois"/>
+                <constraint firstAttribute="trailing" secondItem="WcS-PS-wBJ" secondAttribute="trailing" constant="20" id="WCN-z4-FJj"/>
+                <constraint firstItem="P6R-Gs-rQi" firstAttribute="top" secondItem="WcS-PS-wBJ" secondAttribute="bottom" constant="15" id="Z0G-Yk-0N0"/>
+                <constraint firstItem="Ess-Ei-vKI" firstAttribute="leading" secondItem="DXH-da-YER" secondAttribute="leading" id="ZG6-ra-Pe6"/>
+                <constraint firstItem="WcS-PS-wBJ" firstAttribute="top" secondItem="DXH-da-YER" secondAttribute="top" constant="20" id="a5Y-E5-Pcb"/>
+                <constraint firstItem="P6R-Gs-rQi" firstAttribute="leading" secondItem="DXH-da-YER" secondAttribute="leading" id="jZO-B2-L0s"/>
+                <constraint firstItem="WcS-PS-wBJ" firstAttribute="leading" secondItem="PzF-yZ-ZO2" secondAttribute="trailing" constant="10" id="nD9-ho-7kr"/>
+                <constraint firstAttribute="trailing" secondItem="Ess-Ei-vKI" secondAttribute="trailing" id="p2c-O1-qsL"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <point key="canvasLocation" x="140.57971014492756" y="-266.51785714285711"/>
+        </view>
+    </objects>
+    <resources>
+        <namedColor name="gray_100">
+            <color red="0.95294117647058818" green="0.95294117647058818" blue="0.95294117647058818" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="gray_200">
+            <color red="0.91764705882352937" green="0.91764705882352937" blue="0.91764705882352937" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="gray_600">
+            <color red="0.43137254901960786" green="0.43137254901960786" blue="0.43137254901960786" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="gray_700">
+            <color red="0.35686274509803922" green="0.35686274509803922" blue="0.35686274509803922" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>

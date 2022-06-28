@@ -33,7 +33,7 @@ final class OnboardingTimeBuilder: Builder<OnboardingTimeDependency>, Onboarding
     func build(withListener listener: OnboardingTimeListener) -> OnboardingTimeRouting {
         let component = OnboardingTimeComponent(dependency: dependency)
         let viewController = OnboardingTimeViewController.create("Onboarding")
-        let interactor = OnboardingTimeInteractor(presenter: viewController)
+        let interactor = OnboardingTimeInteractor(presenter: viewController, useCase: OnboardingUseCase())
         interactor.listener = listener
         return OnboardingTimeRouter(interactor: interactor, viewController: viewController)
     }

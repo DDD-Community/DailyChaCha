@@ -19,7 +19,7 @@ protocol OnboardingRepositoriable {
     /// POST : 날짜정하기 생성 API, 유저의 온보딩 두번째 - 날짜를 생성하는 API입니다.
     func dates(weekday: String) -> Single<Void>
     /// GET : 온보딩 운동일정 가져오는 API, 유저의 온보딩 여부를 반환합니다.
-    func dates() -> Single<Void>
+    func dates() -> Single<[Int]>
     /// PUT : 시간정하기 API,  유저의 온보딩 세번째 - 시간을 생성하는 API입니다.
     func dates(exerciseDate: Onboarding.ExerciseDate) -> Single<Void>
 }
@@ -44,8 +44,8 @@ final class MockOnboardingRepository: OnboardingRepositoriable {
         .just(())
     }
     
-    func dates() -> Single<Void> {
-        .just(())
+    func dates() -> Single<[Int]> {
+        .just([0, 1, 2])
     }
     
     func dates(exerciseDate: Onboarding.ExerciseDate) -> Single<Void> {

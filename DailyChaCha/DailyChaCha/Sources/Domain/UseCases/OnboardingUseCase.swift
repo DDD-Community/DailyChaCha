@@ -27,5 +27,9 @@ extension OnboardingUseCase {
     func goals(goal: String) -> Single<Void> {
         onboardingRepository.goals(goal: goal)
     }
+    
+    func dates() -> Single<[Int]> {
+        onboardingRepository.dates()
+    }
 }
 

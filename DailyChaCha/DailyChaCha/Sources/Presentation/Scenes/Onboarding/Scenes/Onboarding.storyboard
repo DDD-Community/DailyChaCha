@@ -659,10 +659,54 @@
                                     <constraint firstAttribute="height" constant="73" id="QoA-Tu-SZp"/>
                                 </constraints>
                             </view>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" allowsMultipleSelection="YES" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="PS3-le-UBH">
-                                <rect key="frame" x="0.0" y="187" width="375" height="591"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DVV-8f-OMk">
+                                <rect key="frame" x="0.0" y="152" width="375" height="50"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="화요일, 금요일마다" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="F2t-Wi-5UE">
+                                        <rect key="frame" x="19.999999999999993" y="20" width="105.33333333333331" height="14"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="14" id="jRT-bi-0OK"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="14"/>
+                                        <color key="textColor" name="gray_500"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="z8F-Cj-B9h" userLabel="Line View">
+                                        <rect key="frame" x="20" y="49" width="335" height="1"/>
+                                        <color key="backgroundColor" name="gray_200"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="1" id="Tas-TJ-VUQ"/>
+                                        </constraints>
+                                    </view>
+                                </subviews>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                            </tableView>
+                                <constraints>
+                                    <constraint firstItem="F2t-Wi-5UE" firstAttribute="top" secondItem="DVV-8f-OMk" secondAttribute="top" constant="20" id="5OH-15-Jav"/>
+                                    <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="F2t-Wi-5UE" secondAttribute="trailing" constant="20" id="Edt-70-d6q"/>
+                                    <constraint firstItem="z8F-Cj-B9h" firstAttribute="top" secondItem="F2t-Wi-5UE" secondAttribute="bottom" constant="15" id="ILR-Mi-9jh"/>
+                                    <constraint firstItem="z8F-Cj-B9h" firstAttribute="leading" secondItem="DVV-8f-OMk" secondAttribute="leading" constant="20" id="U2N-qn-fRd"/>
+                                    <constraint firstAttribute="bottom" secondItem="z8F-Cj-B9h" secondAttribute="bottom" id="aSR-Ud-IgP"/>
+                                    <constraint firstItem="F2t-Wi-5UE" firstAttribute="leading" secondItem="DVV-8f-OMk" secondAttribute="leading" constant="20" id="ihr-X2-7eR"/>
+                                    <constraint firstAttribute="trailing" secondItem="z8F-Cj-B9h" secondAttribute="trailing" constant="20" id="x8m-vV-1d0"/>
+                                </constraints>
+                            </view>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FrS-lX-yRL">
+                                <rect key="frame" x="0.0" y="202" width="375" height="498"/>
+                                <subviews>
+                                    <stackView opaque="NO" contentMode="scaleToFill" placeholderIntrinsicWidth="375" placeholderIntrinsicHeight="600" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="HkS-Ji-6gp">
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="600"/>
+                                    </stackView>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="HkS-Ji-6gp" firstAttribute="leading" secondItem="9LO-f6-Nqa" secondAttribute="leading" id="Myf-Rc-Ihr"/>
+                                    <constraint firstItem="HkS-Ji-6gp" firstAttribute="bottom" secondItem="9LO-f6-Nqa" secondAttribute="bottom" id="YgZ-5g-Ejt"/>
+                                    <constraint firstItem="HkS-Ji-6gp" firstAttribute="trailing" secondItem="9LO-f6-Nqa" secondAttribute="trailing" id="fTe-pe-Nsk"/>
+                                    <constraint firstItem="HkS-Ji-6gp" firstAttribute="top" secondItem="9LO-f6-Nqa" secondAttribute="top" id="jmk-Yw-lC7"/>
+                                    <constraint firstItem="HkS-Ji-6gp" firstAttribute="width" secondItem="xWs-vk-dcW" secondAttribute="width" id="rfL-GC-FXo"/>
+                                </constraints>
+                                <viewLayoutGuide key="contentLayoutGuide" id="9LO-f6-Nqa"/>
+                                <viewLayoutGuide key="frameLayoutGuide" id="xWs-vk-dcW"/>
+                            </scrollView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Y2Y-iJ-0QK" userLabel="Adjust View">
                                 <rect key="frame" x="0.0" y="700" width="375" height="112"/>
                                 <subviews>
@@ -708,28 +752,32 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="eCz-DB-vwW" firstAttribute="trailing" secondItem="YvB-oj-NQL" secondAttribute="trailing" id="5g2-Hd-ijj"/>
-                            <constraint firstItem="PS3-le-UBH" firstAttribute="leading" secondItem="lOF-Pn-Fy2" secondAttribute="leading" id="DKA-LL-bXv"/>
+                            <constraint firstItem="FrS-lX-yRL" firstAttribute="trailing" secondItem="eCz-DB-vwW" secondAttribute="trailing" id="8pm-5n-s36"/>
+                            <constraint firstAttribute="trailing" secondItem="DVV-8f-OMk" secondAttribute="trailing" id="CZ5-gx-JDl"/>
+                            <constraint firstItem="DVV-8f-OMk" firstAttribute="top" secondItem="YvB-oj-NQL" secondAttribute="bottom" id="ESS-cB-5BS"/>
                             <constraint firstItem="eCz-DB-vwW" firstAttribute="bottom" secondItem="pQe-xu-Z07" secondAttribute="bottom" constant="20" id="G4I-cX-MB0"/>
                             <constraint firstItem="YvB-oj-NQL" firstAttribute="leading" secondItem="eCz-DB-vwW" secondAttribute="leading" id="MOZ-ln-1ha"/>
-                            <constraint firstAttribute="trailing" secondItem="PS3-le-UBH" secondAttribute="trailing" id="TTx-tm-Zy6"/>
+                            <constraint firstItem="DVV-8f-OMk" firstAttribute="leading" secondItem="lOF-Pn-Fy2" secondAttribute="leading" id="W3f-i3-AqJ"/>
+                            <constraint firstItem="FrS-lX-yRL" firstAttribute="top" secondItem="DVV-8f-OMk" secondAttribute="bottom" id="WQ0-Oe-NrH"/>
                             <constraint firstItem="YvB-oj-NQL" firstAttribute="top" secondItem="eCz-DB-vwW" secondAttribute="top" constant="35" id="Zg7-gl-Nsq"/>
+                            <constraint firstItem="FrS-lX-yRL" firstAttribute="leading" secondItem="lOF-Pn-Fy2" secondAttribute="leading" id="Zzm-VL-13X"/>
                             <constraint firstItem="eCz-DB-vwW" firstAttribute="trailing" secondItem="Y2Y-iJ-0QK" secondAttribute="trailing" id="art-80-k9F"/>
-                            <constraint firstItem="PS3-le-UBH" firstAttribute="top" secondItem="YvB-oj-NQL" secondAttribute="bottom" constant="35" id="d3H-KJ-L2p"/>
                             <constraint firstItem="Y2Y-iJ-0QK" firstAttribute="leading" secondItem="lOF-Pn-Fy2" secondAttribute="leading" id="hzy-TN-sEo"/>
-                            <constraint firstItem="eCz-DB-vwW" firstAttribute="bottom" secondItem="PS3-le-UBH" secondAttribute="bottom" id="v4P-LC-6nL"/>
+                            <constraint firstItem="Y2Y-iJ-0QK" firstAttribute="top" secondItem="FrS-lX-yRL" secondAttribute="bottom" id="qW8-Qt-wTp"/>
                             <constraint firstAttribute="bottom" secondItem="Y2Y-iJ-0QK" secondAttribute="bottom" id="z32-rX-hd8"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="headerLabel" destination="F2t-Wi-5UE" id="3YS-ti-JYj"/>
                         <outlet property="nextButton" destination="7nl-Ch-7Ci" id="cgK-gp-p2V"/>
                         <outlet property="prevButton" destination="RpP-wl-4QE" id="FN1-Kf-MkI"/>
-                        <outlet property="tableView" destination="PS3-le-UBH" id="3Vh-Me-RvP"/>
+                        <outlet property="stackView" destination="HkS-Ji-6gp" id="0gO-vy-5wt"/>
                         <outlet property="titleView" destination="YvB-oj-NQL" id="QQG-4v-NAo"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="c88-nN-5VP" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2238" y="136"/>
+            <point key="canvasLocation" x="2237.5999999999999" y="135.96059113300493"/>
         </scene>
     </scenes>
     <resources>

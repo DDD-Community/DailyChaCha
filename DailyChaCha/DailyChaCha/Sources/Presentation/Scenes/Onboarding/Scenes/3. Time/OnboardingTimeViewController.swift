@@ -11,29 +11,98 @@ import RxSwift
 import UIKit
 
 protocol OnboardingTimePresentableListener: AnyObject {
-    // TODO: Declare properties and methods that the view controller can invoke to perform
-    // business logic, such as signIn(). This protocol is implemented by the corresponding
-    // interactor class.
+    typealias Input = OnboardingTimeInteractor.Input
+    typealias Output = OnboardingTimeInteractor.Output
+    
+    func transform(input: Input) -> Output
 }
 
 final class OnboardingTimeViewController: UIViewController, OnboardingTimePresentable, OnboardingTimeViewControllable {
     @IBOutlet private weak var titleView: OnboardingTitleView!
-    @IBOutlet private weak var tableView: UITableView!
+    @IBOutlet private weak var headerLabel: UILabel!
+    @IBOutlet private weak var stackView: UIStackView!
     @IBOutlet private weak var prevButton: UIButton!
     @IBOutlet private weak var nextButton: UIButton!
     weak var listener: OnboardingTimePresentableListener?
+    private let disposeBag: DisposeBag = .init()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setupLayout()
-        bind()
+        bind(listener: listener)
     }
     
     private func setupLayout() {
         titleView.configure(data: OnboardingTitleData(title: "시간 정하기", subTitle: "몇 시쯤 운동할 계획인가요?"))
     }
     
-    private func bind() {
+    private func bind(listener: OnboardingTimePresentableListener?) {
+        guard let listener = listener else {
+            return
+        }
         
+        let time: String = "19:00"
+        let startView = OnboardingTimeSelectView(title: "운동 시작 시간", initTime: time)
+        let otherView = OnboardingTimeOtherView()
+        stackView.addArrangedSubview(startView)
+        stackView.addArrangedSubview(otherView)
+
+        let input: OnboardingTimeInteractor.Input = .init(
+            loadData: rx.viewWillAppear.map { _ in }
+        )
+        
+        let output = listener.transform(input: input)
+        output.headerText.bind(to: headerLabel.rx.text).disposed(by: disposeBag)
+        
+        var separationViews: [OnboardingTimeSelectView] = []
+        output.dates
+            .withUnretained(self)
+            .subscribe(onNext: { (owner, dates) in
+                for date in dates {
+                    let view: OnboardingTimeSelectView = .init(title: date, initTime: time)
+                    separationViews.append(view)
+                    owner.stackView.addArrangedSubview(view)
+                    view.isHidden = true
+                    
+                    view.selected
+                        .subscribe(onNext: { state in
+                            // TODO: 나 빼고 나머진 normal 으로 변경해야함...
+                            switch state {
+                            case .selected:
+                                startView.state = .disabled
+                            default:
+                                break
+                            }
+                        })
+                        .disposed(by: owner.disposeBag)
+                }
+            })
+            .disposed(by: disposeBag)
+        
+        startView.selected
+            .subscribe(onNext: { state in
+                switch state {
+                case .selected:
+                    separationViews.forEach { $0.state = .disabled }
+                default:
+                    break
+                }
+            })
+            .disposed(by: disposeBag)
+        
+        otherView.selected
+            .subscribe(onNext: { state in
+                UIView.animate(withDuration: 0.3, animations: {
+                    switch state {
+                    case .normal:
+                        separationViews.forEach { $0.isHidden = true }
+                    case .selected:
+                        separationViews.forEach { $0.isHidden = false }
+                    case .disabled:
+                        break
+                    }
+                })
+            })
+            .disposed(by: disposeBag)
     }
 }
