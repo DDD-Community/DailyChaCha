@@ -14,7 +14,7 @@ protocol OnboardingAlertPresentableListener: AnyObject {
     typealias Input = OnboardingAlertInteractor.Input
     typealias Output = OnboardingAlertInteractor.Output
     
-    func transfor(input: Input) -> Output
+    func transform(input: Input) -> Output
 }
 
 final class OnboardingAlertViewController: UIViewController, OnboardingAlertPresentable, OnboardingAlertViewControllable {
@@ -45,7 +45,7 @@ final class OnboardingAlertViewController: UIViewController, OnboardingAlertPres
         )
         
         skipButton.rx.tap.map { true }.bind(to: input.nextStep).disposed(by: disposeBag)
-        let output = listener.transfor(input: input)
+        let output = listener.transform(input: input)
         
         output.requestPermission
             .withUnretained(self)

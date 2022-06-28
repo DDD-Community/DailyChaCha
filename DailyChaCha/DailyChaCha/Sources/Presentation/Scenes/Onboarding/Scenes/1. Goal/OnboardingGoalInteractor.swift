@@ -47,7 +47,7 @@ final class OnboardingGoalInteractor: PresentableInteractor<OnboardingGoalPresen
         presenter.listener = self
     }
     
-    func transfer(input: Input) -> Output {
+    func transform(input: Input) -> Output {
         let cells: Observable<[CellModel]> = input.loadData
             .withUnretained(self)
             .flatMap { owner, _ in

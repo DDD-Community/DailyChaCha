@@ -45,7 +45,7 @@ final class OnboardingDateInteractor: PresentableInteractor<OnboardingDatePresen
         presenter.listener = self
     }
 
-    func transfor(input: Input) -> Output {
+    func transform(input: Input) -> Output {
         let cells: Observable<[CellModel]> = input.loadData
             .withUnretained(self)
             .map { (owner, _ ) in

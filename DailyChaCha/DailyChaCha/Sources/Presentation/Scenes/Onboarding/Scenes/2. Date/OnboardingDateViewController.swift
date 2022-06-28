@@ -14,7 +14,7 @@ protocol OnboardingDatePresentableListener: AnyObject {
     typealias Input = OnboardingDateInteractor.Input
     typealias Output = OnboardingDateInteractor.Output
     
-    func transfor(input: Input) -> Output
+    func transform(input: Input) -> Output
 }
 
 final class OnboardingDateViewController: UIViewController, OnboardingDatePresentable, OnboardingDateViewControllable {
@@ -47,7 +47,7 @@ final class OnboardingDateViewController: UIViewController, OnboardingDatePresen
             tapNext: nextButton.rx.tap.asObservable()
         )
         
-        let output = listener.transfor(input: input)
+        let output = listener.transform(input: input)
         output.cells.bind(to: tableView.rx.cells).disposed(by: disposeBag)
     }
 }

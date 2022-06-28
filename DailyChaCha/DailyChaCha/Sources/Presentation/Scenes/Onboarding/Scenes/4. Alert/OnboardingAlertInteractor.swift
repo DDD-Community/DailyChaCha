@@ -42,7 +42,7 @@ final class OnboardingAlertInteractor: PresentableInteractor<OnboardingAlertPres
         presenter.listener = self
     }
     
-    func transfor(input: Input) -> Output {
+    func transform(input: Input) -> Output {
         input.nextStep
             .subscribe(onNext: {
                 print("nextStep", $0)

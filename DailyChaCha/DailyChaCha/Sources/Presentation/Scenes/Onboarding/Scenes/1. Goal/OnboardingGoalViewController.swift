@@ -15,7 +15,7 @@ protocol OnboardingGoalPresentableListener: AnyObject {
     typealias Input = OnboardingGoalInteractor.Input
     typealias Output = OnboardingGoalInteractor.Output
     
-    func transfer(input: Input) -> Output
+    func transform(input: Input) -> Output
 }
 
 final class OnboardingGoalViewController: UIViewController, OnboardingGoalPresentable, OnboardingGoalViewControllable {
@@ -55,7 +55,7 @@ final class OnboardingGoalViewController: UIViewController, OnboardingGoalPresen
             tapNextButton: nextButton.rx.tap.withLatestFrom(modelSelected)
         )
             
-        let output = listener.transfer(input: input)
+        let output = listener.transform(input: input)
         output.cells.bind(to: tableView.rx.cells).disposed(by: disposeBag)
         output.isEnabledNextButton.bind(to: nextButton.rx.isEnabled).disposed(by: disposeBag)
     }

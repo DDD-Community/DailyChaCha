@@ -15,7 +15,7 @@ protocol OnboardingWelcomePresentableListener: AnyObject {
     typealias Input = OnboardingWelcomeInteractor.Input
     typealias Output = OnboardingWelcomeInteractor.Output
     
-    func transfor(input: Input) -> Output
+    func transform(input: Input) -> Output
 }
 
 final class OnboardingWelcomeViewController: UIViewController, OnboardingWelcomePresentable, OnboardingWelcomeViewControllable {
@@ -44,6 +44,6 @@ final class OnboardingWelcomeViewController: UIViewController, OnboardingWelcome
             nextStep: startButton.rx.tap.asObservable()
         )
         
-        _ = listener.transfor(input: input)
+        _ = listener.transform(input: input)
     }
 }
