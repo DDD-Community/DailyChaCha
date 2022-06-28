@@ -19,16 +19,14 @@ protocol OnboardingDatePresentable: Presentable {
     // TODO: Declare methods the interactor can invoke the presenter to present data.
 }
 
-protocol OnboardingDateListener: AnyObject {
-    // TODO: Declare methods the interactor can invoke to communicate with other RIBs.
-}
+protocol OnboardingDateListener: OnboardingStepable { }
 
 final class OnboardingDateInteractor: PresentableInteractor<OnboardingDatePresentable>, OnboardingDateInteractable, OnboardingDatePresentableListener {
     
     struct Input {
         let loadData: Observable<Void>
-        let tapPrev: Observable<Void>
-        let tapNext: Observable<Void>
+        let prevStep: Observable<Void>
+        let nextStep: Observable<Void>
     }
     
     struct Output {
@@ -38,6 +36,7 @@ final class OnboardingDateInteractor: PresentableInteractor<OnboardingDatePresen
     weak var router: OnboardingDateRouting?
     weak var listener: OnboardingDateListener?
     private let useCase: OnboardingUseCase
+    private let disposeBag: DisposeBag = .init()
 
     init(presenter: OnboardingDatePresentable, useCase: OnboardingUseCase) {
         self.useCase = useCase
@@ -52,6 +51,20 @@ final class OnboardingDateInteractor: PresentableInteractor<OnboardingDatePresen
                 return owner.getWeekDays()
                     .map { OnboardingDateSelectCellModel(title: $0) }
             }
+        
+        input.prevStep
+            .asDriver(onErrorJustReturn: ())
+            .drive(onNext: { [weak self] in
+                self?.listener?.prevStep(.date)
+            })
+            .disposed(by: disposeBag)
+        
+        input.nextStep
+            .asDriver(onErrorJustReturn: ())
+            .drive(onNext: { [weak self] in
+                self?.listener?.nextStep(.date)
+            })
+            .disposed(by: disposeBag)
             
         return .init(cells: cells)
     }

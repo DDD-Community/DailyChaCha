@@ -11,7 +11,8 @@ import RxSwift
 
 protocol OnboardingRouting: Routing {
     func cleanupViews()
-    func route()
+    func routeNextStep(_ step: OnboardingStep)
+    func routePrevStep(_ step: OnboardingStep)
     // TODO: Declare methods the interactor can invoke to manage sub-tree via the router.
 }
 
@@ -40,8 +41,13 @@ final class OnboardingInteractor: Interactor, OnboardingInteractable {
         // TODO: Pause any business logic.
     }
     
-    func nextStep() {
-        print("nextStep")
-        router?.route()
+    func nextStep(_ step: OnboardingStep) {
+        print("nextStep", step)
+        router?.routeNextStep(step)
+    }
+    
+    func prevStep(_ step: OnboardingStep) {
+        print("prevStep", step)
+        router?.routePrevStep(step)
     }
 }

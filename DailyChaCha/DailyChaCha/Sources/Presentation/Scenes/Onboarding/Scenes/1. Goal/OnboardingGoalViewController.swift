@@ -52,7 +52,7 @@ final class OnboardingGoalViewController: UIViewController, OnboardingGoalPresen
         let input: OnboardingGoalInteractor.Input = .init(
             loadData: rx.viewWillAppear.map { _ in },
             modelSelected: modelSelected,
-            tapNextButton: nextButton.rx.tap.withLatestFrom(modelSelected)
+            nextStep: nextButton.rx.tap.withLatestFrom(modelSelected)
         )
             
         let output = listener.transform(input: input)

@@ -43,8 +43,8 @@ final class OnboardingDateViewController: UIViewController, OnboardingDatePresen
 
         let input: OnboardingDateInteractor.Input = .init(
             loadData: rx.viewWillAppear.map { _ in },
-            tapPrev: prevButton.rx.tap.asObservable(),
-            tapNext: nextButton.rx.tap.asObservable()
+            prevStep: prevButton.rx.tap.asObservable(),
+            nextStep: nextButton.rx.tap.asObservable()
         )
         
         let output = listener.transform(input: input)

@@ -8,6 +8,15 @@
 
 import RIBs
 
+enum OnboardingStep {
+    case start, goal, date, time, alert, welcome
+}
+
+protocol OnboardingStepable: AnyObject {
+    func nextStep(_ step: OnboardingStep)
+    func prevStep(_ step: OnboardingStep)
+}
+
 protocol OnboardingInteractable: Interactable, OnboardingGoalListener, OnboardingDateListener, OnboardingTimeListener, OnboardingAlertListener, OnboardingWelcomeListener {
     var router: OnboardingRouting? { get set }
     var listener: OnboardingListener? { get set }
@@ -68,47 +77,43 @@ final class OnboardingRouter: Router<OnboardingInteractable>, OnboardingRouting 
      */
     override func didLoad() {
         super.didLoad()
-        // 모든 빌더를 다 들고 있어야겠네.
-        routeToOnboarding()
+        routeNextStep(.start)
     }
     
-    func routeToOnboarding() {
-        detachCurrentChild()
-
-        let build = goalBuilder.build(withListener: interactor)
-        currentChild = build
-        attachChild(build)
-//        viewController.uiviewController.present(goal.viewControllable.uiviewController, animated: true)
-        
-//        let build = dateBuilder.build(withListener: interactor)
-//        currentChild = build
-//        attachChild(build)
-//        viewController.uiviewController.present(build.viewControllable.uiviewController, animated: true)
-        
-//        let build = timeBuilder.build(withListener: interactor)
-//        currentChild = build
-//        attachChild(build)
-//        viewController.uiviewController.present(build.viewControllable.uiviewController, animated: true)
-        
-//        let build = alertBuilder.build(withListener: interactor)
-//        currentChild = build
-//        attachChild(build)
-//        viewController.uiviewController.present(build.viewControllable.uiviewController, animated: true)
-        
-//        let build = welcomeBuilder.build(withListener: interactor)
-//        currentChild = build
-//        attachChild(build)
-        
-        viewController.presentNavigationViewController(root: build.viewControllable, state: .fullScreen)
-    }
-    
-    private func detachCurrentChild() {
-        if let currentChild = currentChild {
-            detachChild(currentChild)
+    func routeNextStep(_ step: OnboardingStep) {
+        print("routeStep", step)
+        switch step {
+        case .start:
+            let build = goalBuilder.build(withListener: interactor)
+            attachChild(build)
+            viewController.presentNavigationViewController(root: build.viewControllable, state: .fullScreen)
+            currentChild = build
+        case .goal:
+            let build = dateBuilder.build(withListener: interactor)
+            attachChild(build)
+            currentChild?.viewControllable.uiviewController.navigationController?.pushViewController(build.viewControllable.uiviewController, animated: true)
+            currentChild = build
+        case .date:
+            let build = timeBuilder.build(withListener: interactor)
+            attachChild(build)
+            currentChild?.viewControllable.uiviewController.navigationController?.pushViewController(build.viewControllable.uiviewController, animated: true)
+            currentChild = build
+        case .time:
+            let build = alertBuilder.build(withListener: interactor)
+            attachChild(build)
+            currentChild?.viewControllable.uiviewController.navigationController?.pushViewController(build.viewControllable.uiviewController, animated: true)
+            currentChild = build
+        case .alert:
+            let build = welcomeBuilder.build(withListener: interactor)
+            attachChild(build)
+            currentChild?.viewControllable.uiviewController.navigationController?.pushViewController(build.viewControllable.uiviewController, animated: true)
+            currentChild = build
+        case .welcome:
+            viewController.dismissViewController(viewController: viewController)
         }
     }
     
-    func route() {
-        print("route")
+    func routePrevStep(_ step: OnboardingStep) {
+//        currentChild?.viewControllable.uiviewController.navigationController?.popViewController(animated: true)
     }
 }

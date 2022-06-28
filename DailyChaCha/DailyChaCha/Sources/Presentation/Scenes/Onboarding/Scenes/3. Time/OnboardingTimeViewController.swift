@@ -48,7 +48,9 @@ final class OnboardingTimeViewController: UIViewController, OnboardingTimePresen
         stackView.addArrangedSubview(otherView)
 
         let input: OnboardingTimeInteractor.Input = .init(
-            loadData: rx.viewWillAppear.map { _ in }
+            loadData: rx.viewWillAppear.map { _ in },
+            prevStep: prevButton.rx.tap.asObservable(),
+            nextStep: nextButton.rx.tap.asObservable()
         )
         
         let output = listener.transform(input: input)

@@ -17,16 +17,14 @@ protocol OnboardingGoalPresentable: Presentable {
     var listener: OnboardingGoalPresentableListener? { get set }
 }
 
-protocol OnboardingGoalListener: AnyObject {
-    func nextStep()
-}
+protocol OnboardingGoalListener: OnboardingStepable { }
 
 final class OnboardingGoalInteractor: PresentableInteractor<OnboardingGoalPresentable>, OnboardingGoalInteractable, OnboardingGoalPresentableListener {
     
     struct Input {
         let loadData: Observable<Void>
         let modelSelected: Observable<OnboardingGoalSelectDatable>
-        let tapNextButton: Observable<OnboardingGoalSelectDatable>
+        let nextStep: Observable<OnboardingGoalSelectDatable>
     }
     
     struct Output {
@@ -65,13 +63,14 @@ final class OnboardingGoalInteractor: PresentableInteractor<OnboardingGoalPresen
                 .map { $0.title.count > 0 && $0.title.count <= 20 }
         )
         
-        input.tapNextButton
+        input.nextStep
             .withUnretained(self)
             .flatMap { owner, goal in
                 owner.useCase.goals(goal: goal.title)
             }
-            .subscribe(onNext: { [weak self] in
-                self?.listener?.nextStep()
+            .asDriver(onErrorJustReturn: ())
+            .drive(onNext: { [weak self] in
+                self?.listener?.nextStep(.goal)
             })
             .disposed(by: disposeBag)
             

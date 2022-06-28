@@ -33,7 +33,7 @@ final class MockOnboardingRepository: OnboardingRepositoriable {
     }
     // TODO: Onboarding.Goals 사용하기
     func goals() -> Single<[String]> {
-        .just(["테스트"])
+        .just(["MOCK:몸도 마음도 건강한 삶을 위해", "MOCK:루틴한 삶을 위해", "MOCK:멋진 몸매를 위해"])
     }
     
     func goals(goal: String) -> Single<Void> {

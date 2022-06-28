@@ -18,9 +18,7 @@ protocol OnboardingAlertPresentable: Presentable {
     // TODO: Declare methods the interactor can invoke the presenter to present data.
 }
 
-protocol OnboardingAlertListener: AnyObject {
-    // TODO: Declare methods the interactor can invoke to communicate with other RIBs.
-}
+protocol OnboardingAlertListener: OnboardingStepable { }
 
 final class OnboardingAlertInteractor: PresentableInteractor<OnboardingAlertPresentable>, OnboardingAlertInteractable, OnboardingAlertPresentableListener {
     
@@ -44,8 +42,9 @@ final class OnboardingAlertInteractor: PresentableInteractor<OnboardingAlertPres
     
     func transform(input: Input) -> Output {
         input.nextStep
-            .subscribe(onNext: {
-                print("nextStep", $0)
+            .asDriver(onErrorJustReturn: false)
+            .drive(onNext: { [weak self] _ in
+                self?.listener?.nextStep(.alert)
             })
             .disposed(by: disposeBag)
         

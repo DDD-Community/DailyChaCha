@@ -19,14 +19,14 @@ protocol OnboardingTimePresentable: Presentable {
     // TODO: Declare methods the interactor can invoke the presenter to present data.
 }
 
-protocol OnboardingTimeListener: AnyObject {
-    // TODO: Declare methods the interactor can invoke to communicate with other RIBs.
-}
+protocol OnboardingTimeListener: OnboardingStepable { }
 
 final class OnboardingTimeInteractor: PresentableInteractor<OnboardingTimePresentable>, OnboardingTimeInteractable, OnboardingTimePresentableListener {
     
     struct Input {
         let loadData: Observable<Void>
+        let prevStep: Observable<Void>
+        let nextStep: Observable<Void>
     }
     
     struct Output {
@@ -37,6 +37,7 @@ final class OnboardingTimeInteractor: PresentableInteractor<OnboardingTimePresen
     weak var router: OnboardingTimeRouting?
     weak var listener: OnboardingTimeListener?
     private let useCase: OnboardingUseCase
+    private let disposeBag: DisposeBag = .init()
 
     init(presenter: OnboardingTimePresentable, useCase: OnboardingUseCase) {
         self.useCase = useCase
@@ -63,6 +64,20 @@ final class OnboardingTimeInteractor: PresentableInteractor<OnboardingTimePresen
                 }
                 return text
             }
+        
+        input.prevStep
+            .asDriver(onErrorJustReturn: ())
+            .drive(onNext: { [weak self] in
+                self?.listener?.prevStep(.time)
+            })
+            .disposed(by: disposeBag)
+        
+        input.nextStep
+            .asDriver(onErrorJustReturn: ())
+            .drive(onNext: { [weak self] in
+                self?.listener?.nextStep(.time)
+            })
+            .disposed(by: disposeBag)
         
         return .init(
             dates: dates,
