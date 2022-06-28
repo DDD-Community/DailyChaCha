@@ -33,7 +33,7 @@ final class OnboardingDateBuilder: Builder<OnboardingDateDependency>, Onboarding
     func build(withListener listener: OnboardingDateListener) -> OnboardingDateRouting {
         _ = OnboardingDateComponent(dependency: dependency)
         let viewController = OnboardingDateViewController.create("Onboarding")
-        let interactor = OnboardingDateInteractor(presenter: viewController)
+        let interactor = OnboardingDateInteractor(presenter: viewController, useCase: OnboardingUseCase())
         interactor.listener = listener
         return OnboardingDateRouter(interactor: interactor, viewController: viewController)
     }

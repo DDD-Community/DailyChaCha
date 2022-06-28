@@ -11,9 +11,10 @@ import RxSwift
 import UIKit
 
 protocol OnboardingDatePresentableListener: AnyObject {
-    // TODO: Declare properties and methods that the view controller can invoke to perform
-    // business logic, such as signIn(). This protocol is implemented by the corresponding
-    // interactor class.
+    typealias Input = OnboardingDateInteractor.Input
+    typealias Output = OnboardingDateInteractor.Output
+    
+    func transfor(input: Input) -> Output
 }
 
 final class OnboardingDateViewController: UIViewController, OnboardingDatePresentable, OnboardingDateViewControllable {
@@ -27,24 +28,32 @@ final class OnboardingDateViewController: UIViewController, OnboardingDatePresen
     override func viewDidLoad() {
         super.viewDidLoad()
         setupLayout()
-        bind()
+        bind(listener: listener)
     }
     
     private func setupLayout() {
         titleView.configure(data: OnboardingTitleData(title: "날짜 정하기", subTitle: "무슨 요일에 운동할까요?"))
+        tableView.contentInset.bottom = Self.Constant.bottomInset
     }
     
-    private func bind() {
-        Observable.just(getWeekDays())
-            .map { $0.map { OnboardingDateSelectCellModel(title: $0) }}
-            .bind(to: tableView.rx.cells)
-            .disposed(by: disposeBag)
+    private func bind(listener: OnboardingDatePresentableListener?) {
+        guard let listener = listener else {
+            return
+        }
+
+        let input: OnboardingDateInteractor.Input = .init(
+            loadData: rx.viewWillAppear.map { _ in },
+            tapPrev: prevButton.rx.tap.asObservable(),
+            tapNext: nextButton.rx.tap.asObservable()
+        )
+        
+        let output = listener.transfor(input: input)
+        output.cells.bind(to: tableView.rx.cells).disposed(by: disposeBag)
     }
-    
-    private func getWeekDays() -> [String] {
-        let fmt = DateFormatter()
-        let firstWeekday = 2 // -> Monday
-        let symbols = fmt.weekdaySymbols!
-        return Array(symbols[firstWeekday-1..<symbols.count]) + symbols[0..<firstWeekday-1]
+}
+
+extension OnboardingDateViewController {
+    struct Constant {
+        static let bottomInset: CGFloat = 100
     }
 }

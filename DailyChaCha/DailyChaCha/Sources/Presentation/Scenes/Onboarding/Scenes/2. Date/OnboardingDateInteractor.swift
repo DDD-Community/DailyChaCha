@@ -8,6 +8,7 @@
 
 import RIBs
 import RxSwift
+import Foundation
 
 protocol OnboardingDateRouting: ViewableRouting {
     // TODO: Declare methods the interactor can invoke to manage sub-tree via the router.
@@ -23,24 +24,42 @@ protocol OnboardingDateListener: AnyObject {
 }
 
 final class OnboardingDateInteractor: PresentableInteractor<OnboardingDatePresentable>, OnboardingDateInteractable, OnboardingDatePresentableListener {
+    
+    struct Input {
+        let loadData: Observable<Void>
+        let tapPrev: Observable<Void>
+        let tapNext: Observable<Void>
+    }
+    
+    struct Output {
+        let cells: Observable<[CellModel]>
+    }
 
     weak var router: OnboardingDateRouting?
     weak var listener: OnboardingDateListener?
+    private let useCase: OnboardingUseCase
 
-    // TODO: Add additional dependencies to constructor. Do not perform any logic
-    // in constructor.
-    override init(presenter: OnboardingDatePresentable) {
+    init(presenter: OnboardingDatePresentable, useCase: OnboardingUseCase) {
+        self.useCase = useCase
         super.init(presenter: presenter)
         presenter.listener = self
     }
 
-    override func didBecomeActive() {
-        super.didBecomeActive()
-        // TODO: Implement business logic here.
+    func transfor(input: Input) -> Output {
+        let cells: Observable<[CellModel]> = input.loadData
+            .withUnretained(self)
+            .map { (owner, _ ) in
+                return owner.getWeekDays()
+                    .map { OnboardingDateSelectCellModel(title: $0) }
+            }
+            
+        return .init(cells: cells)
     }
-
-    override func willResignActive() {
-        super.willResignActive()
-        // TODO: Pause any business logic.
+    
+    private func getWeekDays() -> [String] {
+        let fmt = DateFormatter()
+        let firstWeekday = 2 // -> Monday
+        let symbols = fmt.weekdaySymbols!
+        return Array(symbols[firstWeekday-1..<symbols.count]) + symbols[0..<firstWeekday-1]
     }
 }
