@@ -1,5 +1,5 @@
 //
-//  CellModel.swift
+//  CellModelable.swift
 //  DailyChaCha
 //
 //  Created by moon.kwon on 2022/06/24.
