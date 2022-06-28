@@ -11,9 +11,10 @@ import RxSwift
 import UIKit
 
 protocol OnboardingAlertPresentableListener: AnyObject {
-    // TODO: Declare properties and methods that the view controller can invoke to perform
-    // business logic, such as signIn(). This protocol is implemented by the corresponding
-    // interactor class.
+    typealias Input = OnboardingAlertInteractor.Input
+    typealias Output = OnboardingAlertInteractor.Output
+    
+    func transfor(input: Input) -> Output
 }
 
 final class OnboardingAlertViewController: UIViewController, OnboardingAlertPresentable, OnboardingAlertViewControllable {
@@ -27,16 +28,29 @@ final class OnboardingAlertViewController: UIViewController, OnboardingAlertPres
     override func viewDidLoad() {
         super.viewDidLoad()
         setupLayout()
-        bind()
+        bind(listener: listener)
     }
     
     private func setupLayout() {
         titleView.configure(data: OnboardingTitleData(title: "도움 받기", subTitle: "알림을 설정하고 목표를 달성하세요!"))
     }
     
-    private func bind() {
-        allowButton.rx.tap
-            .subscribe(onNext: requestNotification)
+    private func bind(listener: OnboardingAlertPresentableListener?) {
+        guard let listener = listener else {
+            return
+        }
+
+        let input: OnboardingAlertInteractor.Input = .init(
+            tapAllow: allowButton.rx.tap.asObservable()
+        )
+        
+        skipButton.rx.tap.map { true }.bind(to: input.nextStep).disposed(by: disposeBag)
+        let output = listener.transfor(input: input)
+        
+        output.requestPermission
+            .withUnretained(self)
+            .flatMap { (owner, _) in owner.permission }
+            .bind(to: input.nextStep)
             .disposed(by: disposeBag)
     }
     
@@ -55,9 +69,19 @@ final class OnboardingAlertViewController: UIViewController, OnboardingAlertPres
         }
     }
     
-    private func requestNotification() {
-        UNUserNotificationCenter.current().requestAuthorization(options: [.alert,.sound,.badge], completionHandler: {didAllow,Error in
-            print("next 화면")
-        })
+    var permission: Observable<Bool> {
+        return .create { obs in
+            UNUserNotificationCenter.current().requestAuthorization(options: [.alert,.sound,.badge], completionHandler: { didAllow, error in
+                if let error = error {
+                    obs.onError(error)
+                } else {
+                    obs.onNext(didAllow)
+                }
+                
+                obs.onCompleted()
+            })
+            
+            return Disposables.create()
+        }
     }
 }

@@ -23,24 +23,32 @@ protocol OnboardingAlertListener: AnyObject {
 }
 
 final class OnboardingAlertInteractor: PresentableInteractor<OnboardingAlertPresentable>, OnboardingAlertInteractable, OnboardingAlertPresentableListener {
+    
+    struct Input {
+        let tapAllow: Observable<Void>
+        let nextStep: PublishSubject<Bool> = .init()
+    }
+    
+    struct Output {
+        let requestPermission: Observable<Void>
+    }
 
     weak var router: OnboardingAlertRouting?
     weak var listener: OnboardingAlertListener?
+    private let disposeBag: DisposeBag = .init()
 
-    // TODO: Add additional dependencies to constructor. Do not perform any logic
-    // in constructor.
     override init(presenter: OnboardingAlertPresentable) {
         super.init(presenter: presenter)
         presenter.listener = self
     }
-
-    override func didBecomeActive() {
-        super.didBecomeActive()
-        // TODO: Implement business logic here.
-    }
-
-    override func willResignActive() {
-        super.willResignActive()
-        // TODO: Pause any business logic.
+    
+    func transfor(input: Input) -> Output {
+        input.nextStep
+            .subscribe(onNext: {
+                print("nextStep", $0)
+            })
+            .disposed(by: disposeBag)
+        
+        return .init(requestPermission: input.tapAllow)
     }
 }
