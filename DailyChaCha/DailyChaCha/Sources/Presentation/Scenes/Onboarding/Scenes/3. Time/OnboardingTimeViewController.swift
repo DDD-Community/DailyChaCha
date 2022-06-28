@@ -66,7 +66,14 @@ final class OnboardingTimeViewController: UIViewController, OnboardingTimePresen
                     
                     view.selected
                         .subscribe(onNext: { state in
-                            // TODO: 나 빼고 나머진 normal 으로 변경해야함...
+                            for separationView in separationViews {
+                                if view == separationView {
+                                    separationView.state = .selected
+                                } else {
+                                    separationView.state = .normal
+                                }
+                            }
+                            
                             switch state {
                             case .selected:
                                 startView.state = .disabled
