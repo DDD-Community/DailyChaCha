@@ -9,6 +9,7 @@
 import RIBs
 import RxSwift
 import RxCocoa
+import Foundation
 
 protocol OnboardingGoalRouting: ViewableRouting {
 }
@@ -23,6 +24,7 @@ final class OnboardingGoalInteractor: PresentableInteractor<OnboardingGoalPresen
     
     struct Input {
         let loadData: Observable<Void>
+        let itemSelected: Observable<IndexPath>
         let modelSelected: Observable<OnboardingGoalSelectDatable>
         let nextStep: Observable<OnboardingGoalSelectDatable>
     }
@@ -60,7 +62,13 @@ final class OnboardingGoalInteractor: PresentableInteractor<OnboardingGoalPresen
         let isEnabledNextButton = Observable.merge(
             insideLimit,
             input.modelSelected
-                .map { $0.title.count > 0 && $0.title.count <= 20 }
+                .map {
+                    if $0.isWriteMode {
+                        return $0.title.count > 0 && $0.title.count <= 20
+                    } else {
+                        return true
+                    }
+                }
         )
         
         input.nextStep

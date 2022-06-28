@@ -8,7 +8,7 @@
 
 import UIKit
 
-final class OnboardingDateSelectCellModel: CellModel, OnboardingGoalSelectDatable {
+final class OnboardingDateSelectCellModel: CellModel {
     var title: String
     
     init(title: String) {

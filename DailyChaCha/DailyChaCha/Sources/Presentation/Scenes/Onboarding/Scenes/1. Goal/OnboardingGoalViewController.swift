@@ -51,6 +51,7 @@ final class OnboardingGoalViewController: UIViewController, OnboardingGoalPresen
         
         let input: OnboardingGoalInteractor.Input = .init(
             loadData: rx.viewWillAppear.map { _ in },
+            itemSelected: tableView.rx.itemSelected.asObservable(),
             modelSelected: modelSelected,
             nextStep: nextButton.rx.tap.withLatestFrom(modelSelected)
         )

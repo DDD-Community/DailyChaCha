@@ -10,10 +10,12 @@ import UIKit
 
 protocol OnboardingGoalSelectDatable {
     var title: String { get }
+    var isWriteMode: Bool { get }
 }
 
 final class OnboardingGoalSelectCellModel: CellModel, OnboardingGoalSelectDatable {
     var title: String
+    var isWriteMode: Bool = false
     
     init(title: String) {
         self.title = title

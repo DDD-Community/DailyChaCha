@@ -16,6 +16,7 @@ protocol OnboardingGoalWriteCellDelegate: AnyObject {
 final class OnboardingGoalWriteCellModel: CellModel, OnboardingGoalSelectDatable {
     fileprivate let textLimit: Int
     var title: String = ""
+    var isWriteMode: Bool = true
     fileprivate weak var delegate: OnboardingGoalWriteCellDelegate?
     
     init(limit: Int, delegate: OnboardingGoalWriteCellDelegate?) {
