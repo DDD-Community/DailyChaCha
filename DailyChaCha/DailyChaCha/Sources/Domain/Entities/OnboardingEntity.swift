@@ -19,6 +19,14 @@ extension Onboarding {
     struct Goal: Codable {
         let goal: String
     }
+    
+    struct Status: Codable {
+        let isOnboardingCompleted: Bool
+
+        enum CodingKeys: String, CodingKey {
+            case isOnboardingCompleted = "is_onboarding_completed"
+        }
+    }
 
     typealias Goals = [Goal]
 }

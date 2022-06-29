@@ -70,6 +70,8 @@ extension OnboardingService: TargetType {
     
     var sampleData: Data {
         switch self {
+        case .status:
+            return "{\"is_onboarding_completed\":false}".data(using: String.Encoding.utf8)!
         case .getGoals:
             return loadMock(name: "Mock.Onboarding.goals")
         default:

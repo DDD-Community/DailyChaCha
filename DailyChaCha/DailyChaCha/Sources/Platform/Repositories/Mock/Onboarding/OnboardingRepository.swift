@@ -13,7 +13,7 @@ import RxMoya
 
 protocol OnboardingRepositoriable {
     /// GET : 온보딩 상태 API, 유저의 온보딩 여부를 반환합니다.
-    func status() -> Single<Void>
+    func status() -> Single<Onboarding.Status>
     /// GET : 결심하기 목록 API, 결심하기에서 사용할 목록들을 반환합니다.
     func goals() -> Single<Onboarding.Goals>
     /// POST : 결심하기 생성 API, 유저의 온보딩 첫번째 - 결심을 생성하는 API입니다.
@@ -26,12 +26,21 @@ protocol OnboardingRepositoriable {
     func dates(exerciseDate: Onboarding.ExerciseDate) -> Single<Void>
 }
 
-final class MockOnboardingRepository: OnboardingRepositoriable {
+final class OnboardingRepository: OnboardingRepositoriable {
     
-    private let provider: MoyaProvider<OnboardingService> = .init(stubClosure: MoyaProvider.immediatelyStub)
+    private let provider: MoyaProvider<OnboardingService>
     
-    func status() -> Single<Void> {
-        .just(())
+    init(isMock: Bool = false) {
+        if isMock {
+            provider = .init(stubClosure: MoyaProvider.immediatelyStub)
+        } else {
+            provider = .init()
+        }
+    }
+    
+    func status() -> Single<Onboarding.Status> {
+        return provider.rx.request(.status)
+            .map(Onboarding.Status.self)
     }
     
     func goals() -> Single<Onboarding.Goals> {

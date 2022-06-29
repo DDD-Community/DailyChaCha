@@ -12,13 +12,16 @@ import RxSwift
 struct OnboardingUseCase {
     private let onboardingRepository: OnboardingRepositoriable
     
-    // TODO: Mock -> 진짜 데이터로 변경 필요.
-    init(onboardingRepository: OnboardingRepositoriable = MockOnboardingRepository()) {
+    init(onboardingRepository: OnboardingRepositoriable = OnboardingRepository(isMock: true)) {
         self.onboardingRepository = onboardingRepository
     }
 }
 
 extension OnboardingUseCase {
+    
+    func status() -> Single<Onboarding.Status> {
+        onboardingRepository.status()
+    }
     // TODO: Error 처리는 어떻게 할지... catchError 
     func goals() -> Single<Onboarding.Goals> {
         onboardingRepository.goals()
