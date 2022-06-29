@@ -16,7 +16,9 @@ extension Onboarding {
         let time: Int
     }
     
-    struct Goals: Codable {
+    struct Goal: Codable {
         let goal: String
     }
+
+    typealias Goals = [Goal]
 }

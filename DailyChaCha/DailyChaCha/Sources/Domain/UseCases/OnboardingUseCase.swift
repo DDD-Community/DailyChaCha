@@ -20,7 +20,7 @@ struct OnboardingUseCase {
 
 extension OnboardingUseCase {
     // TODO: Error 처리는 어떻게 할지... catchError 
-    func goals() -> Single<[String]> {
+    func goals() -> Single<Onboarding.Goals> {
         onboardingRepository.goals()
     }
     

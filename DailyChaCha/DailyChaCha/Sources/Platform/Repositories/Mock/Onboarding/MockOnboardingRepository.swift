@@ -8,12 +8,14 @@
 
 import Foundation
 import RxSwift
+import Moya
+import RxMoya
 
 protocol OnboardingRepositoriable {
     /// GET : 온보딩 상태 API, 유저의 온보딩 여부를 반환합니다.
     func status() -> Single<Void>
     /// GET : 결심하기 목록 API, 결심하기에서 사용할 목록들을 반환합니다.
-    func goals() -> Single<[String]>
+    func goals() -> Single<Onboarding.Goals>
     /// POST : 결심하기 생성 API, 유저의 온보딩 첫번째 - 결심을 생성하는 API입니다.
     func goals(goal: String) -> Single<Void>
     /// POST : 날짜정하기 생성 API, 유저의 온보딩 두번째 - 날짜를 생성하는 API입니다.
@@ -26,14 +28,15 @@ protocol OnboardingRepositoriable {
 
 final class MockOnboardingRepository: OnboardingRepositoriable {
     
-//    private let provider = MoyaProvider<>
+    private let provider: MoyaProvider<OnboardingService> = .init(stubClosure: MoyaProvider.immediatelyStub)
     
     func status() -> Single<Void> {
         .just(())
     }
-    // TODO: Onboarding.Goals 사용하기
-    func goals() -> Single<[String]> {
-        .just(["MOCK:몸도 마음도 건강한 삶을 위해", "MOCK:루틴한 삶을 위해", "MOCK:멋진 몸매를 위해"])
+    
+    func goals() -> Single<Onboarding.Goals> {
+        return provider.rx.request(.getGoals)
+            .map(Onboarding.Goals.self)
     }
     
     func goals(goal: String) -> Single<Void> {

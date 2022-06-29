@@ -54,7 +54,7 @@ final class OnboardingGoalInteractor: PresentableInteractor<OnboardingGoalPresen
                 owner.useCase.goals()
             }
             .map { [weak self] in
-                var cells: [CellModel] = $0.map { OnboardingGoalSelectCellModel(title: $0) }
+                var cells: [CellModel] = $0.map { OnboardingGoalSelectCellModel(title: $0.goal) }
                 cells.append(OnboardingGoalWriteCellModel(limit: Self.Constant.WriteLimit, delegate: self))
                 return cells
             }
