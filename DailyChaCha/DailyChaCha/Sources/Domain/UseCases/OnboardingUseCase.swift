@@ -34,5 +34,9 @@ extension OnboardingUseCase {
     func dates() -> Single<[Int]> {
         onboardingRepository.dates()
     }
+    
+    func dates(days: [Int]) -> Single<Void> {
+        onboardingRepository.dates(days: days)
+    }
 }
 

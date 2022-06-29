@@ -34,21 +34,29 @@ final class OnboardingDateViewController: UIViewController, OnboardingDatePresen
     private func setupLayout() {
         titleView.configure(data: OnboardingTitleData(title: "날짜 정하기", subTitle: "무슨 요일에 운동할까요?"))
         tableView.contentInset.bottom = Self.Constant.bottomInset
+        nextButton.isEnabled = false
     }
     
     private func bind(listener: OnboardingDatePresentableListener?) {
         guard let listener = listener else {
             return
         }
+        
+        let nextStep = nextButton.rx.tap
+            .map { [tableView] in
+                tableView?.indexPathsForSelectedRows?.map { $0.row } ?? []
+            }
 
         let input: OnboardingDateInteractor.Input = .init(
             loadData: rx.viewWillAppear.map { _ in },
             prevStep: prevButton.rx.tap.asObservable(),
-            nextStep: nextButton.rx.tap.asObservable()
+            nextStep: nextStep,
+            selectedRows: tableView.rx.indexPathsForSelectedRows.asObservable()
         )
         
         let output = listener.transform(input: input)
         output.cells.bind(to: tableView.rx.cells).disposed(by: disposeBag)
+        output.isEnabledNextButton.bind(to: nextButton.rx.isEnabled).disposed(by: disposeBag)
     }
 }
 

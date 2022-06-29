@@ -19,7 +19,7 @@ protocol OnboardingRepositoriable {
     /// POST : 결심하기 생성 API, 유저의 온보딩 첫번째 - 결심을 생성하는 API입니다.
     func goals(goal: String) -> Single<Void>
     /// POST : 날짜정하기 생성 API, 유저의 온보딩 두번째 - 날짜를 생성하는 API입니다.
-    func dates(weekday: String) -> Single<Void>
+    func dates(days: [Int]) -> Single<Void>
     /// GET : 온보딩 운동일정 가져오는 API, 유저의 온보딩 여부를 반환합니다.
     func dates() -> Single<[Int]>
     /// PUT : 시간정하기 API,  유저의 온보딩 세번째 - 시간을 생성하는 API입니다.
@@ -49,11 +49,13 @@ final class OnboardingRepository: OnboardingRepositoriable {
     }
     
     func goals(goal: String) -> Single<Void> {
-        .just(())
+        return provider.rx.request(.setGoals(goal: goal))
+            .map { _ in }
     }
     
-    func dates(weekday: String) -> Single<Void> {
-        .just(())
+    func dates(days: [Int]) -> Single<Void> {
+        return provider.rx.request(.setDates(days: days))
+            .map { _ in }
     }
     
     func dates() -> Single<[Int]> {

@@ -26,11 +26,13 @@ final class OnboardingDateInteractor: PresentableInteractor<OnboardingDatePresen
     struct Input {
         let loadData: Observable<Void>
         let prevStep: Observable<Void>
-        let nextStep: Observable<Void>
+        let nextStep: Observable<[Int]>
+        let selectedRows: Observable<[IndexPath]?>
     }
     
     struct Output {
         let cells: Observable<[CellModel]>
+        let isEnabledNextButton: Observable<Bool>
     }
 
     weak var router: OnboardingDateRouting?
@@ -60,13 +62,20 @@ final class OnboardingDateInteractor: PresentableInteractor<OnboardingDatePresen
             .disposed(by: disposeBag)
         
         input.nextStep
+            .withUnretained(self)
+            .flatMap { owner, days in
+                owner.useCase.dates(days: days)
+            }
             .asDriver(onErrorJustReturn: ())
             .drive(onNext: { [weak self] in
                 self?.listener?.nextStep(.date)
             })
             .disposed(by: disposeBag)
             
-        return .init(cells: cells)
+        return .init(
+            cells: cells,
+            isEnabledNextButton: input.selectedRows.map { $0?.isEmpty == false }
+        )
     }
     
     private func getWeekDays() -> [String] {

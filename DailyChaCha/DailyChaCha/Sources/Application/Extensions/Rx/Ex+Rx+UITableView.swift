@@ -40,5 +40,15 @@ extension Reactive where Base: UITableView {
             return cell
         })
     }
+    
+    public var indexPathsForSelectedRows: ControlEvent<[IndexPath]?> {
+        let rows = Observable.merge(
+            itemSelected.asObservable(),
+            itemDeselected.asObservable()
+        )
+            .map { _ in base.indexPathsForSelectedRows }
+        
+        return ControlEvent(events: rows)
+    }
 }
 
