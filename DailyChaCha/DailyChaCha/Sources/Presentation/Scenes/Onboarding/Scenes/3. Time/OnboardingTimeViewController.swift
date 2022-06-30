@@ -9,6 +9,7 @@
 import RIBs
 import RxSwift
 import UIKit
+import RxKeyboard
 
 protocol OnboardingTimePresentableListener: AnyObject {
     typealias Input = OnboardingTimeInteractor.Input
@@ -18,6 +19,7 @@ protocol OnboardingTimePresentableListener: AnyObject {
 }
 
 final class OnboardingTimeViewController: UIViewController, OnboardingTimePresentable, OnboardingTimeViewControllable {
+    @IBOutlet private weak var scrollView: UIScrollView!
     @IBOutlet private weak var titleView: OnboardingTitleView!
     @IBOutlet private weak var headerLabel: UILabel!
     @IBOutlet private weak var stackView: UIStackView!
@@ -41,8 +43,14 @@ final class OnboardingTimeViewController: UIViewController, OnboardingTimePresen
             return
         }
         
-        let time: String = "19:00"
-        let startView = OnboardingTimeSelectView(title: "운동 시작 시간", initTime: time)
+        RxKeyboard.instance.frame
+            .drive(onNext: { [scrollView] height in
+                print(height)
+//                scrollView?.contentOffset.y += height
+            })
+            .disposed(by: disposeBag)
+        
+        let startView = OnboardingTimeSelectView(title: "운동 시작 시간")
         let otherView = OnboardingTimeOtherView()
         stackView.addArrangedSubview(startView)
         stackView.addArrangedSubview(otherView)
@@ -61,7 +69,7 @@ final class OnboardingTimeViewController: UIViewController, OnboardingTimePresen
             .withUnretained(self)
             .subscribe(onNext: { (owner, dates) in
                 for date in dates {
-                    let view: OnboardingTimeSelectView = .init(title: date, initTime: time)
+                    let view: OnboardingTimeSelectView = .init(title: date)
                     separationViews.append(view)
                     owner.stackView.addArrangedSubview(view)
                     view.isHidden = true

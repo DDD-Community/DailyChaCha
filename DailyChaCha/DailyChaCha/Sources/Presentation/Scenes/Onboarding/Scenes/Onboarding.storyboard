@@ -228,7 +228,7 @@
                                     <constraint firstAttribute="height" constant="73" id="ZW4-6D-HhX"/>
                                 </constraints>
                             </view>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" allowsMultipleSelection="YES" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="xS8-w1-vZn">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="none" allowsMultipleSelection="YES" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="xS8-w1-vZn">
                                 <rect key="frame" x="0.0" y="187" width="375" height="591"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <view key="tableFooterView" contentMode="scaleToFill" id="Ujn-ph-ZP9">
@@ -690,7 +690,7 @@
                                     <constraint firstAttribute="trailing" secondItem="z8F-Cj-B9h" secondAttribute="trailing" constant="20" id="x8m-vV-1d0"/>
                                 </constraints>
                             </view>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FrS-lX-yRL">
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FrS-lX-yRL">
                                 <rect key="frame" x="0.0" y="202" width="375" height="498"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" placeholderIntrinsicWidth="375" placeholderIntrinsicHeight="600" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="HkS-Ji-6gp">
@@ -771,6 +771,7 @@
                         <outlet property="headerLabel" destination="F2t-Wi-5UE" id="3YS-ti-JYj"/>
                         <outlet property="nextButton" destination="7nl-Ch-7Ci" id="cgK-gp-p2V"/>
                         <outlet property="prevButton" destination="RpP-wl-4QE" id="FN1-Kf-MkI"/>
+                        <outlet property="scrollView" destination="FrS-lX-yRL" id="CO6-iJ-wE5"/>
                         <outlet property="stackView" destination="HkS-Ji-6gp" id="0gO-vy-5wt"/>
                         <outlet property="titleView" destination="YvB-oj-NQL" id="QQG-4v-NAo"/>
                     </connections>

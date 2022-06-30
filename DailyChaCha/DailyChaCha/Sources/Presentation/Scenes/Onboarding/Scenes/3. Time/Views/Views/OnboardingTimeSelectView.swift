@@ -21,7 +21,7 @@ final class OnboardingTimeSelectView: DesignView, OnboardingTimeSelectable {
     @IBOutlet private weak var titleLabel: UILabel!
     @IBOutlet private weak var timeLabel: UILabel!
     @IBOutlet private weak var timeButton: UIButton!
-    @IBOutlet private weak var selectButton: UIButton!
+    @IBOutlet private weak var selectButton: PickerButton!
     private let disposeBag: DisposeBag = .init()
     public var selected: PublishSubject<OnboardingTimeState> = .init()
     
@@ -38,10 +38,16 @@ final class OnboardingTimeSelectView: DesignView, OnboardingTimeSelectable {
         }
     }
     
-    init(title: String, initTime: String) {
+    init(title: String) {
         super.init(frame: .zero)
         titleLabel.text = title
-        timeLabel.text = initTime
+        
+        let now = Date()
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "HH:mm"
+        let current = dateFormatter.string(from: now)
+        timeLabel.text = current
+        selectButton.pickerView.setDate(now, animated: false)
     }
     
     public required init?(coder aDecoder: NSCoder) {
@@ -52,15 +58,17 @@ final class OnboardingTimeSelectView: DesignView, OnboardingTimeSelectable {
         selectButton.rx.tap
             .withUnretained(self)
             .subscribe(onNext: { (owner, _ ) in
-                switch owner.state {
-                case .normal:
-                    owner.state = .selected
-                case .selected:
-                    owner.state = .normal
-                case .disabled:
-                    owner.state = .selected
-                }
+                owner.state = .selected
                 owner.selected.onNext(owner.state)
+            })
+            .disposed(by: disposeBag)
+        
+        selectButton.rx.selected
+            .subscribe(onNext: { [weak self] in
+                let formatter = DateFormatter()
+                formatter.dateFormat = "HH:mm"
+                self?.timeLabel.text = formatter.string(from: $0)
+                self?.state = .normal
             })
             .disposed(by: disposeBag)
     }
