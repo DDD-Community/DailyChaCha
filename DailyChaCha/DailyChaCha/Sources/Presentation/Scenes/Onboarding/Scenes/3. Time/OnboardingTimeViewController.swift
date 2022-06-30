@@ -43,10 +43,10 @@ final class OnboardingTimeViewController: UIViewController, OnboardingTimePresen
             return
         }
         
-        RxKeyboard.instance.frame
+        RxKeyboard.instance.visibleHeight
             .drive(onNext: { [scrollView] height in
-                print(height)
-//                scrollView?.contentOffset.y += height
+                scrollView?.contentInset.bottom = height
+                scrollView?.scrollToBottom()
             })
             .disposed(by: disposeBag)
         

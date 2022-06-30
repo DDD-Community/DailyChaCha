@@ -43,11 +43,15 @@ final class OnboardingTimeSelectView: DesignView, OnboardingTimeSelectable {
         titleLabel.text = title
         
         let now = Date()
+        let hour = Calendar.current.dateComponents([.hour], from: now)
+        
+        if let removeMinute = Calendar.current.date(from: hour) {
+            selectButton.pickerView.setDate(removeMinute, animated: false)
+        }
+        
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "HH:mm"
-        let current = dateFormatter.string(from: now)
-        timeLabel.text = current
-        selectButton.pickerView.setDate(now, animated: false)
+        dateFormatter.dateFormat = "HH:00"
+        timeLabel.text = dateFormatter.string(from: now)
     }
     
     public required init?(coder aDecoder: NSCoder) {
