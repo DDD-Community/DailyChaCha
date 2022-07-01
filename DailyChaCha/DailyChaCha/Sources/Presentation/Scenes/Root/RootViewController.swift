@@ -37,3 +37,7 @@ final class RootViewController: UIViewController,
     present(viewController.uiviewController, animated: false)
   }
 }
+
+extension RootViewController: EditRoutineViewControllable {
+    
+}
