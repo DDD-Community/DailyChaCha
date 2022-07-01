@@ -17,6 +17,10 @@ protocol EditStartPresentableListener: AnyObject {
 }
 
 final class EditStartViewController: UIViewController, EditStartPresentable, EditStartViewControllable {
-
+    @IBOutlet private weak var naviBar: NaviCloseBar!
     weak var listener: EditStartPresentableListener?
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+    }
 }
