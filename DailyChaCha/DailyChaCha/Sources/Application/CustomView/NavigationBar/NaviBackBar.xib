@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="19529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19519"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="NaviBackBar" customModule="DailyChaCha" customModuleProvider="target">
+            <connections>
+                <outlet property="backButton" destination="tWh-lu-Ryg" id="F7e-BP-Iqo"/>
+                <outlet property="rightButton" destination="yBH-bL-RZN" id="y1g-L0-Af7"/>
+                <outlet property="titleLabel" destination="MwN-Yt-5AR" id="C8U-6N-sah"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="a5c-ai-i85">
+            <rect key="frame" x="0.0" y="0.0" width="395" height="56"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tWh-lu-Ryg" userLabel="Left Button">
+                    <rect key="frame" x="0.0" y="0.0" width="60" height="56"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="56" id="dkG-Hi-PbK"/>
+                        <constraint firstAttribute="width" constant="60" id="pFB-7Y-P84"/>
+                    </constraints>
+                    <state key="normal" image="icon_back"/>
+                </button>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="제목이 길어진다제목이 길어진다제목이 길어진다제목이 길어진다" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MwN-Yt-5AR">
+                    <rect key="frame" x="60" y="16" width="275" height="24"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="24" id="2Hn-rk-JF4"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yBH-bL-RZN" userLabel="Right Button">
+                    <rect key="frame" x="335" y="0.0" width="60" height="56"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="60" id="NVt-9i-2on"/>
+                        <constraint firstAttribute="height" constant="56" id="oro-Vv-tZZ"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" weight="medium" pointSize="18"/>
+                    <state key="normal" title="저장">
+                        <color key="titleColor" name="primary_900"/>
+                    </state>
+                </button>
+            </subviews>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="yBH-bL-RZN" secondAttribute="trailing" id="0y9-YV-wGw"/>
+                <constraint firstItem="tWh-lu-Ryg" firstAttribute="centerY" secondItem="MwN-Yt-5AR" secondAttribute="centerY" id="4lt-4P-O6K"/>
+                <constraint firstItem="MwN-Yt-5AR" firstAttribute="centerX" secondItem="a5c-ai-i85" secondAttribute="centerX" id="5pt-dd-zJX"/>
+                <constraint firstAttribute="bottom" secondItem="tWh-lu-Ryg" secondAttribute="bottom" id="CnO-w1-f7G"/>
+                <constraint firstItem="yBH-bL-RZN" firstAttribute="top" secondItem="a5c-ai-i85" secondAttribute="top" id="VOv-ov-Xu5"/>
+                <constraint firstItem="yBH-bL-RZN" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="MwN-Yt-5AR" secondAttribute="leading" id="YiG-b6-LeJ"/>
+                <constraint firstAttribute="bottom" secondItem="yBH-bL-RZN" secondAttribute="bottom" id="ewg-UI-8T1"/>
+                <constraint firstItem="MwN-Yt-5AR" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="tWh-lu-Ryg" secondAttribute="trailing" id="fDs-zV-mA8"/>
+                <constraint firstItem="tWh-lu-Ryg" firstAttribute="leading" secondItem="a5c-ai-i85" secondAttribute="leading" id="gLd-j4-0x9"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <point key="canvasLocation" x="123.91304347826087" y="414.50892857142856"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="icon_back" width="24" height="24"/>
+        <namedColor name="primary_900">
+            <color red="1" green="0.41568627450980394" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+    </resources>
+</document>
