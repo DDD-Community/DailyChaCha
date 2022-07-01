@@ -18,10 +18,12 @@ class BaseProjectFactory: ProjectFactory {
     let dependencies: [TargetDependency] = [
         .package(product: "RIBs"),
         .package(product: "Moya"),
+        .package(product: "RxMoya"),
         .package(product: "SnapKit"),
         .package(product: "SwiftyBeaver"),
         .package(product: "RxDataSources"),
-        .package(product: "ReactorKit")
+        .package(product: "ReactorKit"),
+        .package(product: "Then")
     ]
     
     let packages: [Package] = [
@@ -31,7 +33,8 @@ class BaseProjectFactory: ProjectFactory {
         .remote(url: "https://github.com/SwiftyBeaver/SwiftyBeaver.git", requirement: .upToNextMinor(from: "1.9.0")),
         .remote(url: "https://github.com/ReactiveX/RxSwift.git", requirement: .upToNextMinor(from: "6.5.0")),
         .remote(url: "https://github.com/RxSwiftCommunity/RxDataSources.git", requirement: .upToNextMinor(from: "5.0.0")),
-        .remote(url: "https://github.com/ReactorKit/ReactorKit.git", requirement: .upToNextMinor(from: "3.2.0"))
+        .remote(url: "https://github.com/ReactorKit/ReactorKit.git", requirement: .upToNextMinor(from: "3.2.0")),
+        .remote(url: "https://github.com/devxoul/Then.git", requirement: .upToNextMinor(from: "3.0.0"))
     ]
 
     func generate() -> [Target] {
@@ -50,6 +53,7 @@ class BaseProjectFactory: ProjectFactory {
                     "\(projectName)/\(projectName)/**/*.xcassets",
                     "\(projectName)/\(projectName)/**/*.json",
                 ],
+                entitlements: "\(projectName)/\(projectName).entitlements",
                 dependencies: dependencies
             ),
 

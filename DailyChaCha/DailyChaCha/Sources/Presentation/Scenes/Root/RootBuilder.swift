@@ -12,9 +12,12 @@ import RIBs
 
 extension EmptyComponent: RootDependency { }
 
-protocol RootDependency: Dependency { }
+protocol RootDependency: Dependency {
+}
 
-final class RootComponent: Component<RootDependency> {
+final class RootComponent: Component<RootDependency>,
+  LoginDependency
+{
   
   override init(dependency: RootDependency) {
     super.init(dependency: dependency)
@@ -41,9 +44,12 @@ final class RootBuilder: Builder<RootDependency>, RootBuildable {
     
     let interactor = RootInteractor(presenter: rootViewController)
     
+    let loginBuilder = LoginBuilder(dependency: component)
+    
     return RootRouter(
       interactor: interactor,
-      viewController: rootViewController
+      viewController: rootViewController,
+      loginBuilder: loginBuilder
     )
   }
 }
