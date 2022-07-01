@@ -37,7 +37,7 @@ final class LoginViewController:
   
   private let imageView = UIImageView().then {
     $0.image = UIImage(named: "img_bg_gym")
-    $0.contentMode = .scaleToFill
+    $0.contentMode = .scaleAspectFill
     $0.clipsToBounds = true
   }
   
@@ -59,7 +59,11 @@ final class LoginViewController:
   }
   
   private let loginButton = UIButton().then {
-    $0.setTitle("애플로 시작하기", for: .normal)
+    $0.setTitle("   애플로 시작하기", for: .normal)
+    $0.setImage(
+      UIImage(named: "apple_logo"),
+      for: .normal
+    )
     $0.titleLabel?.font = UIFont.systemFont(ofSize: 18, weight: .regular)
     $0.backgroundColor = .black
     $0.layer.cornerRadius = 16
