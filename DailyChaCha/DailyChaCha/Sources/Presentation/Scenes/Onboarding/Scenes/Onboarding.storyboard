@@ -502,7 +502,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="z8F-Cj-B9h" userLabel="Line View">
-                                        <rect key="frame" x="20" y="49" width="335" height="1"/>
+                                        <rect key="frame" x="0.0" y="49" width="375" height="1"/>
                                         <color key="backgroundColor" name="gray_200"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="1" id="Tas-TJ-VUQ"/>
@@ -514,10 +514,10 @@
                                     <constraint firstItem="F2t-Wi-5UE" firstAttribute="top" secondItem="DVV-8f-OMk" secondAttribute="top" constant="20" id="5OH-15-Jav"/>
                                     <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="F2t-Wi-5UE" secondAttribute="trailing" constant="20" id="Edt-70-d6q"/>
                                     <constraint firstItem="z8F-Cj-B9h" firstAttribute="top" secondItem="F2t-Wi-5UE" secondAttribute="bottom" constant="15" id="ILR-Mi-9jh"/>
-                                    <constraint firstItem="z8F-Cj-B9h" firstAttribute="leading" secondItem="DVV-8f-OMk" secondAttribute="leading" constant="20" id="U2N-qn-fRd"/>
+                                    <constraint firstItem="z8F-Cj-B9h" firstAttribute="leading" secondItem="DVV-8f-OMk" secondAttribute="leading" id="U2N-qn-fRd"/>
                                     <constraint firstAttribute="bottom" secondItem="z8F-Cj-B9h" secondAttribute="bottom" id="aSR-Ud-IgP"/>
                                     <constraint firstItem="F2t-Wi-5UE" firstAttribute="leading" secondItem="DVV-8f-OMk" secondAttribute="leading" constant="20" id="ihr-X2-7eR"/>
-                                    <constraint firstAttribute="trailing" secondItem="z8F-Cj-B9h" secondAttribute="trailing" constant="20" id="x8m-vV-1d0"/>
+                                    <constraint firstAttribute="trailing" secondItem="z8F-Cj-B9h" secondAttribute="trailing" id="x8m-vV-1d0"/>
                                 </constraints>
                             </view>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FrS-lX-yRL">
