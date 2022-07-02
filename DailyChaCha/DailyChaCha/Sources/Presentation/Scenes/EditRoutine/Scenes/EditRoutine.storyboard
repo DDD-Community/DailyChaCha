@@ -4,6 +4,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19519"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -26,17 +27,83 @@
                                     <userDefinedRuntimeAttribute type="string" keyPath="titleText" value="운동 설정"/>
                                 </userDefinedRuntimeAttributes>
                             </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kk9-74-Eyv" userLabel="Line View">
+                                <rect key="frame" x="0.0" y="100" width="414" height="8"/>
+                                <color key="backgroundColor" name="gray_100"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="8" id="fIl-Gz-9eF"/>
+                                </constraints>
+                            </view>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="kgv-en-I7t">
+                                <rect key="frame" x="0.0" y="108" width="414" height="754"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <color key="separatorColor" name="gray_200"/>
+                                <inset key="separatorInset" minX="20" minY="0.0" maxX="20" maxY="0.0"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="EditStartCell" rowHeight="64" id="3DF-2q-xyo" customClass="EditStartCell" customModule="DailyChaCha" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="44.5" width="414" height="64"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="3DF-2q-xyo" id="8V1-WW-ttd">
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="64"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" text="운동 이유" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eOh-5R-x8s">
+                                                    <rect key="frame" x="20" y="21" width="67" height="22"/>
+                                                    <fontDescription key="fontDescription" type="system" weight="medium" pointSize="18"/>
+                                                    <color key="textColor" name="black"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_arr_s_right" translatesAutoresizingMaskIntoConstraints="NO" id="Too-IC-Pjh">
+                                                    <rect key="frame" x="382" y="26" width="12" height="12"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="12" id="hDc-t6-5mU"/>
+                                                        <constraint firstAttribute="height" constant="12" id="qcA-fB-WHM"/>
+                                                    </constraints>
+                                                </imageView>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="749" text="몸도 마음도 건강한 삶을 위해" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4qv-ix-w8N">
+                                                    <rect key="frame" x="169.5" y="21" width="204.5" height="22"/>
+                                                    <fontDescription key="fontDescription" type="system" weight="medium" pointSize="18"/>
+                                                    <color key="textColor" name="gray_500"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="Too-IC-Pjh" firstAttribute="leading" secondItem="4qv-ix-w8N" secondAttribute="trailing" constant="8" id="EiZ-da-dX3"/>
+                                                <constraint firstItem="4qv-ix-w8N" firstAttribute="centerY" secondItem="Too-IC-Pjh" secondAttribute="centerY" id="TDP-Ou-692"/>
+                                                <constraint firstItem="eOh-5R-x8s" firstAttribute="centerY" secondItem="8V1-WW-ttd" secondAttribute="centerY" id="dfS-kY-OUn"/>
+                                                <constraint firstAttribute="trailing" secondItem="Too-IC-Pjh" secondAttribute="trailing" constant="20" id="fqa-GN-l9R"/>
+                                                <constraint firstAttribute="bottom" secondItem="Too-IC-Pjh" secondAttribute="bottom" constant="26" id="hbK-dF-lfN"/>
+                                                <constraint firstItem="Too-IC-Pjh" firstAttribute="top" secondItem="8V1-WW-ttd" secondAttribute="top" constant="26" id="nd8-0b-pd6"/>
+                                                <constraint firstItem="eOh-5R-x8s" firstAttribute="leading" secondItem="8V1-WW-ttd" secondAttribute="leading" constant="20" id="rs5-Nz-pJb"/>
+                                                <constraint firstItem="4qv-ix-w8N" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="eOh-5R-x8s" secondAttribute="trailing" constant="10" id="xgS-qJ-lqU"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="subTitleLabel" destination="4qv-ix-w8N" id="PNc-oW-vhZ"/>
+                                            <outlet property="titleLabel" destination="eOh-5R-x8s" id="Hp3-MC-SZ1"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </prototypes>
+                            </tableView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="vDu-zF-Fre"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
+                            <constraint firstItem="vDu-zF-Fre" firstAttribute="bottom" secondItem="kgv-en-I7t" secondAttribute="bottom" id="D4d-ls-ITi"/>
+                            <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" secondItem="kk9-74-Eyv" secondAttribute="trailing" id="Hq1-as-59c"/>
                             <constraint firstItem="9ZA-g6-gKc" firstAttribute="leading" secondItem="5EZ-qb-Rvc" secondAttribute="leading" id="InV-9N-LyH"/>
+                            <constraint firstItem="kk9-74-Eyv" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" id="PEE-Z6-aE8"/>
+                            <constraint firstItem="kgv-en-I7t" firstAttribute="top" secondItem="kk9-74-Eyv" secondAttribute="bottom" id="VHz-RB-XF6"/>
                             <constraint firstItem="9ZA-g6-gKc" firstAttribute="top" secondItem="vDu-zF-Fre" secondAttribute="top" id="Y3U-MC-UGg"/>
+                            <constraint firstItem="kk9-74-Eyv" firstAttribute="top" secondItem="9ZA-g6-gKc" secondAttribute="bottom" id="a8K-8S-UMM"/>
+                            <constraint firstItem="kgv-en-I7t" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" id="aIW-Cp-Y8N"/>
                             <constraint firstItem="9ZA-g6-gKc" firstAttribute="trailing" secondItem="vDu-zF-Fre" secondAttribute="trailing" id="ddI-iH-Jyx"/>
+                            <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" secondItem="kgv-en-I7t" secondAttribute="trailing" id="rW5-uJ-ikk"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="naviBar" destination="9ZA-g6-gKc" id="4t4-hi-pd7"/>
+                        <outlet property="tableView" destination="kgv-en-I7t" id="qpd-yt-c3b"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ief-a0-LHa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -60,19 +127,37 @@
                                     <userDefinedRuntimeAttribute type="string" keyPath="titleText" value="운동 이유"/>
                                 </userDefinedRuntimeAttributes>
                             </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7d8-ZS-cIQ" userLabel="Line View">
+                                <rect key="frame" x="0.0" y="100" width="414" height="8"/>
+                                <color key="backgroundColor" name="gray_100"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="8" id="BqE-F6-AjU"/>
+                                </constraints>
+                            </view>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="mVW-I5-Hzo">
+                                <rect key="frame" x="0.0" y="108" width="414" height="754"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                            </tableView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="QNG-5a-ZkZ"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
+                            <constraint firstItem="mVW-I5-Hzo" firstAttribute="top" secondItem="7d8-ZS-cIQ" secondAttribute="bottom" id="6nF-Es-Efe"/>
                             <constraint firstItem="coD-GT-t2A" firstAttribute="trailing" secondItem="QNG-5a-ZkZ" secondAttribute="trailing" id="6rO-VE-CdQ"/>
                             <constraint firstItem="coD-GT-t2A" firstAttribute="top" secondItem="QNG-5a-ZkZ" secondAttribute="top" id="Aus-EL-PnI"/>
+                            <constraint firstItem="QNG-5a-ZkZ" firstAttribute="bottom" secondItem="mVW-I5-Hzo" secondAttribute="bottom" id="E5J-oN-KFs"/>
+                            <constraint firstItem="7d8-ZS-cIQ" firstAttribute="top" secondItem="coD-GT-t2A" secondAttribute="bottom" id="Z5d-Hz-rah"/>
+                            <constraint firstAttribute="trailing" secondItem="7d8-ZS-cIQ" secondAttribute="trailing" id="beQ-CJ-Aca"/>
+                            <constraint firstItem="mVW-I5-Hzo" firstAttribute="leading" secondItem="QNG-5a-ZkZ" secondAttribute="leading" id="jPo-Mw-Vq3"/>
+                            <constraint firstItem="7d8-ZS-cIQ" firstAttribute="leading" secondItem="QNG-5a-ZkZ" secondAttribute="leading" id="pbP-o8-kcC"/>
                             <constraint firstItem="coD-GT-t2A" firstAttribute="leading" secondItem="Za6-QV-O4e" secondAttribute="leading" id="ux7-82-ufk"/>
+                            <constraint firstItem="QNG-5a-ZkZ" firstAttribute="trailing" secondItem="mVW-I5-Hzo" secondAttribute="trailing" id="zPE-MM-tPR"/>
                         </constraints>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ium-fE-pdH" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="800" y="92"/>
+            <point key="canvasLocation" x="800.00000000000011" y="91.741071428571431"/>
         </scene>
         <!--Edit Date View Controller-->
         <scene sceneID="Jo7-Ge-JT3">
@@ -91,13 +176,31 @@
                                     <userDefinedRuntimeAttribute type="string" keyPath="titleText" value="요일 반복"/>
                                 </userDefinedRuntimeAttributes>
                             </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="49b-05-7sV" userLabel="Line View">
+                                <rect key="frame" x="0.0" y="100" width="414" height="8"/>
+                                <color key="backgroundColor" name="gray_100"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="8" id="vpy-p8-OeO"/>
+                                </constraints>
+                            </view>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="Dla-Ap-YlT">
+                                <rect key="frame" x="0.0" y="108" width="414" height="754"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                            </tableView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="nFn-M5-zrU"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
+                            <constraint firstAttribute="trailing" secondItem="49b-05-7sV" secondAttribute="trailing" id="7s6-qe-Gne"/>
                             <constraint firstItem="UQs-I1-S83" firstAttribute="leading" secondItem="m0M-x8-Htu" secondAttribute="leading" id="7tz-4t-Mni"/>
+                            <constraint firstItem="49b-05-7sV" firstAttribute="leading" secondItem="nFn-M5-zrU" secondAttribute="leading" id="AAS-Q7-KoW"/>
+                            <constraint firstItem="49b-05-7sV" firstAttribute="top" secondItem="UQs-I1-S83" secondAttribute="bottom" id="OYR-rG-MOK"/>
+                            <constraint firstItem="nFn-M5-zrU" firstAttribute="bottom" secondItem="Dla-Ap-YlT" secondAttribute="bottom" id="WQZ-3p-N6J"/>
+                            <constraint firstItem="nFn-M5-zrU" firstAttribute="trailing" secondItem="Dla-Ap-YlT" secondAttribute="trailing" id="YVG-G6-wmr"/>
                             <constraint firstItem="UQs-I1-S83" firstAttribute="trailing" secondItem="nFn-M5-zrU" secondAttribute="trailing" id="fjT-Bu-bzF"/>
                             <constraint firstItem="UQs-I1-S83" firstAttribute="top" secondItem="nFn-M5-zrU" secondAttribute="top" id="lB9-2E-7oA"/>
+                            <constraint firstItem="Dla-Ap-YlT" firstAttribute="leading" secondItem="nFn-M5-zrU" secondAttribute="leading" id="lmJ-FY-k8q"/>
+                            <constraint firstItem="Dla-Ap-YlT" firstAttribute="top" secondItem="49b-05-7sV" secondAttribute="bottom" id="oc9-Rs-s8F"/>
                         </constraints>
                     </view>
                 </viewController>
@@ -122,13 +225,23 @@
                                     <userDefinedRuntimeAttribute type="string" keyPath="titleText" value="시작 시간"/>
                                 </userDefinedRuntimeAttributes>
                             </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cdi-qe-PWA" userLabel="Line View">
+                                <rect key="frame" x="0.0" y="100" width="414" height="8"/>
+                                <color key="backgroundColor" name="gray_100"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="8" id="MNT-iD-Nl1"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="SYE-76-rjU"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="j7N-oR-yis" firstAttribute="trailing" secondItem="SYE-76-rjU" secondAttribute="trailing" id="0Ag-8x-XLc"/>
                             <constraint firstItem="j7N-oR-yis" firstAttribute="top" secondItem="SYE-76-rjU" secondAttribute="top" id="EQw-Pw-QIH"/>
+                            <constraint firstAttribute="trailing" secondItem="cdi-qe-PWA" secondAttribute="trailing" id="gY5-bH-jpe"/>
+                            <constraint firstItem="cdi-qe-PWA" firstAttribute="top" secondItem="j7N-oR-yis" secondAttribute="bottom" id="gtv-mb-CSH"/>
                             <constraint firstItem="j7N-oR-yis" firstAttribute="leading" secondItem="VBa-g7-dpH" secondAttribute="leading" id="ldo-N2-JaM"/>
+                            <constraint firstItem="cdi-qe-PWA" firstAttribute="leading" secondItem="SYE-76-rjU" secondAttribute="leading" id="lnb-Mz-XW4"/>
                         </constraints>
                     </view>
                 </viewController>
@@ -138,6 +251,19 @@
         </scene>
     </scenes>
     <resources>
+        <image name="ic_arr_s_right" width="12" height="12"/>
+        <namedColor name="black">
+            <color red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="gray_100">
+            <color red="0.95294117647058818" green="0.95294117647058818" blue="0.95294117647058818" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="gray_200">
+            <color red="0.91764705882352937" green="0.91764705882352937" blue="0.91764705882352937" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="gray_500">
+            <color red="0.59215686274509804" green="0.59215686274509804" blue="0.59215686274509804" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
