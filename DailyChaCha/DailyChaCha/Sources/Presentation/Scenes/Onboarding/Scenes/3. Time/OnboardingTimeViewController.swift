@@ -22,7 +22,7 @@ final class OnboardingTimeViewController: UIViewController, OnboardingTimePresen
     @IBOutlet private weak var scrollView: UIScrollView!
     @IBOutlet private weak var titleView: OnboardingTitleView!
     @IBOutlet private weak var headerLabel: UILabel!
-    @IBOutlet private weak var stackView: UIStackView!
+    @IBOutlet private weak var stackView: OnboardingTimeView!
     @IBOutlet private weak var prevButton: UIButton!
     @IBOutlet private weak var nextButton: UIButton!
     weak var listener: OnboardingTimePresentableListener?
@@ -50,11 +50,6 @@ final class OnboardingTimeViewController: UIViewController, OnboardingTimePresen
             })
             .disposed(by: disposeBag)
         
-        let startView = OnboardingTimeSelectView(title: "운동 시작 시간")
-        let otherView = OnboardingTimeOtherView()
-        stackView.addArrangedSubview(startView)
-        stackView.addArrangedSubview(otherView)
-
         let input: OnboardingTimeInteractor.Input = .init(
             loadData: rx.viewWillAppear.map { _ in },
             prevStep: prevButton.rx.tap.asObservable(),
@@ -63,63 +58,6 @@ final class OnboardingTimeViewController: UIViewController, OnboardingTimePresen
         
         let output = listener.transform(input: input)
         output.headerText.bind(to: headerLabel.rx.text).disposed(by: disposeBag)
-        
-        var separationViews: [OnboardingTimeSelectView] = []
-        output.dates
-            .withUnretained(self)
-            .subscribe(onNext: { (owner, dates) in
-                for date in dates {
-                    let view: OnboardingTimeSelectView = .init(title: date)
-                    separationViews.append(view)
-                    owner.stackView.addArrangedSubview(view)
-                    view.isHidden = true
-                    
-                    view.selected
-                        .subscribe(onNext: { state in
-                            for separationView in separationViews {
-                                if view == separationView {
-                                    separationView.state = .selected
-                                } else {
-                                    separationView.state = .normal
-                                }
-                            }
-                            
-                            switch state {
-                            case .selected:
-                                startView.state = .disabled
-                            default:
-                                break
-                            }
-                        })
-                        .disposed(by: owner.disposeBag)
-                }
-            })
-            .disposed(by: disposeBag)
-        
-        startView.selected
-            .subscribe(onNext: { state in
-                switch state {
-                case .selected:
-                    separationViews.forEach { $0.state = .disabled }
-                default:
-                    break
-                }
-            })
-            .disposed(by: disposeBag)
-        
-        otherView.selected
-            .subscribe(onNext: { state in
-                UIView.animate(withDuration: 0.3, animations: {
-                    switch state {
-                    case .normal:
-                        separationViews.forEach { $0.isHidden = true }
-                    case .selected:
-                        separationViews.forEach { $0.isHidden = false }
-                    case .disabled:
-                        break
-                    }
-                })
-            })
-            .disposed(by: disposeBag)
+        output.dates.bind(to: stackView.rx.items).disposed(by: disposeBag)
     }
 }

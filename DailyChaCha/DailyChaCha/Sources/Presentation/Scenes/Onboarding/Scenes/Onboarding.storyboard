@@ -523,7 +523,7 @@
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FrS-lX-yRL">
                                 <rect key="frame" x="0.0" y="202" width="375" height="498"/>
                                 <subviews>
-                                    <stackView opaque="NO" contentMode="scaleToFill" placeholderIntrinsicWidth="375" placeholderIntrinsicHeight="600" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="HkS-Ji-6gp">
+                                    <stackView opaque="NO" contentMode="scaleToFill" placeholderIntrinsicWidth="375" placeholderIntrinsicHeight="600" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="HkS-Ji-6gp" customClass="OnboardingTimeView" customModule="DailyChaCha" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="600"/>
                                     </stackView>
                                 </subviews>
