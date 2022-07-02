@@ -187,7 +187,7 @@
                                     <constraint firstAttribute="height" constant="8" id="vpy-p8-OeO"/>
                                 </constraints>
                             </view>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="Dla-Ap-YlT">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" allowsMultipleSelection="YES" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="Dla-Ap-YlT">
                                 <rect key="frame" x="0.0" y="108" width="414" height="754"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             </tableView>
@@ -207,6 +207,10 @@
                             <constraint firstItem="Dla-Ap-YlT" firstAttribute="top" secondItem="49b-05-7sV" secondAttribute="bottom" id="oc9-Rs-s8F"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="naviBar" destination="UQs-I1-S83" id="hTZ-KY-m9a"/>
+                        <outlet property="tableView" destination="Dla-Ap-YlT" id="dX3-2j-NDz"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jmb-e9-gyY" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
