@@ -240,18 +240,79 @@
                                     <constraint firstAttribute="height" constant="8" id="MNT-iD-Nl1"/>
                                 </constraints>
                             </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iXP-eT-vmA">
+                                <rect key="frame" x="0.0" y="108" width="414" height="50"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="화요일, 금요일마다" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wce-Dy-EMz">
+                                        <rect key="frame" x="20" y="20" width="105.5" height="14"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="14" id="aTN-sq-FXK"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="14"/>
+                                        <color key="textColor" name="gray_500"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="V1c-4n-AKH" userLabel="Line View">
+                                        <rect key="frame" x="0.0" y="49" width="414" height="1"/>
+                                        <color key="backgroundColor" name="gray_200"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="1" id="7KL-BH-31q"/>
+                                        </constraints>
+                                    </view>
+                                </subviews>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstItem="V1c-4n-AKH" firstAttribute="leading" secondItem="iXP-eT-vmA" secondAttribute="leading" id="6qt-nz-u8a"/>
+                                    <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="wce-Dy-EMz" secondAttribute="trailing" constant="20" id="B6m-bH-Ypl"/>
+                                    <constraint firstAttribute="trailing" secondItem="V1c-4n-AKH" secondAttribute="trailing" id="MDV-qg-WXl"/>
+                                    <constraint firstAttribute="bottom" secondItem="V1c-4n-AKH" secondAttribute="bottom" id="b3y-ei-VEm"/>
+                                    <constraint firstItem="wce-Dy-EMz" firstAttribute="leading" secondItem="iXP-eT-vmA" secondAttribute="leading" constant="20" id="kn0-Bw-dNX"/>
+                                    <constraint firstItem="V1c-4n-AKH" firstAttribute="top" secondItem="wce-Dy-EMz" secondAttribute="bottom" constant="15" id="mq1-WG-JtW"/>
+                                    <constraint firstItem="wce-Dy-EMz" firstAttribute="top" secondItem="iXP-eT-vmA" secondAttribute="top" constant="20" id="se4-Mh-cgo"/>
+                                </constraints>
+                            </view>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="V8E-4W-Hzh">
+                                <rect key="frame" x="0.0" y="158" width="414" height="704"/>
+                                <subviews>
+                                    <stackView opaque="NO" contentMode="scaleToFill" placeholderIntrinsicWidth="375" placeholderIntrinsicHeight="600" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="lGy-Gl-Wuw" customClass="OnboardingTimeView" customModule="DailyChaCha" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="600"/>
+                                    </stackView>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="lGy-Gl-Wuw" firstAttribute="trailing" secondItem="esn-06-ox6" secondAttribute="trailing" id="4NM-qf-46V"/>
+                                    <constraint firstItem="lGy-Gl-Wuw" firstAttribute="width" secondItem="V9l-XM-I3c" secondAttribute="width" id="O3y-h3-udt"/>
+                                    <constraint firstItem="lGy-Gl-Wuw" firstAttribute="bottom" secondItem="esn-06-ox6" secondAttribute="bottom" id="RTk-3w-EUK"/>
+                                    <constraint firstItem="lGy-Gl-Wuw" firstAttribute="leading" secondItem="esn-06-ox6" secondAttribute="leading" id="zQe-er-fso"/>
+                                    <constraint firstItem="lGy-Gl-Wuw" firstAttribute="top" secondItem="esn-06-ox6" secondAttribute="top" id="ziw-mo-rYm"/>
+                                </constraints>
+                                <viewLayoutGuide key="contentLayoutGuide" id="esn-06-ox6"/>
+                                <viewLayoutGuide key="frameLayoutGuide" id="V9l-XM-I3c"/>
+                            </scrollView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="SYE-76-rjU"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="j7N-oR-yis" firstAttribute="trailing" secondItem="SYE-76-rjU" secondAttribute="trailing" id="0Ag-8x-XLc"/>
+                            <constraint firstItem="SYE-76-rjU" firstAttribute="trailing" secondItem="V8E-4W-Hzh" secondAttribute="trailing" id="1D0-ye-TwB"/>
                             <constraint firstItem="j7N-oR-yis" firstAttribute="top" secondItem="SYE-76-rjU" secondAttribute="top" id="EQw-Pw-QIH"/>
+                            <constraint firstItem="V8E-4W-Hzh" firstAttribute="leading" secondItem="SYE-76-rjU" secondAttribute="leading" id="FfY-KB-AXu"/>
+                            <constraint firstItem="SYE-76-rjU" firstAttribute="bottom" secondItem="V8E-4W-Hzh" secondAttribute="bottom" id="Goc-cA-2MV"/>
+                            <constraint firstItem="V8E-4W-Hzh" firstAttribute="top" secondItem="iXP-eT-vmA" secondAttribute="bottom" id="Rlp-zV-ZJH"/>
                             <constraint firstAttribute="trailing" secondItem="cdi-qe-PWA" secondAttribute="trailing" id="gY5-bH-jpe"/>
                             <constraint firstItem="cdi-qe-PWA" firstAttribute="top" secondItem="j7N-oR-yis" secondAttribute="bottom" id="gtv-mb-CSH"/>
+                            <constraint firstItem="SYE-76-rjU" firstAttribute="trailing" secondItem="iXP-eT-vmA" secondAttribute="trailing" id="kUM-YU-Zd6"/>
                             <constraint firstItem="j7N-oR-yis" firstAttribute="leading" secondItem="VBa-g7-dpH" secondAttribute="leading" id="ldo-N2-JaM"/>
                             <constraint firstItem="cdi-qe-PWA" firstAttribute="leading" secondItem="SYE-76-rjU" secondAttribute="leading" id="lnb-Mz-XW4"/>
+                            <constraint firstItem="iXP-eT-vmA" firstAttribute="leading" secondItem="SYE-76-rjU" secondAttribute="leading" id="usb-2z-9yE"/>
+                            <constraint firstItem="iXP-eT-vmA" firstAttribute="top" secondItem="cdi-qe-PWA" secondAttribute="bottom" id="wyc-1r-1sj"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="headerLabel" destination="wce-Dy-EMz" id="pgB-Lr-IpW"/>
+                        <outlet property="naviBar" destination="j7N-oR-yis" id="vpC-5p-QYY"/>
+                        <outlet property="scrollView" destination="V8E-4W-Hzh" id="LvG-fa-bIv"/>
+                        <outlet property="stackView" destination="lGy-Gl-Wuw" id="2Jd-KF-pQY"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="d4c-G6-kIA" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>

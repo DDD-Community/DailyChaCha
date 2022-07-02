@@ -33,7 +33,7 @@ final class EditTimeBuilder: Builder<EditTimeDependency>, EditTimeBuildable {
     func build(withListener listener: EditTimeListener) -> EditTimeRouting {
         let component = EditTimeComponent(dependency: dependency)
         let viewController = EditTimeViewController.create("EditRoutine")
-        let interactor = EditTimeInteractor(presenter: viewController)
+        let interactor = EditTimeInteractor(presenter: viewController, useCase: OnboardingUseCase())
         interactor.listener = listener
         return EditTimeRouter(interactor: interactor, viewController: viewController)
     }
