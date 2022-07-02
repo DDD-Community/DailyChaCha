@@ -34,6 +34,8 @@ final class OnboardingGoalViewController: UIViewController, OnboardingGoalPresen
     
     private func setupLayout() {
         titleView.configure(data: OnboardingTitleData(title: "결심하기", subTitle: "왜 운동 습관을 가지려고 하나요?"))
+        tableView.register(type: OnboardingGoalSelectCell.self)
+        tableView.register(type: OnboardingGoalWriteCell.self)
     }
     
     private func bind(listener: OnboardingGoalPresentableListener?) {
