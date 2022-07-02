@@ -10,11 +10,11 @@ import Foundation
 import Moya
 
 enum OnboardingService {
-    case status
+    case status, progress
     case getGoals, setGoals(goal: String)
     case getDates
-    // TODO: 파라미터 다시 확인, 요일은 Int로 처리가 좋음
-    case setDates(days: [Int]), putDates
+    case setDates(days: [Int]), putDates(dates: Onboarding.Dates)
+    case setAlert
 }
 
 extension OnboardingService: TargetType {
@@ -24,25 +24,30 @@ extension OnboardingService: TargetType {
     }
     
     var baseURL: URL {
-        return URL(string: "http://ec2-13-209-98-22.ap-northeast-2.compute.amazonaws.com/api/")!
+//        return URL(string: "http://ec2-13-209-98-22.ap-northeast-2.compute.amazonaws.com/api/")!
+        return URL(string: "http://ec2/")!
     }
     
     var path: String {
         switch self {
         case .status:
             return "onboarding/status"
+        case .progress:
+            return "onboarding/progress"
         case .getGoals, .setGoals:
             return "onboarding/goals"
         case .getDates, .setDates, .putDates:
             return "onboarding/dates"
+        case .setAlert:
+            return "onboarding/alert"
         }
     }
     
     var method: Moya.Method {
         switch self {
-        case .status, .getGoals, .getDates:
+        case .status, .getGoals, .getDates, .progress:
             return .get
-        case .setGoals, .setDates:
+        case .setGoals, .setDates, .setAlert:
             return .post
         case .putDates:
             return .put
@@ -51,7 +56,7 @@ extension OnboardingService: TargetType {
     
     var task: Task {
         switch self {
-        case .status, .getGoals, .getDates:
+        case .status, .getGoals, .getDates, .setAlert:
             return .requestPlain
         case .setGoals(let goal):
             return .requestParameters(
@@ -61,6 +66,13 @@ extension OnboardingService: TargetType {
         case .setDates(let days):
             return .requestParameters(
                 parameters: ["exercise_dates": days],
+                encoding: JSONEncoding.default
+            )
+        case .putDates(let dates):
+            let params = dates.exerciseDates.map { $0.params }
+            
+            return .requestParameters(
+                parameters: ["exercise_dates": params],
                 encoding: JSONEncoding.default
             )
         default:
@@ -74,6 +86,10 @@ extension OnboardingService: TargetType {
             return "{\"is_onboarding_completed\":false}".data(using: String.Encoding.utf8)!
         case .getGoals:
             return loadMock(name: "Mock.Onboarding.goals")
+        case .progress:
+            return "{\"progress\":\"date\"}".data(using: String.Encoding.utf8)!
+        case .getDates:
+            return loadMock(name: "Mock.Onboarding.dates")
         default:
             return .init()
         }
