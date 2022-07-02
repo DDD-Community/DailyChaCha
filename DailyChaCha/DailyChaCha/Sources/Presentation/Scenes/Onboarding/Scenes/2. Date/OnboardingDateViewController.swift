@@ -34,6 +34,7 @@ final class OnboardingDateViewController: UIViewController, OnboardingDatePresen
     private func setupLayout() {
         titleView.configure(data: OnboardingTitleData(title: "날짜 정하기", subTitle: "무슨 요일에 운동할까요?"))
         tableView.contentInset.bottom = Self.Constant.bottomInset
+        tableView.register(type: OnboardingDateSelectCell.self)
         nextButton.isEnabled = false
     }
     
