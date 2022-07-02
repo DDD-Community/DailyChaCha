@@ -134,7 +134,7 @@
                                     <constraint firstAttribute="height" constant="8" id="BqE-F6-AjU"/>
                                 </constraints>
                             </view>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="mVW-I5-Hzo">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="mVW-I5-Hzo">
                                 <rect key="frame" x="0.0" y="108" width="414" height="754"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             </tableView>
@@ -154,6 +154,10 @@
                             <constraint firstItem="QNG-5a-ZkZ" firstAttribute="trailing" secondItem="mVW-I5-Hzo" secondAttribute="trailing" id="zPE-MM-tPR"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="naviBar" destination="coD-GT-t2A" id="WEB-hU-VJP"/>
+                        <outlet property="tableView" destination="mVW-I5-Hzo" id="1Fh-DU-mjy"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ium-fE-pdH" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>

@@ -8,6 +8,7 @@
 
 import RIBs
 import RxSwift
+import Foundation
 
 protocol EditGoalRouting: ViewableRouting {
     // TODO: Declare methods the interactor can invoke to manage sub-tree via the router.
@@ -23,24 +24,76 @@ protocol EditGoalListener: AnyObject {
 }
 
 final class EditGoalInteractor: PresentableInteractor<EditGoalPresentable>, EditGoalInteractable, EditGoalPresentableListener {
+    
+    struct Input {
+        let loadData: Observable<Void>
+        let itemSelected: Observable<IndexPath>
+        let modelSelected: Observable<OnboardingGoalSelectDatable>
+        let nextStep: Observable<OnboardingGoalSelectDatable>
+    }
+    
+    struct Output {
+        let cells: Observable<[CellModel]>
+        let isEnabledNextButton: Observable<Bool>
+    }
 
     weak var router: EditGoalRouting?
     weak var listener: EditGoalListener?
+    /// WriteCell
+    var insideLimit: PublishSubject<Bool> = .init()
+    private let disposeBag: DisposeBag = .init()
+    private let useCase: OnboardingUseCase
 
-    // TODO: Add additional dependencies to constructor. Do not perform any logic
-    // in constructor.
-    override init(presenter: EditGoalPresentable) {
+    init(presenter: EditGoalPresentable, useCase: OnboardingUseCase) {
+        self.useCase = useCase
         super.init(presenter: presenter)
         presenter.listener = self
     }
-
-    override func didBecomeActive() {
-        super.didBecomeActive()
-        // TODO: Implement business logic here.
-    }
-
-    override func willResignActive() {
-        super.willResignActive()
-        // TODO: Pause any business logic.
+    
+    func transform(input: Input) -> Output {
+        let cells: Observable<[CellModel]> = input.loadData
+            .withUnretained(self)
+            .flatMap { owner, _ in
+                owner.useCase.goals()
+            }
+            .map { [weak self] in
+                var cells: [CellModel] = $0.map { OnboardingGoalSelectCellModel(title: $0.goal) }
+                cells.append(OnboardingGoalWriteCellModel(limit: Self.Constant.WriteLimit, delegate: self))
+                return cells
+            }
+        
+        let isEnabledNextButton = Observable.merge(
+            insideLimit,
+            input.modelSelected
+                .map {
+                    if $0.isWriteMode {
+                        return $0.title.count > 0 && $0.title.count <= 20
+                    } else {
+                        return true
+                    }
+                }
+        )
+        
+        input.nextStep
+            .withUnretained(self)
+            .flatMap { owner, goal in
+                owner.useCase.goals(goal: goal.title)
+            }
+            .asDriver(onErrorJustReturn: ())
+            .drive(onNext: { [weak self] in
+//                print($0)
+//                self?.listener?.nextStep(.goal)
+            })
+            .disposed(by: disposeBag)
+            
+        return .init(cells: cells, isEnabledNextButton: isEnabledNextButton)
     }
 }
+
+extension EditGoalInteractor {
+    struct Constant {
+        static let WriteLimit: Int = 20
+    }
+}
+
+extension EditGoalInteractor: OnboardingGoalWriteCellDelegate { }
