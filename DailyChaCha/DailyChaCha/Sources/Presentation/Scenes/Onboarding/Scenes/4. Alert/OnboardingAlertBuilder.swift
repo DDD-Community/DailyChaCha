@@ -33,7 +33,7 @@ final class OnboardingAlertBuilder: Builder<OnboardingAlertDependency>, Onboardi
     func build(withListener listener: OnboardingAlertListener) -> OnboardingAlertRouting {
         _ = OnboardingAlertComponent(dependency: dependency)
         let viewController = OnboardingAlertViewController.create("Onboarding")
-        let interactor = OnboardingAlertInteractor(presenter: viewController)
+        let interactor = OnboardingAlertInteractor(presenter: viewController, useCase: OnboardingUseCase())
         interactor.listener = listener
         return OnboardingAlertRouter(interactor: interactor, viewController: viewController)
     }

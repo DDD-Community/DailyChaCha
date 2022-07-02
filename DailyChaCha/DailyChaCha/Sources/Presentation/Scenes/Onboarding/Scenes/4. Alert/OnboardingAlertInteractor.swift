@@ -33,16 +33,22 @@ final class OnboardingAlertInteractor: PresentableInteractor<OnboardingAlertPres
 
     weak var router: OnboardingAlertRouting?
     weak var listener: OnboardingAlertListener?
+    private let useCase: OnboardingUseCase
     private let disposeBag: DisposeBag = .init()
 
-    override init(presenter: OnboardingAlertPresentable) {
+    init(presenter: OnboardingAlertPresentable, useCase: OnboardingUseCase) {
+        self.useCase = useCase
         super.init(presenter: presenter)
         presenter.listener = self
     }
     
     func transform(input: Input) -> Output {
         input.nextStep
-            .asDriver(onErrorJustReturn: false)
+            .withUnretained(self)
+            .flatMap { owner, _ in
+                owner.useCase.alert()
+            }
+            .asDriver(onErrorJustReturn: ())
             .drive(onNext: { [weak self] _ in
                 self?.listener?.nextStep(.alert)
             })
