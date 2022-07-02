@@ -33,7 +33,7 @@ final class EditDateBuilder: Builder<EditDateDependency>, EditDateBuildable {
     func build(withListener listener: EditDateListener) -> EditDateRouting {
         let component = EditDateComponent(dependency: dependency)
         let viewController = EditDateViewController.create("EditRoutine")
-        let interactor = EditDateInteractor(presenter: viewController)
+        let interactor = EditDateInteractor(presenter: viewController, useCase: OnboardingUseCase())
         interactor.listener = listener
         return EditDateRouter(interactor: interactor, viewController: viewController)
     }
