@@ -32,7 +32,7 @@ final class EditTimeInteractor: PresentableInteractor<EditTimePresentable>, Edit
     }
     
     struct Output {
-        let dates: Observable<[String]>
+        let dates: Observable<Onboarding.Dates>
         let headerText: Observable<String>
     }
 
@@ -51,11 +51,11 @@ final class EditTimeInteractor: PresentableInteractor<EditTimePresentable>, Edit
         let dates = input.loadData
             .withUnretained(self)
             .flatMap { (owner, _ ) in owner.useCase.dates() }
-            .map { [unowned self] in getWeekDays(days: $0) }
             .share()
         
         let headerText: Observable<String> = dates
-            .map { weekdays in
+            .map { dates in
+                let weekdays = dates.exerciseDates.map { $0.weekday }
                 var text: String = ""
                 for i in 0..<weekdays.count {
                     if i+1 == weekdays.count {
