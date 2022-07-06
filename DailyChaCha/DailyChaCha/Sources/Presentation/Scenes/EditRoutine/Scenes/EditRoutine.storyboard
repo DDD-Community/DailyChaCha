@@ -34,7 +34,7 @@
                                     <constraint firstAttribute="height" constant="8" id="fIl-Gz-9eF"/>
                                 </constraints>
                             </view>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="kgv-en-I7t">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="kgv-en-I7t">
                                 <rect key="frame" x="0.0" y="108" width="414" height="754"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <color key="separatorColor" name="gray_200"/>
@@ -66,13 +66,23 @@
                                                     <color key="textColor" name="gray_500"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vNT-oV-6tY">
+                                                    <rect key="frame" x="20" y="63" width="374" height="1"/>
+                                                    <color key="backgroundColor" name="gray_200"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="1" id="je5-54-9Nz"/>
+                                                    </constraints>
+                                                </view>
                                             </subviews>
                                             <constraints>
+                                                <constraint firstAttribute="bottom" secondItem="vNT-oV-6tY" secondAttribute="bottom" id="DyM-AG-7Zw"/>
                                                 <constraint firstItem="Too-IC-Pjh" firstAttribute="leading" secondItem="4qv-ix-w8N" secondAttribute="trailing" constant="8" id="EiZ-da-dX3"/>
                                                 <constraint firstItem="4qv-ix-w8N" firstAttribute="centerY" secondItem="Too-IC-Pjh" secondAttribute="centerY" id="TDP-Ou-692"/>
+                                                <constraint firstAttribute="trailing" secondItem="vNT-oV-6tY" secondAttribute="trailing" constant="20" id="a7I-Aq-xwu"/>
                                                 <constraint firstItem="eOh-5R-x8s" firstAttribute="centerY" secondItem="8V1-WW-ttd" secondAttribute="centerY" id="dfS-kY-OUn"/>
                                                 <constraint firstAttribute="trailing" secondItem="Too-IC-Pjh" secondAttribute="trailing" constant="20" id="fqa-GN-l9R"/>
                                                 <constraint firstAttribute="bottom" secondItem="Too-IC-Pjh" secondAttribute="bottom" constant="26" id="hbK-dF-lfN"/>
+                                                <constraint firstItem="vNT-oV-6tY" firstAttribute="leading" secondItem="8V1-WW-ttd" secondAttribute="leading" constant="20" id="kXf-bX-C3o"/>
                                                 <constraint firstItem="Too-IC-Pjh" firstAttribute="top" secondItem="8V1-WW-ttd" secondAttribute="top" constant="26" id="nd8-0b-pd6"/>
                                                 <constraint firstItem="eOh-5R-x8s" firstAttribute="leading" secondItem="8V1-WW-ttd" secondAttribute="leading" constant="20" id="rs5-Nz-pJb"/>
                                                 <constraint firstItem="4qv-ix-w8N" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="eOh-5R-x8s" secondAttribute="trailing" constant="10" id="xgS-qJ-lqU"/>
@@ -276,6 +286,9 @@
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" placeholderIntrinsicWidth="375" placeholderIntrinsicHeight="600" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="lGy-Gl-Wuw" customClass="OnboardingTimeView" customModule="DailyChaCha" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="414" height="600"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="boolean" keyPath="isNew" value="NO"/>
+                                        </userDefinedRuntimeAttributes>
                                     </stackView>
                                 </subviews>
                                 <constraints>
