@@ -10,9 +10,9 @@ import Foundation
 import RxSwift
 
 struct OnboardingUseCase {
-    private let onboardingRepository: OnboardingRepositoriable
+    private let onboardingRepository: OnboardingRepository
     
-    init(onboardingRepository: OnboardingRepositoriable = OnboardingRepository(isMock: true)) {
+    init(onboardingRepository: OnboardingRepository = OnboardingRepositoryImpl(isMock: true)) {
         self.onboardingRepository = onboardingRepository
     }
 }

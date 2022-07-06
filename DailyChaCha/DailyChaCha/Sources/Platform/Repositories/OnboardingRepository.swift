@@ -11,7 +11,7 @@ import RxSwift
 import Moya
 import RxMoya
 
-protocol OnboardingRepositoriable {
+protocol OnboardingRepository {
     /// GET : 온보딩 상태 API, 유저의 온보딩 여부를 반환합니다.
     func status() -> Single<Onboarding.Status>
     /// GET:  온보딩 진행상황 API, 유저의 온보딩 진행상황을 반환합니다. 결심하기가 완료됐다면 'date', 날짜정하기를 완료했다면 'time', 시간정하기를 완료했다면 'alert'을 보냅니다.
@@ -30,7 +30,7 @@ protocol OnboardingRepositoriable {
     func alert() -> Single<Void>
 }
 
-final class OnboardingRepository: OnboardingRepositoriable {
+final class OnboardingRepositoryImpl: OnboardingRepository {
     
     private let provider: MoyaProvider<OnboardingService>
     private let isMock: Bool
@@ -85,36 +85,3 @@ final class OnboardingRepository: OnboardingRepositoriable {
             .map { _ in }
     }
 }
-
-//enum APIError: Int, Error {
-//    case badRequest = 400
-//    case unAuthorized = 401
-//    case internalServerError = 500
-//}
-//
-//final class ErrorOnboardingRepository: OnboardingRepositoriable {
-//
-//    func status() -> Observable<Void> {
-//        .error(APIError.badRequest)
-//    }
-//
-//    func goals() -> Observable<Void> {
-//        .error(APIError.badRequest)
-//    }
-//
-//    func goals(goal: String) -> Observable<Void> {
-//        .error(APIError.badRequest)
-//    }
-//
-//    func dates(weekday: String) -> Observable<Void> {
-//        .error(APIError.badRequest)
-//    }
-//
-//    func dates() -> Observable<Void> {
-//        .error(APIError.badRequest)
-//    }
-//
-//    func dates(exerciseDate: Onboarding.ExerciseDate) -> Observable<Void> {
-//        .error(APIError.badRequest)
-//    }
-//}
