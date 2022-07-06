@@ -13,7 +13,7 @@ import RxCocoa
 
 final class RxPickerButtonDelegateProxy: DelegateProxy<PickerButton, PickerButtonDelegate> {
     
-    let selected: PublishSubject<Date> = .init()
+    let done: PublishSubject<Date> = .init()
     
     init(pickerButton: PickerButton) {
         super.init(parentObject: pickerButton, delegateProxy: RxPickerButtonDelegateProxy.self)
@@ -37,7 +37,7 @@ extension RxPickerButtonDelegateProxy: DelegateProxyType { }
 extension RxPickerButtonDelegateProxy: PickerButtonDelegate {
     
     func pickerView(_ pickerView: UIDatePicker, date: Date) {
-        selected.onNext(date)
+        done.onNext(date)
     }
 }
 
@@ -46,7 +46,7 @@ extension Reactive where Base: PickerButton {
         return RxPickerButtonDelegateProxy.proxy(for: self.base)
     }
     
-    public var selected: ControlEvent<Date> {
-        return .init(events: delegate.selected.asObserver())
+    public var done: ControlEvent<Date> {
+        return .init(events: delegate.done.asObserver())
     }
 }

@@ -50,14 +50,21 @@ final class OnboardingTimeViewController: UIViewController, OnboardingTimePresen
             })
             .disposed(by: disposeBag)
         
+        let nextStep: Observable<[Onboarding.ExerciseDate]> = nextButton.rx.tap
+            .compactMap { [stackView] in
+                stackView?.resultForSelectedRows
+            }
+        
         let input: OnboardingTimeInteractor.Input = .init(
             loadData: rx.viewWillAppear.map { _ in },
             prevStep: prevButton.rx.tap.asObservable(),
-            nextStep: nextButton.rx.tap.asObservable()
+            nextStep: nextStep,
+            selectedRows: stackView.rxResultForSelectedRows
         )
         
         let output = listener.transform(input: input)
         output.headerText.bind(to: headerLabel.rx.text).disposed(by: disposeBag)
         output.dates.bind(to: stackView.rx.items).disposed(by: disposeBag)
+        output.isEnabledNextButton.bind(to: nextButton.rx.isEnabled).disposed(by: disposeBag)
     }
 }

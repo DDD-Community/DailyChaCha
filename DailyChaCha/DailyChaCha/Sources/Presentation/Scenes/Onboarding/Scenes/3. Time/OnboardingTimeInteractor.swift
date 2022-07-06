@@ -26,12 +26,14 @@ final class OnboardingTimeInteractor: PresentableInteractor<OnboardingTimePresen
     struct Input {
         let loadData: Observable<Void>
         let prevStep: Observable<Void>
-        let nextStep: Observable<Void>
+        let nextStep: Observable<[Onboarding.ExerciseDate]>
+        let selectedRows: Observable<[Onboarding.ExerciseDate]?>
     }
     
     struct Output {
-        let dates: Observable<[String]>
+        let dates: Observable<Onboarding.Dates>
         let headerText: Observable<String>
+        let isEnabledNextButton: Observable<Bool>
     }
 
     weak var router: OnboardingTimeRouting?
@@ -49,11 +51,11 @@ final class OnboardingTimeInteractor: PresentableInteractor<OnboardingTimePresen
         let dates = input.loadData
             .withUnretained(self)
             .flatMap { (owner, _ ) in owner.useCase.dates() }
-            .map { [unowned self] in getWeekDays(days: $0) }
             .share()
         
         let headerText: Observable<String> = dates
-            .map { weekdays in
+            .map { dates in
+                let weekdays = dates.exerciseDates.map { $0.weekday }
                 var text: String = ""
                 for i in 0..<weekdays.count {
                     if i+1 == weekdays.count {
@@ -72,22 +74,23 @@ final class OnboardingTimeInteractor: PresentableInteractor<OnboardingTimePresen
             })
             .disposed(by: disposeBag)
         
+        // TODO: - api 연동
         input.nextStep
+            .withUnretained(self)
+            .flatMap { owner, exerciseDate in
+                owner.useCase.dates(exerciseDate: .init(exerciseDates: exerciseDate))
+            }
             .asDriver(onErrorJustReturn: ())
             .drive(onNext: { [weak self] in
+                print($0)
                 self?.listener?.nextStep(.time)
             })
             .disposed(by: disposeBag)
         
         return .init(
             dates: dates,
-            headerText: headerText
+            headerText: headerText,
+            isEnabledNextButton: input.selectedRows.map { $0?.isEmpty == false }
         )
-    }
-    
-    private func getWeekDays(days: [Int]) -> [String] {
-        let fmt = DateFormatter()
-        let symbols = fmt.weekdaySymbols!
-        return days.map { symbols[$0] }
     }
 }

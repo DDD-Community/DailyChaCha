@@ -11,11 +11,18 @@ import RxSwift
 import RxCocoa
 
 class OnboardingTimeView: UIStackView {
-    private let startView: OnboardingTimeSelectView = .init(title: "운동 시작 시간")
+    fileprivate let startView: OnboardingTimeSelectView = .init(data: .init(), isNew: true)
     private let otherView: OnboardingTimeOtherView = .init()
-    private var separationViews: [OnboardingTimeSelectView] = []
-    fileprivate let items: PublishSubject<[String]> = .init()
+    fileprivate var separationViews: [OnboardingTimeSelectView] = []
+    fileprivate let items: PublishSubject<Onboarding.Dates> = .init()
     private let disposeBag: DisposeBag = .init()
+    public var resultForSelectedRows: [Onboarding.ExerciseDate]? = nil {
+        didSet {
+            rxResultForSelectedRows.onNext(resultForSelectedRows)
+        }
+    }
+    public var rxResultForSelectedRows: PublishSubject<[Onboarding.ExerciseDate]?> = .init()
+    @IBInspectable public var isNew: Bool = true
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -40,6 +47,13 @@ class OnboardingTimeView: UIStackView {
             })
             .disposed(by: disposeBag)
         
+        startView.done
+            .withUnretained(self)
+            .subscribe(onNext: { (owner, result) in
+                owner.resultForSelectedRows = [result]
+            })
+            .disposed(by: disposeBag)
+        
         otherView.selected
             .subscribe(onNext: { [weak self] state in
                 UIView.animate(withDuration: 0.3, animations: {
@@ -56,43 +70,63 @@ class OnboardingTimeView: UIStackView {
             .disposed(by: disposeBag)
         
         items.withUnretained(self)
-            .subscribe(onNext: { (owner, dates) in
-                for date in dates {
-                    let view: OnboardingTimeSelectView = .init(title: date)
-                    owner.separationViews.append(view)
-                    owner.addArrangedSubview(view)
-                    view.isHidden = true
-                    
-                    view.selected
-                        .subscribe(onNext: { state in
-                            for separationView in owner.separationViews {
-                                if view == separationView {
-                                    separationView.state = .selected
-                                } else {
-                                    separationView.state = .normal
-                                }
-                            }
-                            
-                            switch state {
-                            case .selected:
-                                owner.startView.state = .disabled
-                            default:
-                                break
-                            }
-                        })
-                        .disposed(by: owner.disposeBag)
+            .subscribe(onNext: { (owner, items) in
+                for dates in items.exerciseDates {
+                    owner.setupSeparationViews(dates)
                 }
+                
+                if owner.isNew {
+                    owner.otherView.selected.onNext(.normal)
+                    owner.startView.selected.onNext(.selected)
+                    owner.resultForSelectedRows = [owner.startView.resultForSelectedRow]
+                } else {
+                    owner.otherView.selected.onNext(.selected)
+                    owner.startView.state = .disabled
+                    owner.resultForSelectedRows = owner.separationViews.map { $0.resultForSelectedRow }
+                }
+            })
+            .disposed(by: disposeBag)
+    }
+    
+    private func setupSeparationViews(_ dates: Onboarding.ExerciseDate) {
+        let view: OnboardingTimeSelectView = .init(data: dates, isNew: isNew)
+        separationViews.append(view)
+        addArrangedSubview(view)
+        view.isHidden = !isNew
+        
+        view.selected
+            .withUnretained(self)
+            .subscribe(onNext: { (owner, state) in
+                for separationView in owner.separationViews {
+                    if view == separationView {
+                        separationView.state = .selected
+                    } else {
+                        separationView.state = .normal
+                    }
+                }
+                
+                switch state {
+                case .selected:
+                    owner.startView.state = .disabled
+                default:
+                    break
+                }
+            })
+            .disposed(by: disposeBag)
+        
+        view.done
+            .withUnretained(self)
+            .subscribe(onNext: { (owner, _ ) in
+                owner.resultForSelectedRows = owner.separationViews.map { $0.resultForSelectedRow }
             })
             .disposed(by: disposeBag)
     }
 }
 
 extension Reactive where Base: OnboardingTimeView {
-    var items: Binder<[String]> {
+    var items: Binder<Onboarding.Dates> {
         return Binder(self.base) { (_, items) in
             self.base.items.onNext(items)
         }
     }
 }
-
-

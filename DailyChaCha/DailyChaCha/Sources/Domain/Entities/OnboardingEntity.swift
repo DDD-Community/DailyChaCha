@@ -12,11 +12,11 @@ struct Onboarding { }
 
 extension Onboarding {
     
-    struct Goal: Codable {
+    struct Goal: Decodable {
         let goal: String
     }
     
-    struct Status: Codable {
+    struct Status: Decodable {
         let isOnboardingCompleted: Bool
 
         enum CodingKeys: String, CodingKey {
@@ -26,7 +26,7 @@ extension Onboarding {
 
     typealias Goals = [Goal]
     
-    struct Progress: Codable {
+    struct Progress: Decodable {
         let progress: ProgressType
         
         enum ProgressType: String, Codable {
@@ -34,41 +34,66 @@ extension Onboarding {
         }
     }
     
-    struct Dates: Codable {
+    struct Dates: Decodable {
         let exerciseDates: [ExerciseDate]
         var goal: String?
 
         enum CodingKeys: String, CodingKey {
             case exerciseDates = "exercise_dates"
+            case goal = "goal"
         }
         
-        var convert: [(weekday: String, time: Int)] {
-            get {
-                exerciseDates.map {
-                    ($0.getWeekDays(day: $0.date), $0.time)
-                }
-            }
+        init(goal: String? = nil, exerciseDates: [ExerciseDate]) {
+            self.goal = goal
+            self.exerciseDates = exerciseDates
+        }
+        
+        init(from decoder: Decoder) throws {
+            let container = try decoder.container(keyedBy: CodingKeys.self)
+            goal = try container.decodeIfPresent(String.self, forKey: .goal)
+            let dates = try container.decodeIfPresent([ExerciseDate].self, forKey: .exerciseDates) ?? []
+            exerciseDates = dates.filter { $0.verify }
         }
     }
     
-    struct ExerciseDate: Codable {
-        let date, time: Int
+    struct ExerciseDate: Decodable {
+        static var DefaultDate: Int = -1
+        static var DefaultTime: TimeInterval = 0
+        var date: Int
+        var time: TimeInterval
 
         enum CodingKeys: String, CodingKey {
             case date = "exercise_date"
             case time = "exercise_time"
         }
         
-        var params: [String: Int] {
-            get {
-                ["exercise_date": date, "exercise_time": time]
+        init() {
+            date = ExerciseDate.DefaultDate
+            time = ExerciseDate.DefaultTime
+        }
+        
+        var verify: Bool {
+            if date >= ExerciseDate.DefaultDate && date < 7 {
+                return true
+            } else {
+                return false
             }
         }
         
-        func getWeekDays(day: Int) -> String {
-            let fmt = DateFormatter()
-            let symbols = fmt.weekdaySymbols!
-            return symbols[day]
+        var weekday: String {
+            if date == ExerciseDate.DefaultDate {
+                return "운동 시작 시간"
+            } else {
+                let fmt = DateFormatter()
+                let symbols = fmt.weekdaySymbols!
+                return symbols[date]
+            }
+        }
+        
+        var params: [String: Any] {
+            get {
+                ["exercise_date": date, "exercise_time": time]
+            }
         }
     }
 

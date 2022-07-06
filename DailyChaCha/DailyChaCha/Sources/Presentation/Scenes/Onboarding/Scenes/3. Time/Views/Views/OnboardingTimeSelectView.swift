@@ -24,6 +24,8 @@ final class OnboardingTimeSelectView: DesignView, OnboardingTimeSelectable {
     @IBOutlet private weak var selectButton: PickerButton!
     private let disposeBag: DisposeBag = .init()
     public var selected: PublishSubject<OnboardingTimeState> = .init()
+    public var done: PublishSubject<Onboarding.ExerciseDate> = .init()
+    public var resultForSelectedRow: Onboarding.ExerciseDate
     
     var state: OnboardingTimeState = .normal {
         didSet {
@@ -38,20 +40,23 @@ final class OnboardingTimeSelectView: DesignView, OnboardingTimeSelectable {
         }
     }
     
-    init(title: String) {
+    init(data: Onboarding.ExerciseDate, isNew: Bool) {
+        resultForSelectedRow = data
         super.init(frame: .zero)
-        titleLabel.text = title
+        titleLabel.text = data.weekday
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "HH:mm"
+        var now: Date
         
-        let now = Date()
-        let hour = Calendar.current.dateComponents([.hour], from: now)
-        
-        if let removeMinute = Calendar.current.date(from: hour) {
-            selectButton.pickerView.setDate(removeMinute, animated: false)
+        if isNew {
+            now = .init()
+        } else {
+            now = .init(timeIntervalSince1970: .init(data.time))
         }
         
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "HH:00"
+        selectButton.pickerView.setDate(now, animated: false)
         timeLabel.text = dateFormatter.string(from: now)
+        resultForSelectedRow.time = now.timeIntervalSince1970
     }
     
     public required init?(coder aDecoder: NSCoder) {
@@ -67,12 +72,15 @@ final class OnboardingTimeSelectView: DesignView, OnboardingTimeSelectable {
             })
             .disposed(by: disposeBag)
         
-        selectButton.rx.selected
-            .subscribe(onNext: { [weak self] in
+        selectButton.rx.done
+            .withUnretained(self)
+            .subscribe(onNext: { (owner, date) in
                 let formatter = DateFormatter()
                 formatter.dateFormat = "HH:mm"
-                self?.timeLabel.text = formatter.string(from: $0)
-                self?.state = .normal
+                owner.timeLabel.text = formatter.string(from: date)
+                owner.state = .normal
+                owner.resultForSelectedRow.time = date.timeIntervalSince1970
+                owner.done.onNext(owner.resultForSelectedRow)
             })
             .disposed(by: disposeBag)
     }
