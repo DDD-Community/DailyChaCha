@@ -11,11 +11,13 @@ import RxSwift
 
 protocol EditRoutineRouting: Routing {
     func cleanupViews()
-    // TODO: Declare methods the interactor can invoke to manage sub-tree via the router.
+    func routeNextStep(_ step: EditRoutineStep)
+    func routePrevStep(_ step: EditRoutineStep)
 }
 
 protocol EditRoutineListener: AnyObject {
     // TODO: Declare methods the interactor can invoke to communicate with other RIBs.
+    func completedEdit()
 }
 
 final class EditRoutineInteractor: Interactor, EditRoutineInteractable {
@@ -29,13 +31,14 @@ final class EditRoutineInteractor: Interactor, EditRoutineInteractable {
 
     override func didBecomeActive() {
         super.didBecomeActive()
-        // TODO: Implement business logic here.
+        router?.routeNextStep(.start)
     }
-
-    override func willResignActive() {
-        super.willResignActive()
-
-        router?.cleanupViews()
-        // TODO: Pause any business logic.
+    
+    func nextStep(_ step: EditRoutineStep) {
+        router?.routeNextStep(step)
+    }
+    
+    func prevStep(_ step: EditRoutineStep) {
+        router?.routePrevStep(step)
     }
 }

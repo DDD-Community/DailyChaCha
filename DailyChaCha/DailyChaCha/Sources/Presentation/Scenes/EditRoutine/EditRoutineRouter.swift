@@ -7,9 +7,15 @@
 //
 
 import RIBs
+import UIKit
 
 enum EditRoutineStep {
-    case start, goal, date, time
+    case start, goal, date, time, alert
+}
+
+protocol EditRoutineStepable: AnyObject {
+    func nextStep(_ step: EditRoutineStep)
+    func prevStep(_ step: EditRoutineStep)
 }
 
 protocol EditRoutineInteractable: Interactable, EditStartListener, EditGoalListener, EditDateListener, EditTimeListener {
@@ -17,7 +23,7 @@ protocol EditRoutineInteractable: Interactable, EditStartListener, EditGoalListe
     var listener: EditRoutineListener? { get set }
 }
 
-protocol EditRoutineViewControllable: NavigateViewControllable {
+protocol EditRoutineViewControllable: ViewControllable {
     // TODO: Declare methods the router invokes to manipulate the view hierarchy. Since
     // this RIB does not own its own view, this protocol is conformed to by one of this
     // RIB's ancestor RIBs' view.
@@ -37,6 +43,8 @@ final class EditRoutineRouter: Router<EditRoutineInteractable>, EditRoutineRouti
         self.goalBuilder = goalBuilder
         self.dateBuilder = dateBuilder
         self.timeBuilder = timeBuilder
+        navigationViewController = UINavigationController()
+        navigationViewController.navigationBar.isHidden = true
         super.init(interactor: interactor)
         interactor.router = self
     }
@@ -48,36 +56,45 @@ final class EditRoutineRouter: Router<EditRoutineInteractable>, EditRoutineRouti
     
     // MARK: - Private
     
+    private let viewController: EditRoutineViewControllable
     private let startBuilder: EditStartBuilder
     private let goalBuilder: EditGoalBuilder
     private let dateBuilder: EditDateBuilder
     private let timeBuilder: EditTimeBuilder
-
-    private let viewController: EditRoutineViewControllable
-    private var currentChild: ViewableRouting?
+    private let navigationViewController: UINavigationController
     
-    override func didLoad() {
-        super.didLoad()
-        
-        routeNextStep(.start)
+    private func parseBuild(_ step: EditRoutineStep) -> ViewableRouting {
+        switch step {
+        case .start: return startBuilder.build(withListener: interactor)
+        case .goal: return goalBuilder.build(withListener: interactor)
+        case .date: return dateBuilder.build(withListener: interactor)
+        case .time: return timeBuilder.build(withListener: interactor)
+        case .alert:
+            fatalError()
+        }
     }
     
+    private func completed() {
+        viewController.uiviewController.dismiss(animated: true)
+        interactor.listener?.completedEdit()
+    }
+
     func routeNextStep(_ step: EditRoutineStep) {
-        print("routeStep", step)
-        var build: ViewableRouting
-        switch step {
-        case .start:
-            build = startBuilder.build(withListener: interactor)
-        case .goal:
-            build = goalBuilder.build(withListener: interactor)
-        case .date:
-            build = dateBuilder.build(withListener: interactor)
-        case .time:
-            build = timeBuilder.build(withListener: interactor)
-        }
-        
+        let build = parseBuild(step)
         attachChild(build)
-        viewController.presentNavigationViewController(root: build.viewControllable, state: .automatic)
-        currentChild = build
+        if step == .start {
+            navigationViewController.viewControllers = [build.viewControllable.uiviewController]
+            viewController.uiviewController.present(navigationViewController, animated: true)
+        } else {
+            navigationViewController.pushViewController(build.viewControllable.uiviewController, animated: true)
+        }
+    }
+    
+    func routePrevStep(_ step: EditRoutineStep) {
+        if step == .start {
+            completed()
+        } else {
+            navigationViewController.popViewController(animated: true)
+        }
     }
 }
