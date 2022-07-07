@@ -19,6 +19,7 @@ protocol OnboardingRouting: Routing {
 
 protocol OnboardingListener: AnyObject {
     // TODO: Declare methods the interactor can invoke to communicate with other RIBs.
+    func completed()
 }
 
 final class OnboardingInteractor: Interactor, OnboardingInteractable {
@@ -54,8 +55,8 @@ final class OnboardingInteractor: Interactor, OnboardingInteractable {
             .withUnretained(self)
             .subscribe(onNext: { owner, status in
                 if status {
-                    // TODO: 재욱, 온보딩 립에서 종료하면 콜백을 받을 수 있나요?
                     owner.deactivate()
+                    owner.listener?.completed()
                 } else {
                     progress.subscribe(onSuccess: owner.router?.startStep).dispose()
                 }

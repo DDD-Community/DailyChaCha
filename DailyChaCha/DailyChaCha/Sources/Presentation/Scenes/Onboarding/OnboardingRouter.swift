@@ -75,6 +75,11 @@ final class OnboardingRouter: Router<OnboardingInteractable>, OnboardingRouting 
         }
     }
     
+    private func completed() {
+        viewController.uiviewController.dismiss(animated: true)
+        interactor.listener?.completed()
+    }
+    
     func startStep(_ step: Onboarding.Step) {
         if let build = parseBuild(step, isNewbie: true) {
             attachChild(build)
@@ -82,7 +87,7 @@ final class OnboardingRouter: Router<OnboardingInteractable>, OnboardingRouting 
             viewController.uiviewController.present(navigationViewController, animated: true)
             currentChild = build
         } else {
-            viewController.uiviewController.dismiss(animated: true)
+            completed()
         }
     }
     
@@ -92,7 +97,7 @@ final class OnboardingRouter: Router<OnboardingInteractable>, OnboardingRouting 
             navigationViewController.pushViewController(build.viewControllable.uiviewController, animated: true)
             currentChild = build
         } else {
-            navigationViewController.popViewController(animated: true)
+            completed()
         }
     }
     

@@ -15,6 +15,7 @@ struct OnboardingUseCase {
 //    init(onboardingRepository: OnboardingRepository = OnboardingRepositoryImpl()) {
 //    init(onboardingRepository: OnboardingRepository = OnboardingNewbieRepositoryImpl()) {
     init(onboardingRepository: OnboardingRepository = OnboardingOldbieRepositoryImpl()) {
+//    init(onboardingRepository: OnboardingRepository = OnboardingCompleteRepositoryImpl()) {
         self.onboardingRepository = onboardingRepository
     }
 }
