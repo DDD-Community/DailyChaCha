@@ -12,7 +12,9 @@ import RxSwift
 struct OnboardingUseCase {
     private let onboardingRepository: OnboardingRepository
     
-    init(onboardingRepository: OnboardingRepository = OnboardingRepositoryImpl()) {
+//    init(onboardingRepository: OnboardingRepository = OnboardingRepositoryImpl()) {
+//    init(onboardingRepository: OnboardingRepository = OnboardingNewbieRepositoryImpl()) {
+    init(onboardingRepository: OnboardingRepository = OnboardingOldbieRepositoryImpl()) {
         self.onboardingRepository = onboardingRepository
     }
 }

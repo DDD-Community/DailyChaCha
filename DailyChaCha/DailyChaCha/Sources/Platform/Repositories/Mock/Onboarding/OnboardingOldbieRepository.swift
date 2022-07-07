@@ -10,7 +10,7 @@ import Foundation
 import RxSwift
 import RxCocoa
 
-final class OnboardingOldbieRepository: OnboardingRepository {
+final class OnboardingOldbieRepositoryImpl: OnboardingRepository {
     
     func status() -> Single<Onboarding.Status> {
         .just(.init(isOnboardingCompleted: false))

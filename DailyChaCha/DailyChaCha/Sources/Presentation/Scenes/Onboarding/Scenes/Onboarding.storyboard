@@ -145,7 +145,7 @@
                                         <rect key="frame" x="20" y="0.0" width="335" height="58"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="N1G-VY-cDf">
-                                                <rect key="frame" x="0.0" y="0.0" width="112.33333333333333" height="58"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="117.33333333333333" height="58"/>
                                                 <color key="backgroundColor" name="gray_200"/>
                                                 <fontDescription key="fontDescription" type="system" weight="medium" pointSize="18"/>
                                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
@@ -159,15 +159,15 @@
                                                 </userDefinedRuntimeAttributes>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vVm-WF-jNv" customClass="PrimaryButton" customModule="DailyChaCha" customModuleProvider="target">
-                                                <rect key="frame" x="117.33333333333336" y="0.0" width="217.66666666666663" height="58"/>
+                                                <rect key="frame" x="122.33333333333336" y="0.0" width="212.66666666666663" height="58"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                                 <state key="normal" title="다음"/>
                                             </button>
                                         </subviews>
                                         <constraints>
-                                            <constraint firstItem="vVm-WF-jNv" firstAttribute="width" secondItem="YgN-ea-REW" secondAttribute="width" multiplier="0.65" id="Ig3-KD-ejb"/>
                                             <constraint firstAttribute="height" constant="58" id="M1N-pl-Csz"/>
+                                            <constraint firstItem="N1G-VY-cDf" firstAttribute="width" secondItem="YgN-ea-REW" secondAttribute="width" multiplier="0.35" id="UVq-rR-fp3"/>
                                         </constraints>
                                     </stackView>
                                 </subviews>
@@ -544,7 +544,7 @@
                                         <rect key="frame" x="20" y="0.0" width="335" height="58"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RpP-wl-4QE">
-                                                <rect key="frame" x="0.0" y="0.0" width="112.33333333333333" height="58"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="117.33333333333333" height="58"/>
                                                 <color key="backgroundColor" name="gray_200"/>
                                                 <fontDescription key="fontDescription" type="system" weight="medium" pointSize="18"/>
                                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
@@ -558,7 +558,7 @@
                                                 </userDefinedRuntimeAttributes>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7nl-Ch-7Ci" customClass="PrimaryButton" customModule="DailyChaCha" customModuleProvider="target">
-                                                <rect key="frame" x="117.33333333333336" y="0.0" width="217.66666666666663" height="58"/>
+                                                <rect key="frame" x="122.33333333333336" y="0.0" width="212.66666666666663" height="58"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                                 <state key="normal" title="다음"/>
@@ -566,7 +566,7 @@
                                         </subviews>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="58" id="0xE-oU-2mI"/>
-                                            <constraint firstItem="7nl-Ch-7Ci" firstAttribute="width" secondItem="pQe-xu-Z07" secondAttribute="width" multiplier="0.65" id="zRo-rr-j3b"/>
+                                            <constraint firstItem="RpP-wl-4QE" firstAttribute="width" secondItem="pQe-xu-Z07" secondAttribute="width" multiplier="0.35" id="Sxj-Bw-Cx3"/>
                                         </constraints>
                                     </stackView>
                                 </subviews>

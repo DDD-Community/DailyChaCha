@@ -66,5 +66,6 @@ final class OnboardingTimeViewController: UIViewController, OnboardingTimePresen
         output.headerText.bind(to: headerLabel.rx.text).disposed(by: disposeBag)
         output.dates.bind(to: stackView.rx.items).disposed(by: disposeBag)
         output.isEnabledNextButton.bind(to: nextButton.rx.isEnabled).disposed(by: disposeBag)
+        output.isHiddenPrevButton.bind(to: prevButton.rx.isHidden).disposed(by: disposeBag)
     }
 }

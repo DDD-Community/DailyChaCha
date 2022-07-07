@@ -58,6 +58,7 @@ final class OnboardingDateViewController: UIViewController, OnboardingDatePresen
         let output = listener.transform(input: input)
         output.cells.bind(to: tableView.rx.cells).disposed(by: disposeBag)
         output.isEnabledNextButton.bind(to: nextButton.rx.isEnabled).disposed(by: disposeBag)
+        output.isHiddenPrevButton.bind(to: prevButton.rx.isHidden).disposed(by: disposeBag)
     }
 }
 

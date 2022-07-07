@@ -34,15 +34,20 @@ final class OnboardingTimeInteractor: PresentableInteractor<OnboardingTimePresen
         let dates: Observable<Onboarding.Dates>
         let headerText: Observable<String>
         let isEnabledNextButton: Observable<Bool>
+        let isHiddenPrevButton: Observable<Bool>
     }
 
     weak var router: OnboardingTimeRouting?
     weak var listener: OnboardingTimeListener?
     private let useCase: OnboardingUseCase
+    private let isNewbie: Bool
     private let disposeBag: DisposeBag = .init()
 
-    init(presenter: OnboardingTimePresentable, useCase: OnboardingUseCase) {
+    init(presenter: OnboardingTimePresentable,
+         useCase: OnboardingUseCase,
+         isNewbie: Bool) {
         self.useCase = useCase
+        self.isNewbie = isNewbie
         super.init(presenter: presenter)
         presenter.listener = self
     }
@@ -90,7 +95,8 @@ final class OnboardingTimeInteractor: PresentableInteractor<OnboardingTimePresen
         return .init(
             dates: dates,
             headerText: headerText,
-            isEnabledNextButton: input.selectedRows.map { $0?.isEmpty == false }
+            isEnabledNextButton: input.selectedRows.map { $0?.isEmpty == false },
+            isHiddenPrevButton: .just(isNewbie)
         )
     }
 }

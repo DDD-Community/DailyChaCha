@@ -21,7 +21,7 @@ final class OnboardingTimeComponent: Component<OnboardingTimeDependency> {
 // MARK: - Builder
 
 protocol OnboardingTimeBuildable: Buildable {
-    func build(withListener listener: OnboardingTimeListener) -> OnboardingTimeRouting
+    func build(withListener listener: OnboardingTimeListener, isNewbie: Bool) -> OnboardingTimeRouting
 }
 
 final class OnboardingTimeBuilder: Builder<OnboardingTimeDependency>, OnboardingTimeBuildable {
@@ -30,10 +30,10 @@ final class OnboardingTimeBuilder: Builder<OnboardingTimeDependency>, Onboarding
         super.init(dependency: dependency)
     }
 
-    func build(withListener listener: OnboardingTimeListener) -> OnboardingTimeRouting {
-        let component = OnboardingTimeComponent(dependency: dependency)
+    func build(withListener listener: OnboardingTimeListener, isNewbie: Bool) -> OnboardingTimeRouting {
+        _ = OnboardingTimeComponent(dependency: dependency)
         let viewController = OnboardingTimeViewController.create("Onboarding")
-        let interactor = OnboardingTimeInteractor(presenter: viewController, useCase: OnboardingUseCase())
+        let interactor = OnboardingTimeInteractor(presenter: viewController, useCase: OnboardingUseCase(), isNewbie: isNewbie)
         interactor.listener = listener
         return OnboardingTimeRouter(interactor: interactor, viewController: viewController)
     }

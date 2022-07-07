@@ -33,15 +33,20 @@ final class OnboardingDateInteractor: PresentableInteractor<OnboardingDatePresen
     struct Output {
         let cells: Observable<[CellModel]>
         let isEnabledNextButton: Observable<Bool>
+        let isHiddenPrevButton: Observable<Bool>
     }
 
     weak var router: OnboardingDateRouting?
     weak var listener: OnboardingDateListener?
     private let useCase: OnboardingUseCase
+    private let isNewbie: Bool
     private let disposeBag: DisposeBag = .init()
 
-    init(presenter: OnboardingDatePresentable, useCase: OnboardingUseCase) {
+    init(presenter: OnboardingDatePresentable,
+         useCase: OnboardingUseCase,
+         isNewbie: Bool) {
         self.useCase = useCase
+        self.isNewbie = isNewbie
         super.init(presenter: presenter)
         presenter.listener = self
     }
@@ -74,7 +79,8 @@ final class OnboardingDateInteractor: PresentableInteractor<OnboardingDatePresen
             
         return .init(
             cells: cells,
-            isEnabledNextButton: input.selectedRows.map { $0?.isEmpty == false }
+            isEnabledNextButton: input.selectedRows.map { $0?.isEmpty == false },
+            isHiddenPrevButton: .just(isNewbie)
         )
     }
     

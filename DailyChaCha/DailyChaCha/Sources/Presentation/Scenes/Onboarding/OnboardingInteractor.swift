@@ -11,6 +11,7 @@ import RxSwift
 
 protocol OnboardingRouting: Routing {
     func cleanupViews()
+    func startStep(_ step: Onboarding.Step)
     func routeNextStep(_ step: Onboarding.Step)
     func routePrevStep(_ step: Onboarding.Step)
     // TODO: Declare methods the interactor can invoke to manage sub-tree via the router.
@@ -25,7 +26,6 @@ final class OnboardingInteractor: Interactor, OnboardingInteractable {
     weak var router: OnboardingRouting?
     weak var listener: OnboardingListener?
     private let useCase: OnboardingUseCase
-    private let disposeBag: DisposeBag = .init()
     
     init(useCase: OnboardingUseCase) {
         self.useCase = useCase
@@ -34,6 +34,7 @@ final class OnboardingInteractor: Interactor, OnboardingInteractable {
 
     override func didBecomeActive() {
         super.didBecomeActive()
+        bind()
     }
 
     override func willResignActive() {
@@ -43,13 +44,30 @@ final class OnboardingInteractor: Interactor, OnboardingInteractable {
         // TODO: Pause any business logic.
     }
     
-    func nextStep(_ step: Onboarding.Step) {
-        print("nextStep", step)
-        router?.routeNextStep(step)
+    private func bind() {
+        let progress = useCase.progress()
+            .map { $0.progress }
+        
+        useCase.status()
+            .map { $0.isOnboardingCompleted }
+            .asObservable()
+            .withUnretained(self)
+            .subscribe(onNext: { owner, status in
+                if status {
+                    // TODO: 재욱, 온보딩 립에서 종료하면 콜백을 받을 수 있나요?
+                    owner.deactivate()
+                } else {
+                    progress.subscribe(onSuccess: owner.router?.startStep).dispose()
+                }
+            })
+            .dispose()
     }
     
+    func nextStep(_ step: Onboarding.Step) {
+        router?.routeNextStep(step)
+    }
+
     func prevStep(_ step: Onboarding.Step) {
-        print("prevStep", step)
         router?.routePrevStep(step)
     }
 }
