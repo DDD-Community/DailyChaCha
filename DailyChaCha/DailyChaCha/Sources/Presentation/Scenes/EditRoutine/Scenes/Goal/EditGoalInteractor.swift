@@ -19,7 +19,7 @@ protocol EditGoalPresentable: Presentable {
     // TODO: Declare methods the interactor can invoke the presenter to present data.
 }
 
-protocol EditGoalListener: AnyObject {
+protocol EditGoalListener: EditRoutineStepable {
     // TODO: Declare methods the interactor can invoke to communicate with other RIBs.
 }
 
@@ -29,6 +29,7 @@ final class EditGoalInteractor: PresentableInteractor<EditGoalPresentable>, Edit
         let loadData: Observable<Void>
         let itemSelected: Observable<IndexPath>
         let modelSelected: Observable<OnboardingGoalSelectDatable>
+        let prevStep: Observable<Void>
         let nextStep: Observable<OnboardingGoalSelectDatable>
     }
     
@@ -73,6 +74,13 @@ final class EditGoalInteractor: PresentableInteractor<EditGoalPresentable>, Edit
                     }
                 }
         )
+        
+        input.prevStep
+            .asDriver(onErrorJustReturn: ())
+            .drive(onNext: { [weak self] in
+                self?.listener?.prevStep(.goal)
+            })
+            .disposed(by: disposeBag)
         
         input.nextStep
             .withUnretained(self)

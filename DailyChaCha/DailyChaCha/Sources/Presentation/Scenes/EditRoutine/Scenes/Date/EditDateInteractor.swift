@@ -19,7 +19,7 @@ protocol EditDatePresentable: Presentable {
     // TODO: Declare methods the interactor can invoke the presenter to present data.
 }
 
-protocol EditDateListener: AnyObject {
+protocol EditDateListener: EditRoutineStepable {
     // TODO: Declare methods the interactor can invoke to communicate with other RIBs.
 }
 
@@ -59,7 +59,7 @@ final class EditDateInteractor: PresentableInteractor<EditDatePresentable>, Edit
         input.prevStep
             .asDriver(onErrorJustReturn: ())
             .drive(onNext: { [weak self] in
-//                self?.listener?.prevStep(.date)
+                self?.listener?.prevStep(.date)
             })
             .disposed(by: disposeBag)
         

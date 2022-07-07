@@ -55,6 +55,7 @@ final class EditGoalViewController: UIViewController, EditGoalPresentable, EditG
             loadData: rx.viewWillAppear.map { _ in },
             itemSelected: tableView.rx.itemSelected.asObservable(),
             modelSelected: modelSelected,
+            prevStep: naviBar.backButton.rx.tap.asObservable(),
             nextStep: naviBar.rightButton.rx.tap.withLatestFrom(modelSelected)
         )
             

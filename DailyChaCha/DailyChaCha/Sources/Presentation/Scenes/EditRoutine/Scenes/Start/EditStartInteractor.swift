@@ -18,7 +18,7 @@ protocol EditStartPresentable: Presentable {
     // TODO: Declare methods the interactor can invoke the presenter to present data.
 }
 
-protocol EditStartListener: AnyObject {
+protocol EditStartListener: EditRoutineStepable {
     // TODO: Declare methods the interactor can invoke to communicate with other RIBs.
 }
 
@@ -26,7 +26,8 @@ final class EditStartInteractor: PresentableInteractor<EditStartPresentable>, Ed
     
     struct Input {
         let loadData: Observable<Void>
-        let modelSelected: Observable<EditStartCellModel.Setting>
+        let prevStep: Observable<Void>
+        let modelSelected: Observable<EditRoutineStep>
     }
     
     struct Output {
@@ -48,16 +49,23 @@ final class EditStartInteractor: PresentableInteractor<EditStartPresentable>, Ed
     func transform(input: Input) -> Output {
         let cells: Observable<[CellModel]> = input.loadData
             .map {
-                [EditStartCellModel(setting: .goal, subTitle: "몸도 마음도 건강한 삶을 위해"),
-                EditStartCellModel(setting: .date, subTitle: "매주 평일"),
-                EditStartCellModel(setting: .time, subTitle: "매일 다르게"),
-                EditStartCellModel(setting: .alert, subTitle: "10분 전")]
+                [EditStartCellModel(step: .goal, subTitle: "몸도 마음도 건강한 삶을 위해"),
+                EditStartCellModel(step: .date, subTitle: "매주 평일"),
+                EditStartCellModel(step: .time, subTitle: "매일 다르게"),
+                EditStartCellModel(step: .alert, subTitle: "10분 전")]
             }
+        
+        input.prevStep
+            .asDriver(onErrorJustReturn: ())
+            .drive(onNext: { [weak self] in
+                self?.listener?.prevStep(.start)
+            })
+            .disposed(by: disposeBag)
         
         let selected = input.modelSelected.share()
         selected
-            .subscribe(onNext: {
-                print("route", $0)
+            .subscribe(onNext: { [listener] in
+                listener?.nextStep($0)
             })
             .disposed(by: disposeBag)
         

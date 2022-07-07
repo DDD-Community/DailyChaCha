@@ -8,24 +8,24 @@
 
 import UIKit
 
-final class EditStartCellModel: CellModel {
-    enum Setting {
-        case goal, date, time, alert
-        
-        var title: String {
-            switch self {
-            case .goal: return "운동 이유"
-            case .date: return "요일 반복"
-            case .time: return "시작 시간"
-            case .alert: return "알림"
-            }
+fileprivate extension EditRoutineStep {
+    var title: String {
+        switch self {
+        case .start: return ""
+        case .goal: return "운동 이유"
+        case .date: return "요일 반복"
+        case .time: return "시작 시간"
+        case .alert: return "알림"
         }
     }
-    public let setting: Setting
+}
+
+final class EditStartCellModel: CellModel {
+    public let step: EditRoutineStep
     fileprivate let subTitleText: String
     
-    init(setting: Setting, subTitle: String) {
-        self.setting = setting
+    init(step: EditRoutineStep, subTitle: String) {
+        self.step = step
         self.subTitleText = subTitle
         super.init(cellID: "EditStartCell")
     }
@@ -37,7 +37,7 @@ final class EditStartCell: UITableViewCell, CellModelable {
     
     func bind(to cellModel: CellModel) {
         guard let cellModel = cellModel as? EditStartCellModel else { return }
-        titleLabel.text = cellModel.setting.title
+        titleLabel.text = cellModel.step.title
         subTitleLabel.text = cellModel.subTitleText
     }
 }
