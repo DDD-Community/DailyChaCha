@@ -85,24 +85,12 @@ extension OnboardingService: TargetType {
         case .status:
             return "{\"is_onboarding_completed\":false}".data(using: String.Encoding.utf8)!
         case .getGoals:
-            return loadMock(name: "Mock.Onboarding.goals")
+            return Mock.load(name: "Mock.Onboarding.goals")
         case .progress:
-            return "{\"progress\":\"date\"}".data(using: String.Encoding.utf8)!
+            return "{\"progress\":\"start\"}".data(using: String.Encoding.utf8)!
         case .getDates:
-            return loadMock(name: "Mock.Onboarding.dates")
+            return Mock.load(name: "Mock.Onboarding.dates")
         default:
-            return .init()
-        }
-    }
-    
-    func loadMock(name: String) -> Data {
-        guard let path = Bundle.main.url(forResource: name, withExtension: "json") else {
-            return .init()
-        }
-
-        do {
-            return try Data(contentsOf: path)
-        } catch {
             return .init()
         }
     }

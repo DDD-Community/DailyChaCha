@@ -12,7 +12,11 @@ struct Onboarding { }
 
 extension Onboarding {
     
-    struct Goal: Decodable {
+    enum Step: String, Decodable {
+        case start, goal, date, time, alert, welcome
+    }
+    
+    struct Goal: Codable {
         let goal: String
     }
     
@@ -27,11 +31,7 @@ extension Onboarding {
     typealias Goals = [Goal]
     
     struct Progress: Decodable {
-        let progress: ProgressType
-        
-        enum ProgressType: String, Codable {
-            case date, time, alert
-        }
+        let progress: Step
     }
     
     struct Dates: Decodable {
@@ -56,7 +56,7 @@ extension Onboarding {
         }
     }
     
-    struct ExerciseDate: Decodable {
+    struct ExerciseDate: Codable {
         static var DefaultDate: Int = -1
         static var DefaultTime: TimeInterval = 0
         var date: Int
@@ -70,6 +70,11 @@ extension Onboarding {
         init() {
             date = ExerciseDate.DefaultDate
             time = ExerciseDate.DefaultTime
+        }
+        
+        init(date: Int, time: TimeInterval) {
+            self.date = date
+            self.time = time
         }
         
         var verify: Bool {

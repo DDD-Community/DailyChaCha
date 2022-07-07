@@ -33,16 +33,10 @@ protocol OnboardingRepository {
 final class OnboardingRepositoryImpl: OnboardingRepository {
     
     private let provider: MoyaProvider<OnboardingService>
-    private let isMock: Bool
     
-    init(isMock: Bool = false) {
+    init() {
         let plugin: [PluginType] = [NetworkLoggerPlugin(configuration: .init(logOptions: .verbose))]
-        self.isMock = isMock
-        if isMock {
-            provider = .init(stubClosure: MoyaProvider.immediatelyStub, plugins: plugin)
-        } else {
-            provider = .init(plugins: plugin)
-        }
+        provider = .init(plugins: plugin)
     }
     
     func status() -> Single<Onboarding.Status> {

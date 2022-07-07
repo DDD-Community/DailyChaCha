@@ -11,8 +11,8 @@ import RxSwift
 
 protocol OnboardingRouting: Routing {
     func cleanupViews()
-    func routeNextStep(_ step: OnboardingStep)
-    func routePrevStep(_ step: OnboardingStep)
+    func routeNextStep(_ step: Onboarding.Step)
+    func routePrevStep(_ step: Onboarding.Step)
     // TODO: Declare methods the interactor can invoke to manage sub-tree via the router.
 }
 
@@ -24,14 +24,16 @@ final class OnboardingInteractor: Interactor, OnboardingInteractable {
 
     weak var router: OnboardingRouting?
     weak var listener: OnboardingListener?
-
-    // TODO: Add additional dependencies to constructor. Do not perform any logic
-    // in constructor.
-    override init() {}
+    private let useCase: OnboardingUseCase
+    private let disposeBag: DisposeBag = .init()
+    
+    init(useCase: OnboardingUseCase) {
+        self.useCase = useCase
+        super.init()
+    }
 
     override func didBecomeActive() {
         super.didBecomeActive()
-        // TODO: Implement business logic here.
     }
 
     override func willResignActive() {
@@ -41,12 +43,12 @@ final class OnboardingInteractor: Interactor, OnboardingInteractable {
         // TODO: Pause any business logic.
     }
     
-    func nextStep(_ step: OnboardingStep) {
+    func nextStep(_ step: Onboarding.Step) {
         print("nextStep", step)
         router?.routeNextStep(step)
     }
     
-    func prevStep(_ step: OnboardingStep) {
+    func prevStep(_ step: Onboarding.Step) {
         print("prevStep", step)
         router?.routePrevStep(step)
     }

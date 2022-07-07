@@ -33,7 +33,7 @@ final class OnboardingBuilder: Builder<OnboardingDependency>, OnboardingBuildabl
 
     func build(withListener listener: OnboardingListener) -> OnboardingRouting {
         let component = OnboardingComponent(dependency: dependency)
-        let interactor = OnboardingInteractor()
+        let interactor = OnboardingInteractor(useCase: OnboardingUseCase())
         interactor.listener = listener
         return OnboardingRouter(
             interactor: interactor,

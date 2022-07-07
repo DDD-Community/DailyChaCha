@@ -8,13 +8,9 @@
 
 import RIBs
 
-enum OnboardingStep {
-    case start, goal, date, time, alert, welcome
-}
-
 protocol OnboardingStepable: AnyObject {
-    func nextStep(_ step: OnboardingStep)
-    func prevStep(_ step: OnboardingStep)
+    func nextStep(_ step: Onboarding.Step)
+    func prevStep(_ step: Onboarding.Step)
 }
 
 protocol OnboardingInteractable: Interactable, OnboardingGoalListener, OnboardingDateListener, OnboardingTimeListener, OnboardingAlertListener, OnboardingWelcomeListener {
@@ -62,25 +58,12 @@ final class OnboardingRouter: Router<OnboardingInteractable>, OnboardingRouting 
     private let welcomeBuilder: OnboardingWelcomeBuilder
     
     private var currentChild: ViewableRouting?
-    /**
-     원하는 인풋과 아웃풋
-      시나리오 :
-      서버에서 저장된 정보를 불러온다
-      -> 있다. -> 완벽히 채워진 모델이다 -> 끝
-            -> 빈 모델이다 -> 부족한 모델이 있는 화면들을 구성해서 전환 시킨다. (띄엄띄엄 되어 있다?)
-      -> 없다. -> start(nil)
-      
-      input :
-      output : 완성된 구조체,
-      
-      입력한 데이터를 계속 서버에 업데이트를 해야한다.
-     */
+     
     override func didLoad() {
         super.didLoad()
-        routeNextStep(.start)
     }
     
-    func routeNextStep(_ step: OnboardingStep) {
+    func routeNextStep(_ step: Onboarding.Step) {
         print("routeStep", step)
         switch step {
         case .start:
@@ -113,7 +96,7 @@ final class OnboardingRouter: Router<OnboardingInteractable>, OnboardingRouting 
         }
     }
     
-    func routePrevStep(_ step: OnboardingStep) {
+    func routePrevStep(_ step: Onboarding.Step) {
 //        currentChild?.viewControllable.uiviewController.navigationController?.popViewController(animated: true)
     }
 }
