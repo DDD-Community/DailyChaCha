@@ -13,7 +13,7 @@ enum OnboardingService {
     case status, progress
     case getGoals, setGoals(goal: String)
     case getDates
-    case setDates(days: [Int]), putDates(dates: Onboarding.Dates)
+    case setDates(days: [Int]), putDates(dates: [Onboarding.ExerciseDate])
     case setAlert
 }
 
@@ -69,7 +69,7 @@ extension OnboardingService: TargetType {
                 encoding: JSONEncoding.default
             )
         case .putDates(let dates):
-            let params = dates.exerciseDates.map { $0.params }
+            let params = dates.map { $0.params }
             
             return .requestParameters(
                 parameters: ["exercise_dates": params],

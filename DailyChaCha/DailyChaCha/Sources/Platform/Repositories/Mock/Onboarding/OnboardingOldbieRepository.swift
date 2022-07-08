@@ -47,7 +47,7 @@ final class OnboardingOldbieRepositoryImpl: OnboardingRepository {
         ]))
     }
     
-    func dates(exerciseDate: Onboarding.Dates) -> Single<Void> {
+    func dates(exerciseDates: [Onboarding.ExerciseDate]) -> Single<Void> {
         .just(())
     }
     
