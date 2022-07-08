@@ -41,6 +41,7 @@ final class OnboardingAlertViewController: UIViewController, OnboardingAlertPres
         }
 
         let input: OnboardingAlertInteractor.Input = .init(
+            loadData: rx.viewWillAppear.map { _ in },
             tapAllow: allowButton.rx.tap.asObservable()
         )
         
@@ -52,21 +53,29 @@ final class OnboardingAlertViewController: UIViewController, OnboardingAlertPres
             .flatMap { (owner, _) in owner.permission }
             .bind(to: input.nextStep)
             .disposed(by: disposeBag)
-    }
-    
-    // TODO: 해당 내용으로 사용하진 않겠지만, 해당 화면을 보여주기 전에 허용 상태를 확인하고 띄울지 스킵할지를 결정해야함.
-    private func checkNotification(_ setting: (UNNotificationSetting)->()) {
-        let center = UNUserNotificationCenter.current()
-        center.getNotificationSettings { settings in
-            switch settings.alertSetting {
-                case .enabled:
-                    // 허용한 상태일 경우
-                print("허용")
-                default:
-                    // 허용하지 않은 상태 + 나머지 모든 경우
-                print("안됨")
-            }
+        
+        output.headerText.map {
+            let paragraphStyle = NSMutableParagraphStyle()
+            paragraphStyle.lineSpacing = 8
+            paragraphStyle.alignment = .center
+            let type: [NSAttributedString.Key : Any] = [
+                .foregroundColor: DailyChaChaAsset.Colors.gray600.color,
+                .font: UIFont.systemFont(ofSize: 18, weight: .medium),
+                .paragraphStyle: paragraphStyle
+            ]
+            let text = NSMutableAttributedString(string: "매주 ", attributes: type)
+            let weekday = NSAttributedString(string: $0, attributes: [
+                .foregroundColor: DailyChaChaAsset.Colors.primary900.color,
+                .font: UIFont.systemFont(ofSize: 18, weight: .medium)
+            ])
+            let send = NSAttributedString(string: "\n운동 10분 전에 알림을 보내드릴까요?", attributes: type)
+            
+            text.append(weekday)
+            text.append(send)
+            return text
         }
+        .bind(to: alertLabel.rx.attributedText)
+        .disposed(by: disposeBag)
     }
     
     var permission: Observable<Bool> {
