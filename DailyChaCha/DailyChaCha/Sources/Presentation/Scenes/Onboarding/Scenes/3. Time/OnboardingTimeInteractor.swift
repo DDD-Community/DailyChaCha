@@ -72,7 +72,7 @@ final class OnboardingTimeInteractor: PresentableInteractor<OnboardingTimePresen
         input.nextStep
             .withUnretained(self)
             .flatMap { owner, exerciseDate in
-                owner.useCase.dates(exerciseDate: .init(exerciseDates: exerciseDate))
+                owner.useCase.dates(exerciseDates: exerciseDate)
             }
             .asDriver(onErrorJustReturn: ())
             .drive(onNext: { [weak self] in
