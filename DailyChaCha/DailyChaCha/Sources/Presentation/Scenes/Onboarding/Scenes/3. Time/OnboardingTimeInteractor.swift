@@ -59,18 +59,7 @@ final class OnboardingTimeInteractor: PresentableInteractor<OnboardingTimePresen
             .share()
         
         let headerText: Observable<String> = dates
-            .map { dates in
-                let weekdays = dates.exerciseDates.map { $0.weekday }
-                var text: String = ""
-                for i in 0..<weekdays.count {
-                    if i+1 == weekdays.count {
-                        text += "\(weekdays[i]) 마다"
-                    } else {
-                        text += "\(weekdays[i]), "
-                    }
-                }
-                return text
-            }
+            .map { $0.weekdaysTitle + "마다" }
         
         input.prevStep
             .asDriver(onErrorJustReturn: ())

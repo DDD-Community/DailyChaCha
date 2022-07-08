@@ -54,6 +54,32 @@ extension Onboarding {
             let dates = try container.decodeIfPresent([ExerciseDate].self, forKey: .exerciseDates) ?? []
             exerciseDates = dates.filter { $0.verify }
         }
+        
+        var weekdaysTitle: String {
+            func comma(short: Bool) -> String {
+                var text: String = ""
+                let weekdays = exerciseDates.map { $0.weekday(short: short) }
+                for i in 0..<weekdays.count {
+                    if i+1 == weekdays.count {
+                        text += "\(weekdays[i])"
+                    } else {
+                        text += "\(weekdays[i]), "
+                    }
+                }
+                return text
+            }
+            
+            let count = exerciseDates.count
+            if count > 0 && count < 4 {
+                return comma(short: false)
+            } else if count > 4 && count < 7 {
+                return comma(short: true)
+            } else if count == 7 {
+                return "매일"
+            } else {
+                return ""
+            }
+        }
     }
     
     struct ExerciseDate: Codable {
@@ -85,12 +111,12 @@ extension Onboarding {
             }
         }
         
-        var weekday: String {
+        func weekday(short: Bool) -> String {
             if date == ExerciseDate.DefaultDate {
                 return "운동 시작 시간"
             } else {
                 let fmt = DateFormatter()
-                let symbols = fmt.weekdaySymbols!
+                let symbols = short ? fmt.shortWeekdaySymbols! : fmt.weekdaySymbols!
                 return symbols[date]
             }
         }
