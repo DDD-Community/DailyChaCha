@@ -40,7 +40,10 @@ final class OnboardingOldbieRepositoryImpl: OnboardingRepository {
         .just(.init(goal: "", exerciseDates: [
             .init(date: 0, time: 0),
             .init(date: 1, time: 0),
-            .init(date: 2, time: 0)
+            .init(date: 2, time: 0),
+            .init(date: 3, time: 0),
+            .init(date: 4, time: 0),
+            .init(date: 5, time: 0),
         ]))
     }
     

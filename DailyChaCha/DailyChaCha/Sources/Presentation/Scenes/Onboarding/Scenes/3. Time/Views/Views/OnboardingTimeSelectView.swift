@@ -43,7 +43,7 @@ final class OnboardingTimeSelectView: DesignView, OnboardingTimeSelectable {
     init(data: Onboarding.ExerciseDate, isNew: Bool) {
         resultForSelectedRow = data
         super.init(frame: .zero)
-        titleLabel.text = data.weekday
+        titleLabel.text = data.weekday(short: false)
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "HH:mm"
         var now: Date
