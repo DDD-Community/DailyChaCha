@@ -11,9 +11,9 @@ import UIKit
 final class OnboardingDateSelectCellModel: CellModel {
     var title: String
     
-    init(title: String) {
+    init(title: String, selected: Bool = false) {
         self.title = title
-        super.init(cellID: "OnboardingDateSelectCell")
+        super.init(cellID: "OnboardingDateSelectCell", selected: selected)
     }
 }
 

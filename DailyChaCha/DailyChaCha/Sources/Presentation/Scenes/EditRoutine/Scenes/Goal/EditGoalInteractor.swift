@@ -89,8 +89,7 @@ final class EditGoalInteractor: PresentableInteractor<EditGoalPresentable>, Edit
             }
             .asDriver(onErrorJustReturn: ())
             .drive(onNext: { [weak self] in
-//                print($0)
-//                self?.listener?.nextStep(.goal)
+                self?.listener?.prevStep(.goal)
             })
             .disposed(by: disposeBag)
             
