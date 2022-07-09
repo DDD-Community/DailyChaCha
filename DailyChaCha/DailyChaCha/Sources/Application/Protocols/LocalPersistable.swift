@@ -14,9 +14,17 @@ enum LocalPersistableKey: String {
 
 protocol LocalPersistable {
   
-  func set(
+  func setPrimitiveValue(
     value: Any?,
     key: LocalPersistableKey
   )
-  func get<T>(key: LocalPersistableKey) -> T?
+  
+  func getPrimitiveValue<T>(key: LocalPersistableKey) -> T?
+  
+  func setCodableObject<T: Codable>(
+    value: T?,
+    key: LocalPersistableKey
+  )
+  
+  func getCodableObject<T: Codable>(key: LocalPersistableKey) -> T?
 }
