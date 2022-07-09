@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct TokenInfo: Decodable {
+struct TokenInfo: Codable {
   let accessToken: String
   let expireDate: String
   
