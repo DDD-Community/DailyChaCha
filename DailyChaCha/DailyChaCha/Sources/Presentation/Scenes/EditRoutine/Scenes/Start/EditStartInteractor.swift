@@ -32,7 +32,6 @@ final class EditStartInteractor: PresentableInteractor<EditStartPresentable>, Ed
     
     struct Output {
         let cells: Observable<[CellModel]>
-        let alert: Observable<[String]>
     }
 
     weak var router: EditStartRouting?
@@ -69,12 +68,8 @@ final class EditStartInteractor: PresentableInteractor<EditStartPresentable>, Ed
             })
             .disposed(by: disposeBag)
         
-        let alert = selected.filter { $0 == .alert }
-            .map { _ in ["없음", "10분 전", "5분 전", "1분 전"] }
-        
         return .init(
-            cells: cells,
-            alert: alert
+            cells: cells
         )
     }
 }

@@ -68,7 +68,6 @@ final class OnboardingTimeInteractor: PresentableInteractor<OnboardingTimePresen
             })
             .disposed(by: disposeBag)
         
-        // TODO: - api 연동
         input.nextStep
             .withUnretained(self)
             .flatMap { owner, exerciseDate in
