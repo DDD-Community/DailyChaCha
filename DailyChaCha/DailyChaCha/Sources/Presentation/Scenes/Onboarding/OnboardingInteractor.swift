@@ -8,67 +8,73 @@
 
 import RIBs
 import RxSwift
+import UIKit
 
 protocol OnboardingRouting: Routing {
-    func cleanupViews()
-    func startStep(_ step: Onboarding.Step)
-    func routeNextStep(_ step: Onboarding.Step)
-    func routePrevStep(_ step: Onboarding.Step)
-    // TODO: Declare methods the interactor can invoke to manage sub-tree via the router.
+  func cleanupViews()
+  func startStep(_ step: Onboarding.Step)
+  func routeNextStep(_ step: Onboarding.Step)
+  func routePrevStep(_ step: Onboarding.Step)
+  // TODO: Declare methods the interactor can invoke to manage sub-tree via the router.
 }
 
 protocol OnboardingListener: AnyObject {
-    // TODO: Declare methods the interactor can invoke to communicate with other RIBs.
-    func completed()
+  func routeToProperOnboardingStep(viewController: UIViewController)
+  func completed()
 }
 
 final class OnboardingInteractor: Interactor, OnboardingInteractable {
-
-    weak var router: OnboardingRouting?
-    weak var listener: OnboardingListener?
-    private let useCase: OnboardingUseCase
+  
+  weak var router: OnboardingRouting?
+  weak var listener: OnboardingListener?
+  private let useCase: OnboardingUseCase
+  
+  init(useCase: OnboardingUseCase) {
+    self.useCase = useCase
+    super.init()
+  }
+  
+  override func didBecomeActive() {
+    super.didBecomeActive()
+    bind()
+  }
+  
+  override func willResignActive() {
+    super.willResignActive()
     
-    init(useCase: OnboardingUseCase) {
-        self.useCase = useCase
-        super.init()
-    }
-
-    override func didBecomeActive() {
-        super.didBecomeActive()
-        bind()
-    }
-
-    override func willResignActive() {
-        super.willResignActive()
-
-        router?.cleanupViews()
-        // TODO: Pause any business logic.
-    }
+    router?.cleanupViews()
+    // TODO: Pause any business logic.
+  }
+  
+  private func bind() {
+    let progress = useCase.progress()
+      .map { $0.progress }
     
-    private func bind() {
-        let progress = useCase.progress()
-            .map { $0.progress }
-        
-        useCase.status()
-            .map { $0.isOnboardingCompleted }
-            .asObservable()
-            .withUnretained(self)
-            .subscribe(onNext: { owner, status in
-                if status {
-                    owner.deactivate()
-                    owner.listener?.completed()
-                } else {
-                    progress.subscribe(onSuccess: owner.router?.startStep).dispose()
-                }
-            })
-            .dispose()
-    }
+    useCase.status()
+      .map { $0.isOnboardingCompleted }
+      .asObservable()
+      .withUnretained(self)
+      .subscribe(onNext: { owner, status in
+        if status {
+          owner.deactivate()
+          owner.listener?.completed()
+        } else {
+          progress.subscribe(onSuccess: owner.router?.startStep).dispose()
+        }
+      })
+      .dispose()
+  }
+  
+  func nextStep(_ step: Onboarding.Step) {
+    router?.routeNextStep(step)
+  }
+  
+  func prevStep(_ step: Onboarding.Step) {
+    router?.routePrevStep(step)
+  }
+  
+  func routeToProperOnboardingStep(viewController: UIViewController) {
     
-    func nextStep(_ step: Onboarding.Step) {
-        router?.routeNextStep(step)
-    }
-
-    func prevStep(_ step: Onboarding.Step) {
-        router?.routePrevStep(step)
-    }
+    listener?.routeToProperOnboardingStep(viewController: viewController)
+  }
 }
