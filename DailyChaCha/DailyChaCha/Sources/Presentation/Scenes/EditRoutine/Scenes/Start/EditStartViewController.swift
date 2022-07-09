@@ -47,11 +47,5 @@ final class EditStartViewController: UIViewController, EditStartPresentable, Edi
         
         let output = listener.transform(input: input)
         output.cells.bind(to: tableView.rx.cells).disposed(by: disposeBag)
-        
-        output.alert
-            .subscribe(onNext: {
-                print($0)
-            })
-            .disposed(by: disposeBag)
     }
 }
