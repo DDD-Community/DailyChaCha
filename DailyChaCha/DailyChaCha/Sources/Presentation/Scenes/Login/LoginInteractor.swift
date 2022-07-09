@@ -12,7 +12,8 @@ import ReactorKit
 import AuthenticationServices
 
 protocol LoginRouting: ViewableRouting {
-  
+  func routeToOnboarding()
+  func routeToProperOnboardingStep(viewController: UIViewController)
 }
 
 protocol LoginPresentable: Presentable {
@@ -54,6 +55,14 @@ final class LoginInteractor:
     super.init(presenter: presenter)
     presenter.listener = self
   }
+  
+  func completed() {
+    print(#function)
+  }
+  
+  func routeToProperOnboardingStep(viewController: UIViewController) {
+    router?.routeToProperOnboardingStep(viewController: viewController)
+  }
 }
 
 // MARK: - Reactor
@@ -83,11 +92,20 @@ extension LoginInteractor {
       .withUnretained(self)
       .flatMap { owner, token in
         return owner.useCase.requestLogin(token: token)
+      }.do(onNext: { tokenInfo in
+        UserInfoManager.shared.setLoginTokenInfo(with: tokenInfo)
+      })
+      .withUnretained(self)
+      .flatMap { owner, _ in
+        owner.routeToOnboardingMutation()
       }
-      .map { tokenInfo in
-        print(tokenInfo)
-        return Mutation.setToken(token: tokenInfo.accessToken)
-      }
+  }
+  
+  func routeToOnboardingMutation() -> Observable<Mutation> {
+    
+    router?.routeToOnboarding()
+    
+    return Observable<Mutation>.empty()
   }
   
   
@@ -95,6 +113,11 @@ extension LoginInteractor {
   
   func reduce(state: LoginState, mutation: Mutation) -> LoginState {
     var newState = state
+    
+    switch mutation {
+    case let .setToken(token):
+      newState.token = token
+    }
     
     return newState
   }
