@@ -15,7 +15,8 @@ protocol LoginDependency: Dependency {
 
 // MARK: - LoginComponent
 
-final class LoginComponent: Component<LoginDependency> {
+final class LoginComponent: Component<LoginDependency>,
+  OnboardingDependency{
 }
 
 // MARK: - LoginBuildable
@@ -51,6 +52,12 @@ final class LoginBuilder:
     let interactor = LoginInteractor(presenter: viewController, useCase: LoginUseCaseImpl())
     interactor.listener = listener
     
-    return LoginRouter(interactor: interactor, viewController: viewController)
+    let onboardingBuilder = OnboardingBuilder(dependency: component)
+    
+    return LoginRouter(
+      interactor: interactor,
+      viewController: viewController,
+      onboardingBuilder: onboardingBuilder
+    )
   }
 }

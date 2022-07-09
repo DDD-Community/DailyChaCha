@@ -107,7 +107,7 @@ extension LoginViewController {
       .disposed(by: disposeBag)
   }
   
-  private func bindState(from: LoginPresentableListener) {
+  private func bindState(from listener: LoginPresentableListener) {
     
   }
 }
