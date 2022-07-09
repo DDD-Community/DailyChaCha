@@ -9,5 +9,5 @@
 import Foundation
 
 struct LoginState {
-  
+  var token: String?
 }
