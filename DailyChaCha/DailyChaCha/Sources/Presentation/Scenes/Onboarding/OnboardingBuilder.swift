@@ -9,14 +9,10 @@
 import RIBs
 
 protocol OnboardingDependency: Dependency {
-    var onboardingViewController: OnboardingViewControllable { get }
+  
 }
 
 final class OnboardingComponent: Component<OnboardingDependency> {
-
-    fileprivate var onboardingViewController: OnboardingViewControllable {
-        return dependency.onboardingViewController
-    }
 }
 
 // MARK: - Builder
@@ -35,9 +31,10 @@ final class OnboardingBuilder: Builder<OnboardingDependency>, OnboardingBuildabl
         let component = OnboardingComponent(dependency: dependency)
         let interactor = OnboardingInteractor(useCase: OnboardingUseCase())
         interactor.listener = listener
+      
+      
         return OnboardingRouter(
             interactor: interactor,
-            viewController: component.onboardingViewController,
             goalBuilder: OnboardingGoalBuilder(dependency: component),
             dateBuilder: OnboardingDateBuilder(dependency: component),
             timeBuilder: OnboardingTimeBuilder(dependency: component),
