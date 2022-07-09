@@ -51,9 +51,13 @@ final class EditDateInteractor: PresentableInteractor<EditDatePresentable>, Edit
     func transform(input: Input) -> Output {
         let cells: Observable<[CellModel]> = input.loadData
             .withUnretained(self)
-            .map { (owner, _ ) in
-                return owner.getWeekDays()
-                    .map { OnboardingDateSelectCellModel(title: $0) }
+            .flatMap { (owner, _ ) in owner.useCase.dates() }
+            .compactMap { [weak self] in
+                let selectedWeekday = $0.weekday
+                return self?.getWeekDays().map {
+                    let selected = selectedWeekday.contains($0.index)
+                    return OnboardingDateSelectCellModel(title: $0.weekday, selected: selected)
+                }
             }
         
         input.prevStep
@@ -70,7 +74,7 @@ final class EditDateInteractor: PresentableInteractor<EditDatePresentable>, Edit
             }
             .asDriver(onErrorJustReturn: ())
             .drive(onNext: { [weak self] in
-//                self?.listener?.nextStep(.date)
+                self?.listener?.prevStep(.date)
             })
             .disposed(by: disposeBag)
             
@@ -80,10 +84,11 @@ final class EditDateInteractor: PresentableInteractor<EditDatePresentable>, Edit
         )
     }
     
-    private func getWeekDays() -> [String] {
+    private func getWeekDays() -> [(index: Int, weekday: String)] {
         let fmt = DateFormatter()
         let firstWeekday = 2 // -> Monday
         let symbols = fmt.weekdaySymbols!
-        return Array(symbols[firstWeekday-1..<symbols.count]) + symbols[0..<firstWeekday-1]
+        let index = Array(firstWeekday-1..<symbols.count) + Array(0..<firstWeekday-1)
+        return index.map { (index: $0, weekday: symbols[$0]) }
     }
 }

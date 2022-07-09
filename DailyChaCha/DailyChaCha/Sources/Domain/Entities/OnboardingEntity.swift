@@ -80,6 +80,10 @@ extension Onboarding {
                 return ""
             }
         }
+        
+        var weekday: [Int] {
+            exerciseDates.map { $0.date }
+        }
     }
     
     struct ExerciseDate: Codable {
