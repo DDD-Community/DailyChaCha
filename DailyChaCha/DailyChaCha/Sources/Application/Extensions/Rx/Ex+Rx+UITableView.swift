@@ -36,6 +36,10 @@ extension Reactive where Base: UITableView {
             if let cell = cell as? CellModelable {
                 cell.bind(to: model)
             }
+            
+            if model.selected {
+                tv.selectRow(at: IndexPath(row: row, section: 0), animated: true, scrollPosition: .none)
+            }
 
             return cell
         })
