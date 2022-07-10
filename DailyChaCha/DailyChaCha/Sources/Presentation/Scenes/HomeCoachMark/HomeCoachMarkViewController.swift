@@ -165,6 +165,19 @@ extension HomeCoachMarkViewController {
         $0.top.equalTo(tooltipView.snp.bottom).offset(29)
         $0.size.equalTo(201)
       }
+    case .brokenCharacter:
+      tooltipView.snp.makeConstraints {
+        $0.leading.equalToSuperview().inset(20)
+        $0.top.equalToSuperview().inset(342)
+        $0.width.equalTo(275)
+        $0.height.equalTo(170)
+      }
+      
+      magnifiedImageView.snp.makeConstraints {
+        $0.leading.equalToSuperview().inset(20)
+        $0.top.equalTo(tooltipView.snp.bottom).offset(29)
+        $0.size.equalTo(201)
+      }
     }
   }
 }

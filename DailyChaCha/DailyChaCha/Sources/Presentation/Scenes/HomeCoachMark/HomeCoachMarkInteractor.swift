@@ -80,6 +80,26 @@ final class HomeCoachMarkInteractor:
         return "운동을 1회 놓칠 때마다 차근이가 아파해요. 다시 운동하면 원래대로 돌아올 거에요."
       }
     }
+    
+    var buttonTitle: String? {
+      switch self {
+      case .ruleOne, .ruleTwo, .ruleThree:
+        return "다음"
+      case .brokenTower, .brokenCharacter:
+        return "확인"
+      }
+    }
+    
+    var arrowDirection: CoachMarkTooltipView.BubbleArrowPosition {
+      switch self {
+      case .ruleOne:
+        return .bottomLeft
+      case .ruleTwo, .brokenTower, .brokenCharacter:
+        return .topMiddle
+      case .ruleThree:
+        return .topRight
+      }
+    }
   }
   
   enum Mutation {
