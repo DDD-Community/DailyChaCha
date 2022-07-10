@@ -51,6 +51,9 @@ final class HomeCoachMarkBuilder:
     let interactor = HomeCoachMarkInteractor(presenter: viewController)
     interactor.listener = listener
     
-    return HomeCoachMarkRouter(interactor: interactor, viewController: viewController)
+    return HomeCoachMarkRouter(
+      interactor: interactor,
+      viewController: viewController
+    )
   }
 }
