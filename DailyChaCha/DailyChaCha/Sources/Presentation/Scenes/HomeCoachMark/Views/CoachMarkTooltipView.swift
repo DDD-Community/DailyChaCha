@@ -32,7 +32,12 @@ final class CoachMarkTooltipView: UIView {
   
   private let button = UIButton().then {
     $0.backgroundColor = UIColor.orange
-    $0.setTitle("다음", for: .normal)
+    $0.layer.cornerRadius = 9
+    $0.titleLabel?.font = .systemFont(
+      ofSize: 14,
+      weight: .regular
+    )
+    $0.setTitleColor(.white, for: .normal)
   }
   
   private let arrowImageView = UIImageView().then {
@@ -116,14 +121,24 @@ final class CoachMarkTooltipView: UIView {
     return self
   }
   
-  
-  func setSubTitleLabel(with text: NSAttributedString) -> CoachMarkTooltipView {
+  @discardableResult
+  func setSubTitleLabel(with text: NSAttributedString?) -> CoachMarkTooltipView {
     subTitleLabel.attributedText = text
     return self
   }
   
-  func setTitleLabel(with text: NSAttributedString) -> CoachMarkTooltipView {
+  @discardableResult
+  func setTitleLabel(with text: NSAttributedString?) -> CoachMarkTooltipView {
     titleLabel.attributedText = text
+    return self
+  }
+  
+  @discardableResult
+  func setButtonTitle(with text: String?) -> CoachMarkTooltipView {
+    button.setTitle(
+      text,
+      for: .normal
+    )
     return self
   }
 }
