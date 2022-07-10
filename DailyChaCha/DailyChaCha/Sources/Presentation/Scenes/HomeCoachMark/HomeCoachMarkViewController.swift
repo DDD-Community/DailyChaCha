@@ -179,6 +179,16 @@ extension HomeCoachMarkViewController {
         $0.size.equalTo(201)
       }
     }
+    setupTooltipView(with: type)
+  }
+  
+  private func setupTooltipView(with type: HomeCoachMarkInteractor.CoachMarkType) {
+    
+    tooltipView
+      .setBubbleArrow(position: type.arrowDirection)
+      .setButtonTitle(with: type.buttonTitle)
+      .setTitleLabel(with: type.title)
+      .setSubTitleLabel(with: type.subTitle)
   }
 }
 
