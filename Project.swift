@@ -26,6 +26,7 @@ class BaseProjectFactory: ProjectFactory {
         .package(product: "Then"),
         .package(product: "RxKeyboard"),
         .package(product: "Lottie"),
+        .package(product: "BonMot")
     ]
     
     let packages: [Package] = [
@@ -39,6 +40,7 @@ class BaseProjectFactory: ProjectFactory {
         .remote(url: "https://github.com/devxoul/Then.git", requirement: .upToNextMinor(from: "3.0.0")),
         .remote(url: "https://github.com/RxSwiftCommunity/RxKeyboard.git", requirement: .upToNextMinor(from: "2.0.0")),
         .remote(url: "https://github.com/airbnb/lottie-ios.git", requirement: .upToNextMinor(from: "3.3.0")),
+        .remote(url: "https://github.com/Rightpoint/BonMot.git", requirement: .upToNextMinor(from: "6.1.1"))
     ]
 
     func generate() -> [Target] {
