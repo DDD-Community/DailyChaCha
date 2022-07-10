@@ -48,7 +48,7 @@ final class HomeCoachMarkBuilder:
     
     let viewController = HomeCoachMarkViewController()
     
-    let interactor = HomeCoachMarkInteractor(presenter: viewController, useCase: HomeCoachMarkUseCaseImpl())
+    let interactor = HomeCoachMarkInteractor(presenter: viewController)
     interactor.listener = listener
     
     return HomeCoachMarkRouter(interactor: interactor, viewController: viewController)
