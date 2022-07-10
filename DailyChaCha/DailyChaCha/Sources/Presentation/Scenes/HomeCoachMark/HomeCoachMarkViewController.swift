@@ -34,6 +34,8 @@ final class HomeCoachMarkViewController:
   HomeCoachMarkPresentable,
   HomeCoachMarkViewControllable
 {
+  private let viewDidLoadRelay = PublishRelay<Void>()
+  
   // MARK: - UI Components
   
   private let backgroundDimmedView = UIView().then {
@@ -65,6 +67,7 @@ final class HomeCoachMarkViewController:
     super.viewDidLoad()
     setupUI()
     bind(listener: listener)
+    viewDidLoadRelay.accept(())
   }
 }
 
@@ -79,10 +82,90 @@ extension HomeCoachMarkViewController {
   
   private func bindAction(to listener: HomeCoachMarkPresentableListener) {
     
+    // Rx + ViewDidLoad 중복으로 넣을 것 같아서 다른 PR RxViewController 추가되면 수정 예정
+    viewDidLoadRelay
+      .map { HomeCoachMarkAction.setCoachMarkType(.ruleOne)}
+      .bind(to: listener.action)
+      .disposed(by: disposeBag)
   }
   
-  private func bindState(from: HomeCoachMarkPresentableListener) {
+  private func bindState(from listener: HomeCoachMarkPresentableListener) {
     
+    listener.state
+      .compactMap { $0.coachMarkType }
+      .bind { [weak self] type in
+        guard let self = self else { return }
+        self.setCoachMark(with: type)
+      }
+      .disposed(by: disposeBag)
+    
+  }
+  
+  private func setCoachMark(with type: HomeCoachMarkInteractor.CoachMarkType) {
+    tooltipView.snp.removeConstraints()
+    magnifiedImageView.snp.removeConstraints()
+    
+    switch type {
+    case .ruleOne:
+      
+      tooltipView.snp.makeConstraints {
+        $0.leading.equalToSuperview().inset(20)
+        $0.top.equalToSuperview().inset(342)
+        $0.width.equalTo(275)
+        $0.height.equalTo(170)
+      }
+      
+      magnifiedImageView.snp.makeConstraints {
+        $0.leading.equalToSuperview().inset(20)
+        $0.top.equalTo(tooltipView.snp.bottom).offset(29)
+        $0.size.equalTo(201)
+      }
+      
+    case .ruleTwo:
+      tooltipView.setBubbleArrow(position: .topLeft)
+      
+      tooltipView.snp.makeConstraints {
+        $0.leading.equalToSuperview().inset(20)
+        $0.top.equalToSuperview().inset(342)
+        $0.width.equalTo(275)
+        $0.height.equalTo(170)
+      }
+      
+      magnifiedImageView.snp.makeConstraints {
+        $0.leading.equalToSuperview().inset(20)
+        $0.top.equalTo(tooltipView.snp.bottom).offset(29)
+        $0.size.equalTo(201)
+      }
+      
+    case .ruleThree:
+      
+      tooltipView.snp.makeConstraints {
+        $0.leading.equalToSuperview().inset(20)
+        $0.top.equalToSuperview().inset(342)
+        $0.width.equalTo(275)
+        $0.height.equalTo(170)
+      }
+      
+      magnifiedImageView.snp.makeConstraints {
+        $0.leading.equalToSuperview().inset(20)
+        $0.top.equalTo(tooltipView.snp.bottom).offset(29)
+        $0.size.equalTo(201)
+      }
+    case .brokenTower:
+      
+      tooltipView.snp.makeConstraints {
+        $0.leading.equalToSuperview().inset(20)
+        $0.top.equalToSuperview().inset(342)
+        $0.width.equalTo(275)
+        $0.height.equalTo(170)
+      }
+      
+      magnifiedImageView.snp.makeConstraints {
+        $0.leading.equalToSuperview().inset(20)
+        $0.top.equalTo(tooltipView.snp.bottom).offset(29)
+        $0.size.equalTo(201)
+      }
+    }
   }
 }
 
@@ -92,6 +175,11 @@ extension HomeCoachMarkViewController {
     view.backgroundColor = .clear
     view.addSubviews(
       backgroundDimmedView
+    )
+    
+    backgroundDimmedView.addSubviews(
+      tooltipView,
+      magnifiedImageView
     )
     
     backgroundDimmedView.snp.makeConstraints {
