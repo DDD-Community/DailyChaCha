@@ -6,10 +6,13 @@
 //  Copyright © 2022 DailyChaCha. All rights reserved.
 //
 
+import AuthenticationServices
+
+import BonMot
+import ReactorKit
 import RIBs
 import RxSwift
-import ReactorKit
-import AuthenticationServices
+
 
 protocol HomeCoachMarkRouting: ViewableRouting {
   
@@ -51,34 +54,58 @@ final class HomeCoachMarkInteractor:
       }
     }
     
-    var subTitle: String? {
+    var subTitle: NSAttributedString? {
+      var subTitle: String?
       switch self {
       case .ruleOne:
-        return "Rule 01"
+        subTitle = "Rule 01"
       case .ruleTwo:
-        return "Rule 02"
+        subTitle = "Rule 02"
       case .ruleThree:
-        return "Rule 03"
+        subTitle = "Rule 03"
       case .brokenTower:
-        return "보상이 망가졌어요!"
+        subTitle = "보상이 망가졌어요!"
       case .brokenCharacter:
-        return "차근이가 아파요!"
+        subTitle = "차근이가 아파요!"
       }
+      
+      return subTitle?.styled(
+        with: .color(DailyChaChaAsset.Colors.gray600.color),
+        .font(
+          .systemFont(
+            ofSize: 14,
+            weight: .regular
+          )
+        ),
+        .minimumLineHeight(14),
+        .maximumLineHeight(14)
+      )
     }
     
-    var title: String? {
+    var title: NSAttributedString? {
+      var title: String?
       switch self {
       case .ruleOne:
-        return "정해진 시간에 운동을 완료하면 오늘의 보상을 받을 수 있어요."
+        title = "정해진 시간에 운동을 완료하면 오늘의 보상을 받을 수 있어요."
       case .ruleTwo:
-        return "운동을 하지 않으면 있던 보상이 망가지거나 차근이가 병들어요."
+        title = "운동을 하지 않으면 있던 보상이 망가지거나 차근이가 병들어요."
       case .ruleThree:
-        return "상단에서 루틴을 바꿀 수 있어요."
+        title = "상단에서 루틴을 바꿀 수 있어요."
       case .brokenTower:
-        return "운동을 2회 놓칠 때마다 아이템이 하나씩 망가져요. 다시 운동하면 원래대로 돌아올 거에요."
+        title = "운동을 2회 놓칠 때마다 아이템이 하나씩 망가져요. 다시 운동하면 원래대로 돌아올 거에요."
       case .brokenCharacter:
-        return "운동을 1회 놓칠 때마다 차근이가 아파해요. 다시 운동하면 원래대로 돌아올 거에요."
+        title = "운동을 1회 놓칠 때마다 차근이가 아파해요. 다시 운동하면 원래대로 돌아올 거에요."
       }
+      return title?.styled(
+        with: .color(.black),
+          .font(.systemFont(
+            ofSize: 16,
+            weight: .medium
+          )
+        ),
+        .minimumLineHeight(16),
+        .maximumLineHeight(16)
+      )
     }
     
     var buttonTitle: String? {
