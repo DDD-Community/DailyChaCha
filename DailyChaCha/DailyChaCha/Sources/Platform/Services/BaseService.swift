@@ -18,6 +18,13 @@ extension BaseService {
   }
   
   var headers: [String : String]? {
-    return [:]
+    
+    var headerDic: [String : String] = [:]
+    
+    if let token = UserInfoManager.shared.getLoginTokenInfo() {
+      headerDic["Authorization"] = "Bearer \(token.accessToken)"
+    }
+    
+    return headerDic
   }
 }
