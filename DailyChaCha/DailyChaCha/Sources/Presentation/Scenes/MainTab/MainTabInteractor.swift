@@ -34,14 +34,20 @@ final class MainTabInteractor:
   
   // MARK: - Properties
   
+  var initialState: MainTabState = .init()
+  
+  private let useCase: MainTabUseCase
+  
   weak var router: MainTabRouting?
   weak var listener: MainTabListener?
   
   // MARK: - Con(De)structor
   
   init(
-    presenter: MainTabPresentable
+    presenter: MainTabPresentable,
+    useCase: MainTabUseCase
   ) {
+    self.useCase = useCase
     super.init(presenter: presenter)
     presenter.listener = self
   }
