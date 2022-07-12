@@ -19,6 +19,7 @@ final class MainTabBar: UIView {
   
   override init(frame: CGRect) {
     super.init(frame: frame)
+    setupUI()
   }
   
   required init?(coder: NSCoder) {
@@ -31,14 +32,17 @@ extension MainTabBar {
   private func setupUI() {
     let homeImageView = UIImageView().then {
       $0.contentMode = .scaleAspectFit
+      $0.image = UIImage(named: "home_tab_icon")
     }
     
     let calendarImageView = UIImageView().then {
       $0.contentMode = .scaleAspectFit
+      $0.image = UIImage(named: "calendar_tab_icon")
     }
     
     let myPageImageView = UIImageView().then {
       $0.contentMode = .scaleAspectFit
+      $0.image = UIImage(named: "myinfo_tab_icon")
     }
     
     self.do {
@@ -54,7 +58,20 @@ extension MainTabBar {
     }
     
     homeImageView.snp.makeConstraints {
-      $0.leading.equalToSuperview().inset(51)
+      $0.leading.equalToSuperview().inset(47)
+      $0.centerY.equalToSuperview()
+      $0.size.equalTo(32)
+    }
+    
+    calendarImageView.snp.makeConstraints {
+      $0.center.equalToSuperview()
+      $0.size.equalTo(32)
+    }
+    
+    myPageImageView.snp.makeConstraints {
+      $0.trailing.equalToSuperview().inset(47)
+      $0.centerY.equalToSuperview()
+      $0.size.equalTo(32)
     }
   }
 }
