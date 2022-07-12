@@ -56,6 +56,25 @@ final class MainTabViewController:
     setupUI()
     bind(listener: listener)
   }
+  
+  func addChildViewController(viewControllable: ViewControllable) {
+    
+    
+    
+    addChild(viewControllable.uiviewController)
+    
+    viewControllable.uiviewController.didMove(toParent: self)
+    
+    if let childView = viewControllable.uiviewController.view {
+      view.addSubview(childView)
+      
+      childView.snp.makeConstraints {
+        $0.leading.trailing.equalToSuperview()
+        $0.top.equalTo(view.safeAreaLayoutGuide.snp.top)
+        $0.bottom.equalTo(mainTabBar.snp.top)
+      }
+    }
+  }
 }
 
 extension MainTabViewController {
@@ -84,8 +103,9 @@ extension MainTabViewController {
     )
     
     mainTabBar.snp.makeConstraints {
-      $0.leading.trailing.bottom.equalToSuperview()
+      $0.leading.trailing.equalToSuperview()
       $0.height.equalTo(90)
+      $0.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).inset(7)
     }
   }
 }

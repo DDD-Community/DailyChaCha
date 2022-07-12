@@ -15,7 +15,11 @@ protocol MainTabDependency: Dependency {
 
 // MARK: - MainTabComponent
 
-final class MainTabComponent: Component<MainTabDependency> {
+final class MainTabComponent: Component<MainTabDependency>,
+                              HomeCoachMarkDependency,
+  HomeDependency
+{
+  
 }
 
 // MARK: - MainTabBuildable
@@ -51,6 +55,15 @@ final class MainTabBuilder:
     let interactor = MainTabInteractor(presenter: viewController, useCase: MainTabUseCaseImpl())
     interactor.listener = listener
     
-    return MainTabRouter(interactor: interactor, viewController: viewController)
+    let homeCoachMarkBuilder = HomeCoachMarkBuilder(dependency: component)
+    
+    let homeBuilder = HomeBuilder(dependency: component)
+    
+    return MainTabRouter(
+      interactor: interactor,
+      viewController: viewController,
+      homeCoachMarkBuilder: homeCoachMarkBuilder,
+      homeBuilder: homeBuilder
+    )
   }
 }
