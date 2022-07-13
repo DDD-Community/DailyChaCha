@@ -77,6 +77,10 @@ final class LoginViewController:
     
   }
   
+  func dismiss(_ animated: Bool) {
+    dismiss(animated: animated)
+  }
+  
   // MARK: Properties
   
   var listener: LoginPresentableListener?

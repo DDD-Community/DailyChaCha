@@ -22,6 +22,8 @@ protocol LoginViewControllable: ViewControllable {
     viewControllable: ViewControllable,
     animated: Bool
   )
+  
+  func dismiss(_ animated: Bool)
 }
 
 final class LoginRouter: ViewableRouter<LoginInteractable, LoginViewControllable>,
@@ -51,6 +53,14 @@ final class LoginRouter: ViewableRouter<LoginInteractable, LoginViewControllable
   
   func routeToProperOnboardingStep(viewController: UIViewController) {
     
-    viewControllable.uiviewController.present(viewController, animated: true)
+    viewControllable.uiviewController.present(viewController, animated: false)
+  }
+  
+  func detachLoginRIBs() {
+    children.forEach { router in
+      detachChild(router)
+    }
+    
+    viewController.dismiss(false)
   }
 }

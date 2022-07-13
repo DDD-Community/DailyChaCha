@@ -16,7 +16,8 @@ protocol RootDependency: Dependency {
 }
 
 final class RootComponent: Component<RootDependency>,
-  LoginDependency
+  LoginDependency,
+  MainTabDependency
 {
   
     let rootViewController: RootViewController
@@ -50,10 +51,13 @@ final class RootBuilder: Builder<RootDependency>, RootBuildable {
     
     let loginBuilder = LoginBuilder(dependency: component)
     
+    let mainTabBuilder = MainTabBuilder(dependency: component)
+    
     return RootRouter(
       interactor: interactor,
       viewController: rootViewController,
-      loginBuilder: loginBuilder
+      loginBuilder: loginBuilder,
+      mainTabBuilder: mainTabBuilder
     )
   }
 }
