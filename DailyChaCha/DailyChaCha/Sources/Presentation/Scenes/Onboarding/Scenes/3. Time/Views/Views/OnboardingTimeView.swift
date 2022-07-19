@@ -22,7 +22,11 @@ class OnboardingTimeView: UIStackView {
         }
     }
     public var rxResultForSelectedRows: PublishSubject<[Onboarding.ExerciseDate]?> = .init()
-    @IBInspectable public var isNew: Bool = true
+    @IBInspectable public var isNew: Bool = true {
+        didSet {
+            otherView.state = isNew ? .normal : .selected
+        }
+    }
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -56,16 +60,14 @@ class OnboardingTimeView: UIStackView {
         
         otherView.selected
             .subscribe(onNext: { [weak self] state in
-                UIView.animate(withDuration: 0.3, animations: {
-                    switch state {
-                    case .normal:
-                        self?.separationViews.forEach { $0.isHidden = true }
-                    case .selected:
-                        self?.separationViews.forEach { $0.isHidden = false }
-                    case .disabled:
-                        break
-                    }
-                })
+                switch state {
+                case .normal:
+                    self?.separationViews.forEach { $0.isHidden = true }
+                case .selected:
+                    self?.separationViews.forEach { $0.isHidden = false }
+                case .disabled:
+                    break
+                }
             })
             .disposed(by: disposeBag)
         
@@ -92,7 +94,7 @@ class OnboardingTimeView: UIStackView {
         let view: OnboardingTimeSelectView = .init(data: dates, isNew: isNew)
         separationViews.append(view)
         addArrangedSubview(view)
-        view.isHidden = !isNew
+        view.isHidden = isNew
         
         view.selected
             .withUnretained(self)
