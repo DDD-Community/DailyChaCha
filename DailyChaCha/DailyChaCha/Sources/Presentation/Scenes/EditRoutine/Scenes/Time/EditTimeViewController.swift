@@ -35,7 +35,6 @@ final class EditTimeViewController: UIViewController, EditTimePresentable, EditT
     private func setupLayout() {
         naviBar.activeRightButton(title: "저장")
         naviBar.rightButton.setTitleColor(DailyChaChaAsset.Colors.gray400.color, for: .disabled)
-//        naviBar.rightButton.isEnabled = false
     }
     
     private func bind(listener: EditTimePresentableListener?) {
@@ -50,14 +49,21 @@ final class EditTimeViewController: UIViewController, EditTimePresentable, EditT
             })
             .disposed(by: disposeBag)
         
+        let nextStep: Observable<[Onboarding.ExerciseDate]> = naviBar.rightButton.rx.tap
+            .compactMap { [stackView] in
+                stackView?.resultForSelectedRows
+            }
+        
         let input: EditTimeInteractor.Input = .init(
-            loadData: rx.viewWillAppear.map { _ in },
+            loadData: rx.viewWillAppear.take(1).map { _ in },
             prevStep: naviBar.backButton.rx.tap.asObservable(),
-            nextStep: naviBar.rightButton.rx.tap.asObservable()
+            nextStep: nextStep,
+            selectedRows: stackView.rxResultForSelectedRows
         )
         
         let output = listener.transform(input: input)
         output.headerText.bind(to: headerLabel.rx.text).disposed(by: disposeBag)
         output.dates.bind(to: stackView.rx.items).disposed(by: disposeBag)
+        output.isEnabledNextButton.bind(to: naviBar.rightButton.rx.isEnabled).disposed(by: disposeBag)
     }
 }

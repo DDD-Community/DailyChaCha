@@ -28,12 +28,14 @@ final class EditTimeInteractor: PresentableInteractor<EditTimePresentable>, Edit
     struct Input {
         let loadData: Observable<Void>
         let prevStep: Observable<Void>
-        let nextStep: Observable<Void>
+        let nextStep: Observable<[Onboarding.ExerciseDate]>
+        let selectedRows: Observable<[Onboarding.ExerciseDate]?>
     }
     
     struct Output {
         let dates: Observable<Onboarding.Dates>
         let headerText: Observable<String>
+        let isEnabledNextButton: Observable<Bool>
     }
 
     weak var router: EditTimeRouting?
@@ -64,15 +66,20 @@ final class EditTimeInteractor: PresentableInteractor<EditTimePresentable>, Edit
             .disposed(by: disposeBag)
         
         input.nextStep
+            .withUnretained(self)
+            .flatMap { owner, exerciseDate in
+                owner.useCase.dates(exerciseDates: exerciseDate)
+            }
             .asDriver(onErrorJustReturn: ())
             .drive(onNext: { [weak self] in
-//                self?.listener?.nextStep(.time)
+                self?.listener?.prevStep(.time)
             })
             .disposed(by: disposeBag)
         
         return .init(
             dates: dates,
-            headerText: headerText
+            headerText: headerText,
+            isEnabledNextButton: input.selectedRows.map { $0?.isEmpty == false }
         )
     }
     
