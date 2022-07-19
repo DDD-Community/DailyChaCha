@@ -63,14 +63,13 @@ final class EditRoutineRouter: Router<EditRoutineInteractable>, EditRoutineRouti
     private let timeBuilder: EditTimeBuilder
     private let navigationViewController: UINavigationController
     
-    private func parseBuild(_ step: EditRoutineStep) -> ViewableRouting {
+    private func parseBuild(_ step: EditRoutineStep) -> ViewableRouting? {
         switch step {
         case .start: return startBuilder.build(withListener: interactor)
         case .goal: return goalBuilder.build(withListener: interactor)
         case .date: return dateBuilder.build(withListener: interactor)
         case .time: return timeBuilder.build(withListener: interactor)
-        case .alert:
-            fatalError()
+        case .alert: return nil
         }
     }
     
@@ -80,7 +79,7 @@ final class EditRoutineRouter: Router<EditRoutineInteractable>, EditRoutineRouti
     }
 
     func routeNextStep(_ step: EditRoutineStep) {
-        let build = parseBuild(step)
+        guard let build = parseBuild(step) else { return }
         attachChild(build)
         if step == .start {
             navigationViewController.viewControllers = [build.viewControllable.uiviewController]
