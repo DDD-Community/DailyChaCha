@@ -38,12 +38,15 @@ final class RootRouter: LaunchRouter<RootInteractable, RootViewControllable>, Ro
   
   override func didLoad() {
     super.didLoad()
-    // TODO: 자동 로그인 설정 후 수정
     
-    let loginRouter = loginBuilder.build(withListener: interactor)
-    
-    attachChild(loginRouter)
-    
-    viewController.present(viewController: loginRouter.viewControllable)
+    if UserInfoManager.shared.getLoginTokenInfo() != nil {
+      // 자동 로그인 원하는 화면 RIBs 연결
+    } else {
+      let loginRouter = loginBuilder.build(withListener: interactor)
+      
+      attachChild(loginRouter)
+      
+      viewController.present(viewController: loginRouter.viewControllable)
+    }
   }
 }
