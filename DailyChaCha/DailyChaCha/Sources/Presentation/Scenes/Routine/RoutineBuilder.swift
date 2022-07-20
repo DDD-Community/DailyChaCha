@@ -9,20 +9,11 @@
 import RIBs
 
 protocol RoutineDependency: Dependency {
-    // TODO: Make sure to convert the variable into lower-camelcase.
-    var RoutineViewController: RoutineViewControllable { get }
-    // TODO: Declare the set of dependencies required by this RIB, but won't be
-    // created by this RIB.
+    
 }
 
 final class RoutineComponent: Component<RoutineDependency> {
 
-    // TODO: Make sure to convert the variable into lower-camelcase.
-    fileprivate var RoutineViewController: RoutineViewControllable {
-        return dependency.RoutineViewController
-    }
-
-    // TODO: Declare 'fileprivate' dependencies that are only used by this RIB.
 }
 
 // MARK: - Builder
@@ -41,6 +32,10 @@ final class RoutineBuilder: Builder<RoutineDependency>, RoutineBuildable {
         let component = RoutineComponent(dependency: dependency)
         let interactor = RoutineInteractor()
         interactor.listener = listener
-        return RoutineRouter(interactor: interactor, viewController: component.RoutineViewController)
+        return RoutineRouter(
+            interactor: interactor,
+            waitBuilder: RoutineWaitBuilder(dependency: component),
+            startBuilder: RoutineStartBuilder(dependency: component)
+        )
     }
 }

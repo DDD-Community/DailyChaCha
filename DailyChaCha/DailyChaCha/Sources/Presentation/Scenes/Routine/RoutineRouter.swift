@@ -7,23 +7,31 @@
 //
 
 import RIBs
+import UIKit
 
-protocol RoutineInteractable: Interactable {
-    var router: RoutineRouting? { get set }
-    var listener: RoutineListener? { get set }
+protocol RoutineStepable: AnyObject {
+    func nextStep(_ step: Routine.Step)
+    func prevStep(_ step: Routine.Step)
 }
 
-protocol RoutineViewControllable: ViewControllable {
-    // TODO: Declare methods the router invokes to manipulate the view hierarchy. Since
-    // this RIB does not own its own view, this protocol is conformed to by one of this
-    // RIB's ancestor RIBs' view.
+protocol RoutineInteractable: Interactable, RoutineWaitListener, RoutineStartListener {
+    var router: RoutineRouting? { get set }
+    var listener: RoutineListener? { get set }
+    
+    func routeToProperRoutineStep(viewController: UIViewController)
 }
 
 final class RoutineRouter: Router<RoutineInteractable>, RoutineRouting {
 
     // TODO: Constructor inject child builder protocols to allow building children.
-    init(interactor: RoutineInteractable, viewController: RoutineViewControllable) {
-        self.viewController = viewController
+    init(interactor: RoutineInteractable,
+         waitBuilder: RoutineWaitBuilder,
+         startBuilder: RoutineStartBuilder) {
+        self.waitBuilder = waitBuilder
+        self.startBuidler = startBuilder
+        navigationViewController = UINavigationController()
+        navigationViewController.isNavigationBarHidden = true
+        navigationViewController.modalPresentationStyle = .fullScreen
         super.init(interactor: interactor)
         interactor.router = self
     }
@@ -35,5 +43,48 @@ final class RoutineRouter: Router<RoutineInteractable>, RoutineRouting {
 
     // MARK: - Private
 
-    private let viewController: RoutineViewControllable
+    private let waitBuilder: RoutineWaitBuilder
+    private let startBuidler: RoutineStartBuilder
+    private let navigationViewController: UINavigationController
+    
+    private var currentChild: ViewableRouting?
+    
+    private func parseBuild(_ step: Routine.Step) -> ViewableRouting? {
+        switch step {
+        case .wait: return waitBuilder.build(withListener: interactor)
+        case .start: return startBuidler.build(withListener: interactor)
+        case .end: return nil
+        }
+    }
+    
+    private func completed() {
+        interactor.listener?.completed()
+    }
+    
+    func startStep(_ step: Routine.Step) {
+        if let build = parseBuild(step) {
+            attachChild(build)
+            navigationViewController.viewControllers = [build.viewControllable.uiviewController]
+            
+            interactor.routeToProperRoutineStep(viewController: navigationViewController)
+            
+            currentChild = build
+        } else {
+            completed()
+        }
+    }
+    
+    func routeNextStep(_ step: Routine.Step) {
+        if let build = parseBuild(step) {
+            attachChild(build)
+            navigationViewController.pushViewController(build.viewControllable.uiviewController, animated: true)
+            currentChild = build
+        } else {
+            completed()
+        }
+    }
+    
+    func routePrevStep(_ step: Routine.Step) {
+        navigationViewController.popViewController(animated: true)
+    }
 }

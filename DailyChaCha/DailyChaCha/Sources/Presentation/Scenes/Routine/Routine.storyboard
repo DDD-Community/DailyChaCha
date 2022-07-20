@@ -86,6 +86,11 @@
                             <constraint firstItem="Bh8-M1-KdS" firstAttribute="leading" secondItem="HgA-Aw-ocO" secondAttribute="leading" constant="40" id="hHP-rt-LHH"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="circleView" destination="jdf-P4-oPh" id="6hq-Az-IjA"/>
+                        <outlet property="exitButton" destination="Rbw-Iq-bws" id="qfX-hX-Yh1"/>
+                        <outlet property="timeLabel" destination="bqN-cx-M96" id="4ty-ee-cES"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="k0X-am-vwV" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
