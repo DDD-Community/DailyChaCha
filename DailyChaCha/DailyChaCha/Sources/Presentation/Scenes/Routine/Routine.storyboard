@@ -199,6 +199,21 @@
             </objects>
             <point key="canvasLocation" x="924" y="204.67980295566502"/>
         </scene>
+        <!--Routine Result View Controller-->
+        <scene sceneID="lyH-EN-txa">
+            <objects>
+                <viewController storyboardIdentifier="RoutineResultViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="dMI-Jj-GCB" customClass="RoutineResultViewController" customModule="DailyChaCha" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="kQq-ZE-cLO">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="6wY-F8-cPz"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="5AN-iQ-r23" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1588" y="205"/>
+        </scene>
     </scenes>
     <resources>
         <image name="img_character_routine" width="285" height="285"/>

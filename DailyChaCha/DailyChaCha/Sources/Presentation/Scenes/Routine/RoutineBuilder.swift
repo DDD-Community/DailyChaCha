@@ -35,7 +35,8 @@ final class RoutineBuilder: Builder<RoutineDependency>, RoutineBuildable {
         return RoutineRouter(
             interactor: interactor,
             waitBuilder: RoutineWaitBuilder(dependency: component),
-            startBuilder: RoutineStartBuilder(dependency: component)
+            startBuilder: RoutineStartBuilder(dependency: component),
+            resultBuilder: RoutineResultBuilder(dependency: component)
         )
     }
 }

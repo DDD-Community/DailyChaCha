@@ -11,10 +11,10 @@ import UIKit
 
 protocol RoutineStepable: AnyObject {
     func nextStep(_ step: Routine.Step)
-    func prevStep(_ step: Routine.Step)
+    func completeStep(_ step: Routine.Step)
 }
 
-protocol RoutineInteractable: Interactable, RoutineWaitListener, RoutineStartListener {
+protocol RoutineInteractable: Interactable, RoutineWaitListener, RoutineStartListener, RoutineResultListener {
     var router: RoutineRouting? { get set }
     var listener: RoutineListener? { get set }
     
@@ -26,9 +26,11 @@ final class RoutineRouter: Router<RoutineInteractable>, RoutineRouting {
     // TODO: Constructor inject child builder protocols to allow building children.
     init(interactor: RoutineInteractable,
          waitBuilder: RoutineWaitBuilder,
-         startBuilder: RoutineStartBuilder) {
+         startBuilder: RoutineStartBuilder,
+         resultBuilder: RoutineResultBuilder) {
         self.waitBuilder = waitBuilder
         self.startBuidler = startBuilder
+        self.resultBuilder = resultBuilder
         navigationViewController = UINavigationController()
         navigationViewController.isNavigationBarHidden = true
         navigationViewController.modalPresentationStyle = .fullScreen
@@ -45,46 +47,35 @@ final class RoutineRouter: Router<RoutineInteractable>, RoutineRouting {
 
     private let waitBuilder: RoutineWaitBuilder
     private let startBuidler: RoutineStartBuilder
+    private let resultBuilder: RoutineResultBuilder
     private let navigationViewController: UINavigationController
     
     private var currentChild: ViewableRouting?
     
-    private func parseBuild(_ step: Routine.Step) -> ViewableRouting? {
+    private func parseBuild(_ step: Routine.Step) -> ViewableRouting {
         switch step {
         case .wait: return waitBuilder.build(withListener: interactor)
         case .start: return startBuidler.build(withListener: interactor)
-        case .end: return nil
+        case .result: return resultBuilder.build(withListener: interactor)
         }
-    }
-    
-    private func completed() {
-        interactor.listener?.completed()
     }
     
     func startStep(_ step: Routine.Step) {
-        if let build = parseBuild(step) {
-            attachChild(build)
-            navigationViewController.viewControllers = [build.viewControllable.uiviewController]
-            
-            interactor.routeToProperRoutineStep(viewController: navigationViewController)
-            
-            currentChild = build
-        } else {
-            completed()
-        }
+        let build = parseBuild(step)
+        attachChild(build)
+        navigationViewController.viewControllers = [build.viewControllable.uiviewController]
+        interactor.routeToProperRoutineStep(viewController: navigationViewController)
+        currentChild = build
     }
     
     func routeNextStep(_ step: Routine.Step) {
-        if let build = parseBuild(step) {
-            attachChild(build)
-            navigationViewController.pushViewController(build.viewControllable.uiviewController, animated: true)
-            currentChild = build
-        } else {
-            completed()
-        }
+        let build = parseBuild(step)
+        attachChild(build)
+        navigationViewController.pushViewController(build.viewControllable.uiviewController, animated: true)
+        currentChild = build
     }
     
-    func routePrevStep(_ step: Routine.Step) {
-        navigationViewController.popViewController(animated: true)
+    func completeStep(_ step: Routine.Step) {
+        interactor.listener?.completed(step)
     }
 }

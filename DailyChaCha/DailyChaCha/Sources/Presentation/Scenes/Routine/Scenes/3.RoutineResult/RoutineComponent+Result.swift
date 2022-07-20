@@ -1,5 +1,5 @@
 //
-//  RoutineEntity.swift
+//  RoutineComponent+Result.swift
 //  DailyChaCha
 //
 //  Created by moon.kwon on 2022/07/20.
@@ -8,12 +8,6 @@
 
 import Foundation
 
-struct Routine { }
-
-extension Routine {
-    
-    enum Step {
-        case wait, start, result
-    }
+extension RoutineComponent: RoutineResultDependency {
     
 }

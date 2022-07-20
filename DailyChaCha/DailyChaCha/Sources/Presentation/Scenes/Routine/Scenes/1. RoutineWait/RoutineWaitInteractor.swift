@@ -60,7 +60,7 @@ final class RoutineWaitInteractor: PresentableInteractor<RoutineWaitPresentable>
         
         input.tapExit
             .subscribe(onNext: { [listener] in
-                listener?.nextStep(.end)
+                listener?.completeStep(.wait)
             })
             .disposed(by: disposeBag)
         

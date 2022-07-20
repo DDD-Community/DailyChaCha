@@ -14,13 +14,13 @@ protocol RoutineRouting: Routing {
     func cleanupViews()
     func startStep(_ step: Routine.Step)
     func routeNextStep(_ step: Routine.Step)
-    func routePrevStep(_ step: Routine.Step)
+    func completeStep(_ step: Routine.Step)
     // TODO: Declare methods the interactor can invoke to manage sub-tree via the router.
 }
 
 protocol RoutineListener: AnyObject {
     func routeToProperRoutineStep(viewController: UIViewController)
-    func completed()
+    func completed(_ step: Routine.Step)
 }
 
 final class RoutineInteractor: Interactor, RoutineInteractable {
@@ -44,15 +44,15 @@ final class RoutineInteractor: Interactor, RoutineInteractable {
     }
     
     private func bind() {
-        router?.startStep(.start)
+        router?.startStep(.wait)
     }
     
     func nextStep(_ step: Routine.Step) {
         router?.routeNextStep(step)
     }
     
-    func prevStep(_ step: Routine.Step) {
-        router?.routePrevStep(step)
+    func completeStep(_ step: Routine.Step) {
+        router?.completeStep(step)
     }
     
     func routeToProperRoutineStep(viewController: UIViewController) {
