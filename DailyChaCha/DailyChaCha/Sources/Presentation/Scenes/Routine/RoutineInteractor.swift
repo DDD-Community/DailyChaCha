@@ -44,7 +44,7 @@ final class RoutineInteractor: Interactor, RoutineInteractable {
     }
     
     private func bind() {
-        router?.startStep(.wait)
+        router?.startStep(.start)
     }
     
     func nextStep(_ step: Routine.Step) {
