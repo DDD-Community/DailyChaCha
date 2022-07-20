@@ -18,14 +18,23 @@ protocol RoutineResultPresentable: Presentable {
     // TODO: Declare methods the interactor can invoke the presenter to present data.
 }
 
-protocol RoutineResultListener: AnyObject {
+protocol RoutineResultListener: RoutineStepable {
     // TODO: Declare methods the interactor can invoke to communicate with other RIBs.
 }
 
 final class RoutineResultInteractor: PresentableInteractor<RoutineResultPresentable>, RoutineResultInteractable, RoutineResultPresentableListener {
+    
+    struct Input {
+        let tapCompleted: Observable<Void>
+    }
+    
+    struct Output {
+        
+    }
 
     weak var router: RoutineResultRouting?
     weak var listener: RoutineResultListener?
+    private let disposeBag: DisposeBag = .init()
 
     // TODO: Add additional dependencies to constructor. Do not perform any logic
     // in constructor.
@@ -34,13 +43,13 @@ final class RoutineResultInteractor: PresentableInteractor<RoutineResultPresenta
         presenter.listener = self
     }
 
-    override func didBecomeActive() {
-        super.didBecomeActive()
-        // TODO: Implement business logic here.
-    }
-
-    override func willResignActive() {
-        super.willResignActive()
-        // TODO: Pause any business logic.
+    func transform(input: Input) -> Output {
+        input.tapCompleted
+            .subscribe(onNext: { [listener] in
+                listener?.completeStep(.result)
+            })
+            .disposed(by: disposeBag)
+        
+        return .init()
     }
 }
