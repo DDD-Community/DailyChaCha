@@ -31,7 +31,7 @@ final class EditGoalBuilder: Builder<EditGoalDependency>, EditGoalBuildable {
     }
 
     func build(withListener listener: EditGoalListener) -> EditGoalRouting {
-        let component = EditGoalComponent(dependency: dependency)
+        _ = EditGoalComponent(dependency: dependency)
         let viewController = EditGoalViewController.create("EditRoutine")
         let interactor = EditGoalInteractor(presenter: viewController, useCase: OnboardingUseCase())
         interactor.listener = listener

@@ -31,7 +31,7 @@ final class EditStartBuilder: Builder<EditStartDependency>, EditStartBuildable {
     }
 
     func build(withListener listener: EditStartListener) -> EditStartRouting {
-        let component = EditStartComponent(dependency: dependency)
+        _ = EditStartComponent(dependency: dependency)
         let viewController = EditStartViewController.create("EditRoutine")
         let interactor = EditStartInteractor(presenter: viewController)
         interactor.listener = listener
