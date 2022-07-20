@@ -8,14 +8,19 @@
 
 import RIBs
 import RxSwift
+import UIKit
 
 protocol RoutineRouting: Routing {
     func cleanupViews()
+    func startStep(_ step: Routine.Step)
+    func routeNextStep(_ step: Routine.Step)
+    func routePrevStep(_ step: Routine.Step)
     // TODO: Declare methods the interactor can invoke to manage sub-tree via the router.
 }
 
 protocol RoutineListener: AnyObject {
-    // TODO: Declare methods the interactor can invoke to communicate with other RIBs.
+    func routeToProperRoutineStep(viewController: UIViewController)
+    func completed()
 }
 
 final class RoutineInteractor: Interactor, RoutineInteractable {
@@ -29,13 +34,28 @@ final class RoutineInteractor: Interactor, RoutineInteractable {
 
     override func didBecomeActive() {
         super.didBecomeActive()
-        // TODO: Implement business logic here.
+        bind()
     }
 
     override func willResignActive() {
         super.willResignActive()
 
         router?.cleanupViews()
-        // TODO: Pause any business logic.
+    }
+    
+    private func bind() {
+        router?.startStep(.wait)
+    }
+    
+    func nextStep(_ step: Routine.Step) {
+        router?.routeNextStep(step)
+    }
+    
+    func prevStep(_ step: Routine.Step) {
+        router?.routePrevStep(step)
+    }
+    
+    func routeToProperRoutineStep(viewController: UIViewController) {
+        listener?.routeToProperRoutineStep(viewController: viewController)
     }
 }

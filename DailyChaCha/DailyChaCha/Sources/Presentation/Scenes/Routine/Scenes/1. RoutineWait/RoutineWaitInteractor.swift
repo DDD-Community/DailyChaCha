@@ -18,14 +18,24 @@ protocol RoutineWaitPresentable: Presentable {
     // TODO: Declare methods the interactor can invoke the presenter to present data.
 }
 
-protocol RoutineWaitListener: AnyObject {
+protocol RoutineWaitListener: RoutineStepable {
     // TODO: Declare methods the interactor can invoke to communicate with other RIBs.
 }
 
 final class RoutineWaitInteractor: PresentableInteractor<RoutineWaitPresentable>, RoutineWaitInteractable, RoutineWaitPresentableListener {
+    
+    struct Input {
+        let loadData: Observable<Void>
+        let tapExit: Observable<Void>
+    }
+    
+    struct Output {
+        let timeText: Observable<String>
+    }
 
     weak var router: RoutineWaitRouting?
     weak var listener: RoutineWaitListener?
+    private let disposeBag: DisposeBag = .init()
 
     // TODO: Add additional dependencies to constructor. Do not perform any logic
     // in constructor.
@@ -33,14 +43,29 @@ final class RoutineWaitInteractor: PresentableInteractor<RoutineWaitPresentable>
         super.init(presenter: presenter)
         presenter.listener = self
     }
-
-    override func didBecomeActive() {
-        super.didBecomeActive()
-        // TODO: Implement business logic here.
-    }
-
-    override func willResignActive() {
-        super.willResignActive()
-        // TODO: Pause any business logic.
+    
+    func transform(input: Input) -> Output {
+        let countdown = 5
+        let timer = Observable<Int>
+            .interval(.seconds(1), scheduler: MainScheduler.instance)
+            .map { countdown - $0 }
+            .take(until: { $0 == 0 })
+            .do(onCompleted: { [listener] in
+                listener?.nextStep(.start)
+            })
+        
+        let timeText = input.loadData
+            .flatMap { timer }
+            .map { "\($0)" }
+        
+        input.tapExit
+            .subscribe(onNext: { [listener] in
+                listener?.nextStep(.end)
+            })
+            .disposed(by: disposeBag)
+        
+        return .init(
+            timeText: timeText
+        )
     }
 }

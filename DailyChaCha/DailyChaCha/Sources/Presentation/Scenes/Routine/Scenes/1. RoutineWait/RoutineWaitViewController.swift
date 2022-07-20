@@ -11,12 +11,41 @@ import RxSwift
 import UIKit
 
 protocol RoutineWaitPresentableListener: AnyObject {
-    // TODO: Declare properties and methods that the view controller can invoke to perform
-    // business logic, such as signIn(). This protocol is implemented by the corresponding
-    // interactor class.
+    typealias Input = RoutineWaitInteractor.Input
+    typealias Output = RoutineWaitInteractor.Output
+    
+    func transform(input: Input) -> Output
 }
 
 final class RoutineWaitViewController: UIViewController, RoutineWaitPresentable, RoutineWaitViewControllable {
+    @IBOutlet private weak var circleView: UIView!
+    @IBOutlet private weak var timeLabel: UILabel!
+    @IBOutlet private weak var exitButton: UIButton!
 
     weak var listener: RoutineWaitPresentableListener?
+    private let disposeBag: DisposeBag = .init()
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        setupLayout()
+        bind(listener: listener)
+    }
+    
+    func setupLayout() {
+        circleView.layer.cornerRadius = circleView.frame.width / 2
+    }
+    
+    func bind(listener: RoutineWaitPresentableListener?) {
+        guard let listener = listener else {
+            return
+        }
+        
+        let input: RoutineWaitInteractor.Input = .init(
+            loadData: rx.viewWillAppear.take(1).map { _ in },
+            tapExit: exitButton.rx.tap.asObservable()
+        )
+        
+        let output = listener.transform(input: input)
+        output.timeText.bind(to: timeLabel.rx.text).disposed(by: disposeBag)
+    }
 }
