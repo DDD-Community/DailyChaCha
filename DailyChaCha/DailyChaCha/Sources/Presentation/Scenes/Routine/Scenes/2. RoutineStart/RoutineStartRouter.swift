@@ -13,7 +13,7 @@ protocol RoutineStartInteractable: Interactable {
     var listener: RoutineStartListener? { get set }
 }
 
-protocol RoutineStartViewControllable: ViewControllable {
+protocol RoutineStartViewControllable: Storyboardable {
     // TODO: Declare methods the router invokes to manipulate the view hierarchy.
 }
 
