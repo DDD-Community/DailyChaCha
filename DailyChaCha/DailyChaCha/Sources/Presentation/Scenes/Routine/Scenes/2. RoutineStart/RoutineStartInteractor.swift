@@ -54,7 +54,6 @@ final class RoutineStartInteractor: PresentableInteractor<RoutineStartPresentabl
         let showPopup: PublishSubject<Void> = .init()
         
         isRunning.asObservable()
-            .debug("isRunning")
             .flatMapLatest {  isRunning in
                 isRunning ? Observable<Int>.interval(.seconds(1), scheduler: MainScheduler.instance) : .empty()
             }
@@ -63,7 +62,7 @@ final class RoutineStartInteractor: PresentableInteractor<RoutineStartPresentabl
             .disposed(by: disposeBag)
         
         input.loadData
-            .map { Date(timeIntervalSinceNow: 0) } // useCase에서 가져온다.
+            .map { Date(timeIntervalSinceNow: -10000) } // useCase에서 가져온다.
             .map { Date() - $0 }
             .subscribe(onNext: {
                 isRunning.accept(true)
@@ -76,7 +75,7 @@ final class RoutineStartInteractor: PresentableInteractor<RoutineStartPresentabl
             .subscribe(onNext: { [listener] in
                 // 5분이 안되었다면 팝업, 아니면 완료
                 if $0 >= 300 {
-                    listener?.nextStep(.end)
+                    listener?.nextStep(.result)
                 } else {
                     showPopup.onNext(())
                 }
@@ -85,7 +84,7 @@ final class RoutineStartInteractor: PresentableInteractor<RoutineStartPresentabl
         
         input.tapForceCompleted
             .subscribe(onNext: { [listener] in
-                listener?.nextStep(.end)
+                listener?.completeStep(.start)
             })
             .disposed(by: disposeBag)
         
