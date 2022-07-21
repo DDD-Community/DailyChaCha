@@ -6,8 +6,19 @@
 //  Copyright © 2022 DailyChaCha. All rights reserved.
 //
 
-import Foundation
+import Then
+import CoreGraphics
 
-struct HomeState {
+struct HomeState: Then {
+  enum BottomSheetSwipeDirection {
+    case upward
+    case downward
+  }
   
+  var backgroundsModel: [HomeBackgroundModel]
+  var objectsModel: [HomeObjectModel]
+  var nextExerciseInfo: NextExerciseInfo?
+  var userLevelInfo: UserLevelInfo?
+  var bottomSheetSwipeBeganYValue: CGFloat
+  var bottomSheetSwipeDirection: BottomSheetSwipeDirection?
 }
