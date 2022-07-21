@@ -8,7 +8,7 @@
 
 import UIKit
 
-fileprivate extension EditRoutineStep {
+fileprivate extension EditRoutine.Step {
     var title: String {
         switch self {
         case .start: return ""
@@ -21,10 +21,10 @@ fileprivate extension EditRoutineStep {
 }
 
 final class EditStartCellModel: CellModel {
-    public let step: EditRoutineStep
+    public let step: EditRoutine.Step
     fileprivate let subTitleText: String
     
-    init(step: EditRoutineStep, subTitle: String) {
+    init(step: EditRoutine.Step, subTitle: String) {
         self.step = step
         self.subTitleText = subTitle
         super.init(cellID: "EditStartCell")

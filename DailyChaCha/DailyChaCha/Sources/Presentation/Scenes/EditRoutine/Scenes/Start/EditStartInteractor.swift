@@ -27,7 +27,7 @@ final class EditStartInteractor: PresentableInteractor<EditStartPresentable>, Ed
     struct Input {
         let loadData: Observable<Void>
         let prevStep: Observable<Void>
-        let modelSelected: Observable<EditRoutineStep>
+        let modelSelected: Observable<EditRoutine.Step>
     }
     
     struct Output {

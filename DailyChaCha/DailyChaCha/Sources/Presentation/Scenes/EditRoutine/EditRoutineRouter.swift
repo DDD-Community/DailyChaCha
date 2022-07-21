@@ -9,18 +9,17 @@
 import RIBs
 import UIKit
 
-enum EditRoutineStep {
-    case start, goal, date, time, alert
-}
-
 protocol EditRoutineStepable: AnyObject {
-    func nextStep(_ step: EditRoutineStep)
-    func prevStep(_ step: EditRoutineStep)
+    func nextStep(_ step: EditRoutine.Step)
+    func prevStep(_ step: EditRoutine.Step)
+    func completedStep(_ step: EditRoutine.Step)
 }
 
 protocol EditRoutineInteractable: Interactable, EditStartListener, EditGoalListener, EditDateListener, EditTimeListener {
     var router: EditRoutineRouting? { get set }
     var listener: EditRoutineListener? { get set }
+    
+    func routeToProperEditRoutineStep(viewController: UIViewController)
 }
 
 protocol EditRoutineViewControllable: ViewControllable {
@@ -33,12 +32,10 @@ final class EditRoutineRouter: Router<EditRoutineInteractable>, EditRoutineRouti
 
     // TODO: Constructor inject child builder protocols to allow building children.
     init(interactor: EditRoutineInteractable,
-         viewController: EditRoutineViewControllable,
          startBuilder: EditStartBuilder,
          goalBuilder: EditGoalBuilder,
          dateBuilder: EditDateBuilder,
          timeBuilder: EditTimeBuilder) {
-        self.viewController = viewController
         self.startBuilder = startBuilder
         self.goalBuilder = goalBuilder
         self.dateBuilder = dateBuilder
@@ -56,14 +53,13 @@ final class EditRoutineRouter: Router<EditRoutineInteractable>, EditRoutineRouti
     
     // MARK: - Private
     
-    private let viewController: EditRoutineViewControllable
     private let startBuilder: EditStartBuilder
     private let goalBuilder: EditGoalBuilder
     private let dateBuilder: EditDateBuilder
     private let timeBuilder: EditTimeBuilder
     private let navigationViewController: UINavigationController
     
-    private func parseBuild(_ step: EditRoutineStep) -> ViewableRouting? {
+    private func parseBuild(_ step: EditRoutine.Step) -> ViewableRouting? {
         switch step {
         case .start: return startBuilder.build(withListener: interactor)
         case .goal: return goalBuilder.build(withListener: interactor)
@@ -74,26 +70,28 @@ final class EditRoutineRouter: Router<EditRoutineInteractable>, EditRoutineRouti
     }
     
     private func completed() {
-        viewController.uiviewController.dismiss(animated: true)
         interactor.listener?.completedEdit()
     }
-
-    func routeNextStep(_ step: EditRoutineStep) {
+    
+    func startStep(_ step: EditRoutine.Step) {
         guard let build = parseBuild(step) else { return }
         attachChild(build)
-        if step == .start {
-            navigationViewController.viewControllers = [build.viewControllable.uiviewController]
-            viewController.uiviewController.present(navigationViewController, animated: true)
-        } else {
-            navigationViewController.pushViewController(build.viewControllable.uiviewController, animated: true)
-        }
+        navigationViewController.viewControllers = [build.viewControllable.uiviewController]
+        
+        interactor.routeToProperEditRoutineStep(viewController: navigationViewController)
+    }
+
+    func routeNextStep(_ step: EditRoutine.Step) {
+        guard let build = parseBuild(step) else { return }
+        attachChild(build)
+        navigationViewController.pushViewController(build.viewControllable.uiviewController, animated: true)
     }
     
-    func routePrevStep(_ step: EditRoutineStep) {
-        if step == .start {
-            completed()
-        } else {
-            navigationViewController.popViewController(animated: true)
-        }
+    func routePrevStep(_ step: EditRoutine.Step) {
+        navigationViewController.popViewController(animated: true)
+    }
+    
+    func completedStep(_ step: EditRoutine.Step) {
+        completed()
     }
 }

@@ -8,15 +8,19 @@
 
 import RIBs
 import RxSwift
+import UIKit
 
 protocol EditRoutineRouting: Routing {
     func cleanupViews()
-    func routeNextStep(_ step: EditRoutineStep)
-    func routePrevStep(_ step: EditRoutineStep)
+    func startStep(_ step: EditRoutine.Step)
+    func routeNextStep(_ step: EditRoutine.Step)
+    func routePrevStep(_ step: EditRoutine.Step)
+    func completedStep(_ step: EditRoutine.Step)
 }
 
 protocol EditRoutineListener: AnyObject {
     // TODO: Declare methods the interactor can invoke to communicate with other RIBs.
+    func routeToProperEditRoutineStep(viewController: UIViewController)
     func completedEdit()
 }
 
@@ -31,14 +35,23 @@ final class EditRoutineInteractor: Interactor, EditRoutineInteractable {
 
     override func didBecomeActive() {
         super.didBecomeActive()
-        router?.routeNextStep(.start)
+        router?.startStep(.start)
     }
     
-    func nextStep(_ step: EditRoutineStep) {
+    func nextStep(_ step: EditRoutine.Step) {
         router?.routeNextStep(step)
     }
     
-    func prevStep(_ step: EditRoutineStep) {
+    func prevStep(_ step: EditRoutine.Step) {
         router?.routePrevStep(step)
+    }
+    
+    func completedStep(_ step: EditRoutine.Step) {
+        router?.completedStep(step)
+    }
+    
+    func routeToProperEditRoutineStep(viewController: UIViewController) {
+      
+      listener?.routeToProperEditRoutineStep(viewController: viewController)
     }
 }
