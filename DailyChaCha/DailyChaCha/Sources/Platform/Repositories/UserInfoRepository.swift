@@ -22,14 +22,6 @@ final class UserInfoRepositoryImpl: UserInfoRepository {
   
   func requestUserInfo() -> Single<TokenInfo> {
     return provider.rx.request(.fetchUserInfo)
-      .map({ response in
-        return response
-      })
       .map(TokenInfo.self)
-      .do { token in
-        print(token)
-      } onError: { error in
-        print(error)
-      }
   }
 }
