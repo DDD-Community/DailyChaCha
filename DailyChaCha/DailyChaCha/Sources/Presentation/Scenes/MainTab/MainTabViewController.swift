@@ -33,6 +33,13 @@ final class MainTabViewController:
   MainTabPresentable,
   MainTabViewControllable
 {
+  // MARK: - Constants
+  
+  enum MainTabChildViewType {
+    case upperTab
+    case fullScreen
+  }
+  
   // MARK: - UI Components
   
   private let mainTabBar = MainTabBar()
@@ -57,7 +64,10 @@ final class MainTabViewController:
     bind(listener: listener)
   }
   
-  func addChildViewController(viewControllable: ViewControllable) {
+  func addChildViewController(
+    viewControllable: ViewControllable,
+    type: MainTabChildViewType
+  ) {
     
     
     
@@ -70,8 +80,13 @@ final class MainTabViewController:
       
       childView.snp.makeConstraints {
         $0.leading.trailing.equalToSuperview()
-        $0.top.equalTo(view.safeAreaLayoutGuide.snp.top)
-        $0.bottom.equalTo(mainTabBar.snp.top)
+        $0.top.equalTo(view.snp.top)
+        switch type {
+        case .upperTab:
+          $0.bottom.equalTo(mainTabBar.snp.top)
+        case .fullScreen:
+          $0.bottom.equalToSuperview()
+        }
       }
     }
   }

@@ -9,7 +9,8 @@
 import RIBs
 
 protocol MainTabInteractable: Interactable,
-  HomeListener
+  HomeListener,
+  HomeCoachMarkListener
 {
   var router: MainTabRouting? { get set }
   var listener: MainTabListener? { get set }
@@ -22,7 +23,10 @@ protocol MainTabViewControllable: ViewControllable {
     animated: Bool
   )
   
-  func addChildViewController(viewControllable: ViewControllable)
+  func addChildViewController(
+    viewControllable: ViewControllable,
+    type: MainTabViewController.MainTabChildViewType
+  )
 }
 
 final class MainTabRouter: ViewableRouter<MainTabInteractable, MainTabViewControllable>,
@@ -55,6 +59,19 @@ final class MainTabRouter: ViewableRouter<MainTabInteractable, MainTabViewContro
     
     attachChild(router)
     
-    viewController.addChildViewController(viewControllable: router.viewControllable)
+    viewController.addChildViewController(
+      viewControllable: router.viewControllable,
+      type: .upperTab
+    )
+    
+    setupHomeCoachMark()
+  }
+  
+  func setupHomeCoachMark() {
+    let router = homeCoachMarkBuilder.build(withListener: interactor)
+    
+    attachChild(router)
+    
+    viewController.addChildViewController(viewControllable: router.viewControllable, type: .fullScreen)
   }
 }
