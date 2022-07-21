@@ -74,7 +74,7 @@ final class HomeTransformableBottomView: UIView {
       titleLabel.attributedText = title
       titleLabel.snp.remakeConstraints {
         $0.leading.equalTo(rewardImageView.snp.trailing).offset(20)
-        $0.centerY.equalToSuperview()
+        $0.top.equalTo(handleView.snp.bottom).offset(17)
       }
       
       rewardImageView.snp.updateConstraints {
