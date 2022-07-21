@@ -82,10 +82,4 @@ final class EditTimeInteractor: PresentableInteractor<EditTimePresentable>, Edit
             isEnabledNextButton: input.selectedRows.map { $0?.isEmpty == false }
         )
     }
-    
-    private func getWeekDays(days: [Int]) -> [String] {
-        let fmt = DateFormatter()
-        let symbols = fmt.weekdaySymbols!
-        return days.map { symbols[$0] }
-    }
 }

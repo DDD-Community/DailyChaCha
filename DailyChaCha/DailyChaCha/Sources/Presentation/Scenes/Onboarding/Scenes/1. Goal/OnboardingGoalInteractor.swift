@@ -78,7 +78,7 @@ final class OnboardingGoalInteractor: PresentableInteractor<OnboardingGoalPresen
             }
             .asDriver(onErrorJustReturn: ())
             .drive(onNext: { [weak self] in
-                self?.listener?.nextStep(.goal)
+                self?.listener?.nextStep(.date)
             })
             .disposed(by: disposeBag)
             

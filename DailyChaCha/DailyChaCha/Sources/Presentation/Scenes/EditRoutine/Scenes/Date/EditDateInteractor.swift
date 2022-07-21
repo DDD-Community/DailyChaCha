@@ -56,7 +56,7 @@ final class EditDateInteractor: PresentableInteractor<EditDatePresentable>, Edit
                 let selectedWeekday = $0.weekday
                 return self?.getWeekDays().map {
                     let selected = selectedWeekday.contains($0.index)
-                    return OnboardingDateSelectCellModel(title: $0.weekday, selected: selected)
+                    return OnboardingDateSelectCellModel(title: $0.weekday, selected: selected, day: $0.index)
                 }
             }
         

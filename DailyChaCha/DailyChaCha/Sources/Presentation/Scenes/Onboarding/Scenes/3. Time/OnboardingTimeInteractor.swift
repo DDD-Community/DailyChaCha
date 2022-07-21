@@ -64,7 +64,7 @@ final class OnboardingTimeInteractor: PresentableInteractor<OnboardingTimePresen
         input.prevStep
             .asDriver(onErrorJustReturn: ())
             .drive(onNext: { [weak self] in
-                self?.listener?.prevStep(.time)
+                self?.listener?.prevStep(.date)
             })
             .disposed(by: disposeBag)
         
@@ -75,7 +75,7 @@ final class OnboardingTimeInteractor: PresentableInteractor<OnboardingTimePresen
             }
             .asDriver(onErrorJustReturn: ())
             .drive(onNext: { [weak self] in
-                self?.listener?.nextStep(.time)
+                self?.listener?.nextStep(.alert)
             })
             .disposed(by: disposeBag)
         

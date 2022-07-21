@@ -57,7 +57,7 @@ final class OnboardingAlertInteractor: PresentableInteractor<OnboardingAlertPres
             }
             .asDriver(onErrorJustReturn: ())
             .drive(onNext: { [weak self] _ in
-                self?.listener?.nextStep(.alert)
+                self?.listener?.nextStep(.welcome)
             })
             .disposed(by: disposeBag)
         

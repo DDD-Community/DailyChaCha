@@ -43,7 +43,7 @@ final class OnboardingWelcomeInteractor: PresentableInteractor<OnboardingWelcome
         input.nextStep
             .asDriver(onErrorJustReturn: ())
             .drive(onNext: { [weak self] in
-                self?.listener?.nextStep(.welcome)
+                self?.listener?.completedStep(.welcome)
             })
             .disposed(by: disposeBag)
         

@@ -12,8 +12,8 @@ import RxSwift
 struct OnboardingUseCase {
     private let onboardingRepository: OnboardingRepository
     
-    init(onboardingRepository: OnboardingRepository = OnboardingRepositoryImpl(isMock: true)) {
-//    init(onboardingRepository: OnboardingRepository = OnboardingRepositoryImpl()) {
+//    init(onboardingRepository: OnboardingRepository = OnboardingRepositoryImpl(isMock: true)) {
+    init(onboardingRepository: OnboardingRepository = OnboardingRepositoryImpl()) {
 //    init(onboardingRepository: OnboardingRepository = OnboardingNewbieRepositoryImpl()) {
 //    init(onboardingRepository: OnboardingRepository = OnboardingOldbieRepositoryImpl()) {
 //    init(onboardingRepository: OnboardingRepository = OnboardingCompleteRepositoryImpl()) {

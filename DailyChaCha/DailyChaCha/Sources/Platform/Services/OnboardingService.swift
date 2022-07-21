@@ -17,29 +17,20 @@ enum OnboardingService {
     case setAlert
 }
 
-extension OnboardingService: TargetType {
-    // TODO: accessToken
-    var headers: [String : String]? {
-        return [:]
-    }
-    
-    var baseURL: URL {
-//        return URL(string: "http://ec2-13-209-98-22.ap-northeast-2.compute.amazonaws.com/api/")!
-        return URL(string: "http://ec2/")!
-    }
+extension OnboardingService: BaseService {
     
     var path: String {
         switch self {
         case .status:
-            return "onboarding/status"
+            return "status"
         case .progress:
-            return "onboarding/progress"
+            return "progress"
         case .getGoals, .setGoals:
-            return "onboarding/goals"
+            return "goals"
         case .getDates, .setDates, .putDates:
-            return "onboarding/dates"
+            return "dates"
         case .setAlert:
-            return "onboarding/alert"
+            return "alert"
         }
     }
     

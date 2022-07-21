@@ -51,13 +51,6 @@ class OnboardingTimeView: UIStackView {
             })
             .disposed(by: disposeBag)
         
-        startView.done
-            .withUnretained(self)
-            .subscribe(onNext: { (owner, result) in
-                owner.resultForSelectedRows = [result]
-            })
-            .disposed(by: disposeBag)
-        
         otherView.selected
             .subscribe(onNext: { [weak self] state in
                 switch state {
@@ -73,6 +66,14 @@ class OnboardingTimeView: UIStackView {
         
         items.withUnretained(self)
             .subscribe(onNext: { (owner, items) in
+                owner.startView.done
+                    .subscribe(onNext: { result in
+                        owner.resultForSelectedRows = items.exerciseDates.map {
+                            Onboarding.ExerciseDate(date: $0.date, time: result.time)
+                        }
+                    })
+                    .disposed(by: owner.disposeBag)
+                
                 for dates in items.exerciseDates {
                     owner.setupSeparationViews(dates)
                 }
@@ -80,7 +81,9 @@ class OnboardingTimeView: UIStackView {
                 if owner.isNew {
                     owner.otherView.selected.onNext(.normal)
                     owner.startView.selected.onNext(.selected)
-                    owner.resultForSelectedRows = [owner.startView.resultForSelectedRow]
+                    owner.resultForSelectedRows = items.exerciseDates.map {
+                        Onboarding.ExerciseDate(date: $0.date, time: owner.startView.resultForSelectedRow.time)
+                    }
                 } else {
                     owner.otherView.selected.onNext(.selected)
                     owner.startView.state = .disabled

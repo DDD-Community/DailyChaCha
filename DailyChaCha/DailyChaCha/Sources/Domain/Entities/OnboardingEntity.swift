@@ -13,11 +13,12 @@ struct Onboarding { }
 extension Onboarding {
     
     enum Step: String, Decodable {
-        case start, goal, date, time, alert, welcome
+        case goal, date, time, alert, welcome
     }
     
     struct Goal: Codable {
         let goal: String
+        let index: Int?
     }
     
     struct Status: Decodable {
@@ -36,23 +37,27 @@ extension Onboarding {
     
     struct Dates: Decodable {
         let exerciseDates: [ExerciseDate]
-        var goal: String?
+        var goal: Goal?
+        let isAllDatesSameTime: Bool
 
         enum CodingKeys: String, CodingKey {
             case exerciseDates = "exercise_dates"
             case goal = "goal"
+            case isAllDatesSameTime = "is_all_dates_same_time"
         }
         
-        init(goal: String? = nil, exerciseDates: [ExerciseDate]) {
+        init(goal: Goal? = nil, exerciseDates: [ExerciseDate]) {
             self.goal = goal
             self.exerciseDates = exerciseDates
+            self.isAllDatesSameTime = true
         }
         
         init(from decoder: Decoder) throws {
             let container = try decoder.container(keyedBy: CodingKeys.self)
-            goal = try container.decodeIfPresent(String.self, forKey: .goal)
+            goal = try container.decodeIfPresent(Goal.self, forKey: .goal)
             let dates = try container.decodeIfPresent([ExerciseDate].self, forKey: .exerciseDates) ?? []
             exerciseDates = dates.filter { $0.verify }
+            isAllDatesSameTime = try container.decodeIfPresent(Bool.self, forKey: .isAllDatesSameTime) ?? true
         }
         
         var weekdaysTitle: String {
@@ -87,10 +92,9 @@ extension Onboarding {
     }
     
     struct ExerciseDate: Codable {
-        static var DefaultDate: Int = -1
-        static var DefaultTime: TimeInterval = 0
-        var date: Int
-        var time: TimeInterval
+        static var DefaultDate: Int = 0
+        static var DefaultTime: Int = 0
+        var date, time: Int
 
         enum CodingKeys: String, CodingKey {
             case date = "exercise_date"
@@ -102,9 +106,15 @@ extension Onboarding {
             time = ExerciseDate.DefaultTime
         }
         
-        init(date: Int, time: TimeInterval) {
+        init(date: Int, time: Int) {
             self.date = date
             self.time = time
+        }
+        
+        init(from decoder: Decoder) throws {
+            let container = try decoder.container(keyedBy: CodingKeys.self)
+            date = try container.decodeIfPresent(Int.self, forKey: .date) ?? ExerciseDate.DefaultDate
+            time = try container.decodeIfPresent(Int.self, forKey: .date) ?? ExerciseDate.DefaultTime
         }
         
         var verify: Bool {

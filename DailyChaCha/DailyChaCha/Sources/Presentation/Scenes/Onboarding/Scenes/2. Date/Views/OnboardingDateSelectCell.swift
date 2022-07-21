@@ -10,9 +10,11 @@ import UIKit
 
 final class OnboardingDateSelectCellModel: CellModel {
     var title: String
+    var day: Int
     
-    init(title: String, selected: Bool = false) {
+    init(title: String, selected: Bool = false, day: Int) {
         self.title = title
+        self.day = day
         super.init(cellID: "OnboardingDateSelectCell", selected: selected)
     }
 }

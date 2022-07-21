@@ -15,6 +15,7 @@ protocol OnboardingRouting: Routing {
   func startStep(_ step: Onboarding.Step)
   func routeNextStep(_ step: Onboarding.Step)
   func routePrevStep(_ step: Onboarding.Step)
+  func completedStep(_ step: Onboarding.Step)
   // TODO: Declare methods the interactor can invoke to manage sub-tree via the router.
 }
 
@@ -28,6 +29,7 @@ final class OnboardingInteractor: Interactor, OnboardingInteractable {
   weak var router: OnboardingRouting?
   weak var listener: OnboardingListener?
   private let useCase: OnboardingUseCase
+    private let disposeBag: DisposeBag = .init()
   
   init(useCase: OnboardingUseCase) {
     self.useCase = useCase
@@ -59,10 +61,10 @@ final class OnboardingInteractor: Interactor, OnboardingInteractable {
           owner.deactivate()
           owner.listener?.completed()
         } else {
-          progress.subscribe(onSuccess: owner.router?.startStep).dispose()
+          progress.subscribe(onSuccess: owner.router?.startStep).disposed(by: owner.disposeBag)
         }
       })
-      .dispose()
+      .disposed(by: disposeBag)
   }
   
   func nextStep(_ step: Onboarding.Step) {
@@ -71,6 +73,10 @@ final class OnboardingInteractor: Interactor, OnboardingInteractable {
   
   func prevStep(_ step: Onboarding.Step) {
     router?.routePrevStep(step)
+  }
+    
+  func completedStep(_ step: Onboarding.Step) {
+      router?.completedStep(step)
   }
   
   func routeToProperOnboardingStep(viewController: UIViewController) {

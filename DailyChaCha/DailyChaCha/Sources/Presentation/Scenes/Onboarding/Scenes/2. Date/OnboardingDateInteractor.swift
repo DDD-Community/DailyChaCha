@@ -31,7 +31,7 @@ final class OnboardingDateInteractor: PresentableInteractor<OnboardingDatePresen
     }
     
     struct Output {
-        let cells: Observable<[CellModel]>
+        let cells: Observable<[OnboardingDateSelectCellModel]>
         let isEnabledNextButton: Observable<Bool>
         let isHiddenPrevButton: Observable<Bool>
     }
@@ -52,28 +52,31 @@ final class OnboardingDateInteractor: PresentableInteractor<OnboardingDatePresen
     }
 
     func transform(input: Input) -> Output {
-        let cells: Observable<[CellModel]> = input.loadData
+        let cells: Observable<[OnboardingDateSelectCellModel]> = input.loadData
             .withUnretained(self)
             .map { (owner, _ ) in
                 return owner.getWeekDays()
-                    .map { OnboardingDateSelectCellModel(title: $0) }
+                    .map { .init(title: $0.weekday, day: $0.index) }
             }
         
         input.prevStep
             .asDriver(onErrorJustReturn: ())
             .drive(onNext: { [weak self] in
-                self?.listener?.prevStep(.date)
+                self?.listener?.prevStep(.goal)
             })
             .disposed(by: disposeBag)
         
         input.nextStep
+            .withLatestFrom(cells) { rows, cells in
+                rows.map { cells[$0].day }
+            }
             .withUnretained(self)
             .flatMap { owner, days in
                 owner.useCase.dates(days: days)
             }
             .asDriver(onErrorJustReturn: ())
             .drive(onNext: { [weak self] in
-                self?.listener?.nextStep(.date)
+                self?.listener?.nextStep(.time)
             })
             .disposed(by: disposeBag)
             
@@ -84,10 +87,11 @@ final class OnboardingDateInteractor: PresentableInteractor<OnboardingDatePresen
         )
     }
     
-    private func getWeekDays() -> [String] {
+    private func getWeekDays() -> [(index: Int, weekday: String)] {
         let fmt = DateFormatter()
         let firstWeekday = 2 // -> Monday
         let symbols = fmt.weekdaySymbols!
-        return Array(symbols[firstWeekday-1..<symbols.count]) + symbols[0..<firstWeekday-1]
+        let index = Array(firstWeekday-1..<symbols.count) + Array(0..<firstWeekday-1)
+        return index.map { (index: $0, weekday: symbols[$0]) }
     }
 }
