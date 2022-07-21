@@ -16,7 +16,9 @@ import SnapKit
 import Then
 
 enum MainTabAction {
-  
+  case homeButtonTap
+  case calendarButtonTap
+  case myPageButtonTap
 }
 
 protocol MainTabPresentableListener: AnyObject {
@@ -68,8 +70,6 @@ final class MainTabViewController:
     viewControllable: ViewControllable,
     type: MainTabChildViewType
   ) {
-    
-    
     
     addChild(viewControllable.uiviewController)
     

@@ -8,7 +8,16 @@
 
 import UIKit
 
+import RxSwift
+import RxCocoa
+
 final class MainTabBar: UIView {
+  
+  lazy var homeButtonTap = homeButton.rx.tap
+  
+  lazy var calendarButtonTap = calendarButton.rx.tap
+  
+  lazy var myPageButtonTap = myPageButton.rx.tap
   
   private let homeButton = UIButton()
   
