@@ -59,35 +59,23 @@ final class OnboardingTimeInteractor: PresentableInteractor<OnboardingTimePresen
             .share()
         
         let headerText: Observable<String> = dates
-            .map { dates in
-                let weekdays = dates.exerciseDates.map { $0.weekday }
-                var text: String = ""
-                for i in 0..<weekdays.count {
-                    if i+1 == weekdays.count {
-                        text += "\(weekdays[i]) 마다"
-                    } else {
-                        text += "\(weekdays[i]), "
-                    }
-                }
-                return text
-            }
+            .map { $0.weekdaysTitle + "마다" }
         
         input.prevStep
             .asDriver(onErrorJustReturn: ())
             .drive(onNext: { [weak self] in
-                self?.listener?.prevStep(.time)
+                self?.listener?.prevStep(.date)
             })
             .disposed(by: disposeBag)
         
-        // TODO: - api 연동
         input.nextStep
             .withUnretained(self)
             .flatMap { owner, exerciseDate in
-                owner.useCase.dates(exerciseDate: .init(exerciseDates: exerciseDate))
+                owner.useCase.dates(exerciseDates: exerciseDate)
             }
             .asDriver(onErrorJustReturn: ())
             .drive(onNext: { [weak self] in
-                self?.listener?.nextStep(.time)
+                self?.listener?.nextStep(.alert)
             })
             .disposed(by: disposeBag)
         

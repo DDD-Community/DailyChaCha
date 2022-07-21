@@ -43,7 +43,7 @@ final class OnboardingTimeSelectView: DesignView, OnboardingTimeSelectable {
     init(data: Onboarding.ExerciseDate, isNew: Bool) {
         resultForSelectedRow = data
         super.init(frame: .zero)
-        titleLabel.text = data.weekday
+        titleLabel.text = data.weekday(short: false)
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "HH:mm"
         var now: Date
@@ -51,12 +51,12 @@ final class OnboardingTimeSelectView: DesignView, OnboardingTimeSelectable {
         if isNew {
             now = .init()
         } else {
-            now = .init(timeIntervalSince1970: .init(data.time))
+            now = data.time.toTime().toTimeDate
         }
         
         selectButton.pickerView.setDate(now, animated: false)
         timeLabel.text = dateFormatter.string(from: now)
-        resultForSelectedRow.time = now.timeIntervalSince1970
+        resultForSelectedRow.time = now.toSeconds
     }
     
     public required init?(coder aDecoder: NSCoder) {
@@ -79,9 +79,52 @@ final class OnboardingTimeSelectView: DesignView, OnboardingTimeSelectable {
                 formatter.dateFormat = "HH:mm"
                 owner.timeLabel.text = formatter.string(from: date)
                 owner.state = .normal
-                owner.resultForSelectedRow.time = date.timeIntervalSince1970
+                owner.resultForSelectedRow.time = date.toSeconds
                 owner.done.onNext(owner.resultForSelectedRow)
             })
             .disposed(by: disposeBag)
+    }
+}
+
+extension Date {
+    /// 시, 분, 초를 합하여 초로 변경한다.
+    var toSeconds: Int {
+        let calendar = Calendar.current
+        let hours = calendar.component(.hour, from: self)
+        let minutes = calendar.component(.minute, from: self)
+        let seconds = calendar.component(.second, from: self)
+        
+        return (hours * 3600) + (minutes * 60) + seconds
+    }
+}
+
+extension Int {
+    /// 초 받은 것을 시, 분, 초로 나타낸다.
+    func toTime(_ hiddenSeconds: Bool = true) -> String {
+        let time = NSInteger(self)
+        
+        let minutes = (time / 60) % 60
+        let hours = (time / 3600)
+        
+        if hiddenSeconds {
+            return String(format: "%0.2d:%0.2d",hours,minutes)
+        } else {
+            let seconds = time % 60
+            return String(format: "%0.2d:%0.2d:%0.2d",hours,minutes,seconds)
+        }
+    }
+}
+
+extension String {
+    /// "HH:mm:ss" -> Date
+    var toTimeDate: Date { //
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "HH:mm:ss"
+        dateFormatter.timeZone = TimeZone(identifier: "UTC")
+        if let date = dateFormatter.date(from: self) {
+            return date
+        } else {
+            return .init()
+        }
     }
 }

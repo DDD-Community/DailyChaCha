@@ -25,7 +25,7 @@ protocol OnboardingRepository {
     /// GET : 온보딩 운동일정 가져오는 API, 유저의 온보딩 여부를 반환합니다.
     func dates() -> Single<Onboarding.Dates>
     /// PUT : 시간정하기 API,  유저의 온보딩 세번째 - 시간을 생성하는 API입니다.
-    func dates(exerciseDate: Onboarding.Dates) -> Single<Void>
+    func dates(exerciseDates: [Onboarding.ExerciseDate]) -> Single<Void>
     /// POST : 알림설정 완료 API, 유저의 온보딩 네번째 - 알림설정 완료하는 API입니다.
     func alert() -> Single<Void>
 }
@@ -34,9 +34,13 @@ final class OnboardingRepositoryImpl: OnboardingRepository {
     
     private let provider: MoyaProvider<OnboardingService>
     
-    init() {
+    init(isMock: Bool = false) {
         let plugin: [PluginType] = [NetworkLoggerPlugin(configuration: .init(logOptions: .verbose))]
-        provider = .init(plugins: plugin)
+        if isMock {
+            provider = .init(stubClosure: MoyaProvider.immediatelyStub, plugins: plugin)
+        } else {
+            provider = .init(plugins: plugin)
+        }
     }
     
     func status() -> Single<Onboarding.Status> {
@@ -69,8 +73,8 @@ final class OnboardingRepositoryImpl: OnboardingRepository {
             .map(Onboarding.Dates.self)
     }
     
-    func dates(exerciseDate: Onboarding.Dates) -> Single<Void> {
-        return provider.rx.request(.putDates(dates: exerciseDate))
+    func dates(exerciseDates: [Onboarding.ExerciseDate]) -> Single<Void> {
+        return provider.rx.request(.putDates(dates: exerciseDates))
             .map { _ in }
     }
     

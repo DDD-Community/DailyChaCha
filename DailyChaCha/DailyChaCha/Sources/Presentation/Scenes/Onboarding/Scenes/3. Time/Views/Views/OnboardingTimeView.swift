@@ -22,7 +22,11 @@ class OnboardingTimeView: UIStackView {
         }
     }
     public var rxResultForSelectedRows: PublishSubject<[Onboarding.ExerciseDate]?> = .init()
-    @IBInspectable public var isNew: Bool = true
+    @IBInspectable public var isNew: Bool = true {
+        didSet {
+            otherView.state = isNew ? .normal : .selected
+        }
+    }
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -47,30 +51,29 @@ class OnboardingTimeView: UIStackView {
             })
             .disposed(by: disposeBag)
         
-        startView.done
-            .withUnretained(self)
-            .subscribe(onNext: { (owner, result) in
-                owner.resultForSelectedRows = [result]
-            })
-            .disposed(by: disposeBag)
-        
         otherView.selected
             .subscribe(onNext: { [weak self] state in
-                UIView.animate(withDuration: 0.3, animations: {
-                    switch state {
-                    case .normal:
-                        self?.separationViews.forEach { $0.isHidden = true }
-                    case .selected:
-                        self?.separationViews.forEach { $0.isHidden = false }
-                    case .disabled:
-                        break
-                    }
-                })
+                switch state {
+                case .normal:
+                    self?.separationViews.forEach { $0.isHidden = true }
+                case .selected:
+                    self?.separationViews.forEach { $0.isHidden = false }
+                case .disabled:
+                    break
+                }
             })
             .disposed(by: disposeBag)
         
         items.withUnretained(self)
             .subscribe(onNext: { (owner, items) in
+                owner.startView.done
+                    .subscribe(onNext: { result in
+                        owner.resultForSelectedRows = items.exerciseDates.map {
+                            Onboarding.ExerciseDate(date: $0.date, time: result.time)
+                        }
+                    })
+                    .disposed(by: owner.disposeBag)
+                
                 for dates in items.exerciseDates {
                     owner.setupSeparationViews(dates)
                 }
@@ -78,7 +81,9 @@ class OnboardingTimeView: UIStackView {
                 if owner.isNew {
                     owner.otherView.selected.onNext(.normal)
                     owner.startView.selected.onNext(.selected)
-                    owner.resultForSelectedRows = [owner.startView.resultForSelectedRow]
+                    owner.resultForSelectedRows = items.exerciseDates.map {
+                        Onboarding.ExerciseDate(date: $0.date, time: owner.startView.resultForSelectedRow.time)
+                    }
                 } else {
                     owner.otherView.selected.onNext(.selected)
                     owner.startView.state = .disabled
@@ -92,7 +97,7 @@ class OnboardingTimeView: UIStackView {
         let view: OnboardingTimeSelectView = .init(data: dates, isNew: isNew)
         separationViews.append(view)
         addArrangedSubview(view)
-        view.isHidden = !isNew
+        view.isHidden = isNew
         
         view.selected
             .withUnretained(self)

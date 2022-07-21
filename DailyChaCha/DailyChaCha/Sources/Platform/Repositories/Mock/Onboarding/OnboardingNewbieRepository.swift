@@ -17,14 +17,14 @@ final class OnboardingNewbieRepositoryImpl: OnboardingRepository {
     }
     
     func progress() -> Single<Onboarding.Progress> {
-        .just(.init(progress: .start))
+        .just(.init(progress: .goal))
     }
     
     func goals() -> Single<Onboarding.Goals> {
         .just([
-            Onboarding.Goal(goal: "MOCK:몸도 마음도 건강한 삶을 위해"),
-            Onboarding.Goal(goal: "MOCK:루틴한 삶을 위해"),
-            Onboarding.Goal(goal: "MOCK:멋진 몸매를 위해"),
+            Onboarding.Goal(goal: "MOCK:몸도 마음도 건강한 삶을 위해", index: 1),
+            Onboarding.Goal(goal: "MOCK:루틴한 삶을 위해", index: 2),
+            Onboarding.Goal(goal: "MOCK:멋진 몸매를 위해", index: 3),
         ])
     }
     
@@ -37,14 +37,14 @@ final class OnboardingNewbieRepositoryImpl: OnboardingRepository {
     }
     
     func dates() -> Single<Onboarding.Dates> {
-        .just(.init(goal: "", exerciseDates: [
+        .just(.init(goal: nil, exerciseDates: [
             .init(date: 0, time: 0),
             .init(date: 1, time: 0),
             .init(date: 2, time: 0)
         ]))
     }
     
-    func dates(exerciseDate: Onboarding.Dates) -> Single<Void> {
+    func dates(exerciseDates: [Onboarding.ExerciseDate]) -> Single<Void> {
         .just(())
     }
     

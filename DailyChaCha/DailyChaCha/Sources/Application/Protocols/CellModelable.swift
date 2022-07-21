@@ -16,8 +16,11 @@ class CellModel: NSObject {
     let cellID: String
     /// tableView.rx.cells로 연결 시 row의 값이 추가됩니다.
     var row: Int?
+    /// true 시, cell.
+    var selected: Bool
 
-    init(cellID: String) {
+    init(cellID: String, selected: Bool = false) {
         self.cellID = cellID
+        self.selected = selected
     }
 }

@@ -23,12 +23,14 @@ protocol OnboardingAlertListener: OnboardingStepable { }
 final class OnboardingAlertInteractor: PresentableInteractor<OnboardingAlertPresentable>, OnboardingAlertInteractable, OnboardingAlertPresentableListener {
     
     struct Input {
+        let loadData: Observable<Void>
         let tapAllow: Observable<Void>
         let nextStep: PublishSubject<Bool> = .init()
     }
     
     struct Output {
         let requestPermission: Observable<Void>
+        let headerText: Observable<String>
     }
 
     weak var router: OnboardingAlertRouting?
@@ -43,6 +45,11 @@ final class OnboardingAlertInteractor: PresentableInteractor<OnboardingAlertPres
     }
     
     func transform(input: Input) -> Output {
+        let headerText = input.loadData
+            .withUnretained(self)
+            .flatMap { (owner, _ ) in owner.useCase.dates() }
+            .map { $0.weekdaysTitle }
+        
         input.nextStep
             .withUnretained(self)
             .flatMap { owner, _ in
@@ -50,10 +57,10 @@ final class OnboardingAlertInteractor: PresentableInteractor<OnboardingAlertPres
             }
             .asDriver(onErrorJustReturn: ())
             .drive(onNext: { [weak self] _ in
-                self?.listener?.nextStep(.alert)
+                self?.listener?.nextStep(.welcome)
             })
             .disposed(by: disposeBag)
         
-        return .init(requestPermission: input.tapAllow)
+        return .init(requestPermission: input.tapAllow, headerText: headerText)
     }
 }

@@ -10,10 +10,12 @@ import UIKit
 
 final class OnboardingDateSelectCellModel: CellModel {
     var title: String
+    var day: Int
     
-    init(title: String) {
+    init(title: String, selected: Bool = false, day: Int) {
         self.title = title
-        super.init(cellID: "OnboardingDateSelectCell")
+        self.day = day
+        super.init(cellID: "OnboardingDateSelectCell", selected: selected)
     }
 }
 

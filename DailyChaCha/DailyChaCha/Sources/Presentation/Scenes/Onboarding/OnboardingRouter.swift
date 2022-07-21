@@ -12,6 +12,7 @@ import UIKit
 protocol OnboardingStepable: AnyObject {
   func nextStep(_ step: Onboarding.Step)
   func prevStep(_ step: Onboarding.Step)
+  func completedStep(_ step: Onboarding.Step)
 }
 
 protocol OnboardingInteractable: Interactable, OnboardingGoalListener, OnboardingDateListener, OnboardingTimeListener, OnboardingAlertListener, OnboardingWelcomeListener {
@@ -57,14 +58,13 @@ final class OnboardingRouter: Router<OnboardingInteractable>, OnboardingRouting 
   
   private var currentChild: ViewableRouting?
   
-  private func parseBuild(_ step: Onboarding.Step, isNewbie: Bool) -> ViewableRouting? {
+  private func parseBuild(_ step: Onboarding.Step, isNewbie: Bool) -> ViewableRouting {
     switch step {
-    case .start: return goalBuilder.build(withListener: interactor)
-    case .goal: return dateBuilder.build(withListener: interactor, isNewbie: isNewbie)
-    case .date: return timeBuilder.build(withListener: interactor, isNewbie: isNewbie)
-    case .time: return alertBuilder.build(withListener: interactor)
-    case .alert: return welcomeBuilder.build(withListener: interactor)
-    case .welcome: return nil
+    case .goal: return goalBuilder.build(withListener: interactor)
+    case .date: return dateBuilder.build(withListener: interactor, isNewbie: isNewbie)
+    case .time: return timeBuilder.build(withListener: interactor, isNewbie: isNewbie)
+    case .alert: return alertBuilder.build(withListener: interactor)
+    case .welcome: return welcomeBuilder.build(withListener: interactor)
     }
   }
   
@@ -73,29 +73,27 @@ final class OnboardingRouter: Router<OnboardingInteractable>, OnboardingRouting 
   }
   
   func startStep(_ step: Onboarding.Step) {
-    if let build = parseBuild(step, isNewbie: true) {
-      attachChild(build)
-      navigationViewController.viewControllers = [build.viewControllable.uiviewController]
-      
-      interactor.routeToProperOnboardingStep(viewController: navigationViewController)
-      
-      currentChild = build
-    } else {
-      completed()
-    }
+    let build = parseBuild(step, isNewbie: true)
+    attachChild(build)
+    navigationViewController.viewControllers = [build.viewControllable.uiviewController]
+  
+    interactor.routeToProperOnboardingStep(viewController: navigationViewController)
+  
+    currentChild = build
   }
   
   func routeNextStep(_ step: Onboarding.Step) {
-    if let build = parseBuild(step, isNewbie: false) {
-      attachChild(build)
-      navigationViewController.pushViewController(build.viewControllable.uiviewController, animated: true)
-      currentChild = build
-    } else {
-      completed()
-    }
+    let build = parseBuild(step, isNewbie: false)
+    attachChild(build)
+    navigationViewController.pushViewController(build.viewControllable.uiviewController, animated: true)
+    currentChild = build
   }
   
   func routePrevStep(_ step: Onboarding.Step) {
     navigationViewController.popViewController(animated: true)
+  }
+    
+  func completedStep(_ step: Onboarding.Step) {
+    completed()
   }
 }

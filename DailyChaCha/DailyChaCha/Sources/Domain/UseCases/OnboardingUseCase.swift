@@ -12,9 +12,10 @@ import RxSwift
 struct OnboardingUseCase {
     private let onboardingRepository: OnboardingRepository
     
-//    init(onboardingRepository: OnboardingRepository = OnboardingRepositoryImpl()) {
+//    init(onboardingRepository: OnboardingRepository = OnboardingRepositoryImpl(isMock: true)) {
+    init(onboardingRepository: OnboardingRepository = OnboardingRepositoryImpl()) {
 //    init(onboardingRepository: OnboardingRepository = OnboardingNewbieRepositoryImpl()) {
-    init(onboardingRepository: OnboardingRepository = OnboardingOldbieRepositoryImpl()) {
+//    init(onboardingRepository: OnboardingRepository = OnboardingOldbieRepositoryImpl()) {
 //    init(onboardingRepository: OnboardingRepository = OnboardingCompleteRepositoryImpl()) {
         self.onboardingRepository = onboardingRepository
     }
@@ -47,8 +48,8 @@ extension OnboardingUseCase {
         onboardingRepository.dates()
     }
     /// PUT : 시간정하기 API,  유저의 온보딩 세번째 - 시간을 생성하는 API입니다.
-    func dates(exerciseDate: Onboarding.Dates) -> Single<Void> {
-        onboardingRepository.dates(exerciseDate: exerciseDate)
+    func dates(exerciseDates: [Onboarding.ExerciseDate]) -> Single<Void> {
+        onboardingRepository.dates(exerciseDates: exerciseDates)
     }
     /// POST : 알림설정 완료 API, 유저의 온보딩 네번째 - 알림설정 완료하는 API입니다.
     func alert() -> Single<Void> {

@@ -37,8 +37,9 @@ final class UserInfoManager {
   }
   
   func getLoginTokenInfo() -> TokenInfo? {
-    let token: TokenInfo? = localPersistanceManager.getCodableObject(key: .loginToken)
+      return .init(accessToken: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJFbWFpbCI6Inp2Mms3Y256OXpAcHJpdmF0ZXJlbGF5LmFwcGxlaWQuY29tIiwiZXhwIjoxNjY1OTgyNTYyfQ.2lXXaO6sfh16lz0dMAMrNBpJxXl0wCSNdfYTPIGqFoU", expireDate: "")
+//    let token: TokenInfo? = localPersistanceManager.getCodableObject(key: .loginToken)
     
-    return token
+//    return token
   }
 }
