@@ -100,7 +100,7 @@ extension Date {
 
 extension Int {
     /// 초 받은 것을 시, 분, 초로 나타낸다.
-    func toTime(_ hiddenSeconds: Bool = false) -> String {
+    func toTime(_ hiddenSeconds: Bool = true) -> String {
         let time = NSInteger(self)
         
         let minutes = (time / 60) % 60
