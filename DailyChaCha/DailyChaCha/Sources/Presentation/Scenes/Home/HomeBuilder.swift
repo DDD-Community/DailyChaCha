@@ -48,7 +48,7 @@ final class HomeBuilder:
     
     let viewController = HomeViewController()
     
-    let interactor = HomeInteractor(presenter: viewController, useCase: HomeUseCaseImpl())
+    let interactor = HomeInteractor(presenter: viewController, useCase: HomeUseCaseImpl(homeRepository: HomeRepositoryImpl()))
     interactor.listener = listener
     
     return HomeRouter(interactor: interactor, viewController: viewController)
