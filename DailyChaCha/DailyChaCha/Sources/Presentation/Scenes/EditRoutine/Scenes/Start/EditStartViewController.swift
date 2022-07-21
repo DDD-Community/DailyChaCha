@@ -42,7 +42,7 @@ final class EditStartViewController: UIViewController, EditStartPresentable, Edi
         let input: EditStartInteractor.Input = .init(
             loadData: rx.viewWillAppear.map { _ in },
             prevStep: naviBar.closeButton.rx.tap.asObservable(),
-            modelSelected: tableView.rx.modelSelected(EditStartCellModel.self).map { $0.step }
+            modelSelected: tableView.rx.modelSelected(EditStartCellModel.self).asObservable()
         )
         
         let output = listener.transform(input: input)

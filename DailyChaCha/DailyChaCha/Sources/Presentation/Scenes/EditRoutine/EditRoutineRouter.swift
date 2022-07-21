@@ -62,7 +62,7 @@ final class EditRoutineRouter: Router<EditRoutineInteractable>, EditRoutineRouti
     private func parseBuild(_ step: EditRoutine.Step) -> ViewableRouting? {
         switch step {
         case .start: return startBuilder.build(withListener: interactor)
-        case .goal: return goalBuilder.build(withListener: interactor)
+        case .goal(let goal): return goalBuilder.build(withListener: interactor, goal: goal)
         case .date: return dateBuilder.build(withListener: interactor)
         case .time: return timeBuilder.build(withListener: interactor)
         case .alert: return nil

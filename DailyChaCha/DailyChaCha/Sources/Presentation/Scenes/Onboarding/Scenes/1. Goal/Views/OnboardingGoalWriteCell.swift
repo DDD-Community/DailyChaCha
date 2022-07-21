@@ -39,6 +39,7 @@ final class OnboardingGoalWriteCell: UITableViewCell, CellModelable {
     
     func bind(to cellModel: CellModel) {
         guard let cellModel = cellModel as? OnboardingGoalWriteCellModel else { return }
+        textField.text = cellModel.title
         textField.rx.text.orEmpty
             .scan("") { (previous, new) -> String in
                 if new.count > cellModel.textLimit {

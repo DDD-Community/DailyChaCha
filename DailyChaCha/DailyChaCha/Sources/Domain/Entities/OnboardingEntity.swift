@@ -56,7 +56,7 @@ extension Onboarding {
             let container = try decoder.container(keyedBy: CodingKeys.self)
             goal = try container.decodeIfPresent(Goal.self, forKey: .goal)
             let dates = try container.decodeIfPresent([ExerciseDate].self, forKey: .exerciseDates) ?? []
-            exerciseDates = dates.filter { $0.verify }
+            exerciseDates = dates.sorted { $0.date < $1.date }.filter { $0.verify }
             isAllDatesSameTime = try container.decodeIfPresent(Bool.self, forKey: .isAllDatesSameTime) ?? true
         }
         
@@ -77,7 +77,7 @@ extension Onboarding {
             let count = exerciseDates.count
             if count > 0 && count < 4 {
                 return comma(short: false)
-            } else if count > 4 && count < 7 {
+            } else if count >= 4 && count < 7 {
                 return comma(short: true)
             } else if count == 7 {
                 return "매일"
@@ -92,7 +92,7 @@ extension Onboarding {
     }
     
     struct ExerciseDate: Codable {
-        static var DefaultDate: Int = 0
+        static var DefaultDate: Int = -1
         static var DefaultTime: Int = 0
         var date, time: Int
 
@@ -114,7 +114,7 @@ extension Onboarding {
         init(from decoder: Decoder) throws {
             let container = try decoder.container(keyedBy: CodingKeys.self)
             date = try container.decodeIfPresent(Int.self, forKey: .date) ?? ExerciseDate.DefaultDate
-            time = try container.decodeIfPresent(Int.self, forKey: .date) ?? ExerciseDate.DefaultTime
+            time = try container.decodeIfPresent(Int.self, forKey: .time) ?? ExerciseDate.DefaultTime
         }
         
         var verify: Bool {

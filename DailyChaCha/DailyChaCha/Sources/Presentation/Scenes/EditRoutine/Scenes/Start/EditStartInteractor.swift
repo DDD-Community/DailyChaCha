@@ -27,7 +27,7 @@ final class EditStartInteractor: PresentableInteractor<EditStartPresentable>, Ed
     struct Input {
         let loadData: Observable<Void>
         let prevStep: Observable<Void>
-        let modelSelected: Observable<EditRoutine.Step>
+        let modelSelected: Observable<EditStartCellModel>
     }
     
     struct Output {
@@ -36,21 +36,27 @@ final class EditStartInteractor: PresentableInteractor<EditStartPresentable>, Ed
 
     weak var router: EditStartRouting?
     weak var listener: EditStartListener?
+    private let useCase: OnboardingUseCase
     private let disposeBag: DisposeBag = .init()
 
     // TODO: Add additional dependencies to constructor. Do not perform any logic
     // in constructor.
-    override init(presenter: EditStartPresentable) {
+    init(presenter: EditStartPresentable, useCase: OnboardingUseCase) {
+        self.useCase = useCase
         super.init(presenter: presenter)
         presenter.listener = self
     }
 
     func transform(input: Input) -> Output {
         let cells: Observable<[CellModel]> = input.loadData
+            .withUnretained(self)
+            .flatMap { owner, _ in
+                owner.useCase.dates()
+            }
             .map {
-                [EditStartCellModel(step: .goal, subTitle: "몸도 마음도 건강한 삶을 위해"),
-                EditStartCellModel(step: .date, subTitle: "매주 평일"),
-                EditStartCellModel(step: .time, subTitle: "매일 다르게"),
+                [EditStartCellModel(step: .goal($0.goal), subTitle: $0.goal?.goal ?? ""),
+                EditStartCellModel(step: .date, subTitle: $0.weekdaysTitle),
+                EditStartCellModel(step: .time, subTitle: $0.isAllDatesSameTime ? "매일 같게" : "매일 다르게"),
                 EditStartCellModel(step: .alert, subTitle: "10분 전")]
             }
         
@@ -64,7 +70,7 @@ final class EditStartInteractor: PresentableInteractor<EditStartPresentable>, Ed
         let selected = input.modelSelected.share()
         selected
             .subscribe(onNext: { [listener] in
-                listener?.nextStep($0)
+                listener?.nextStep($0.step)
             })
             .disposed(by: disposeBag)
         

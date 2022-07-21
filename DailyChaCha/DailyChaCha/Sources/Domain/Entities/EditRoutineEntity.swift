@@ -12,6 +12,7 @@ struct EditRoutine { }
 
 extension EditRoutine {
     enum Step {
-        case start, goal, date, time, alert
+        case start, date, time, alert
+        case goal(Onboarding.Goal?)
     }
 }

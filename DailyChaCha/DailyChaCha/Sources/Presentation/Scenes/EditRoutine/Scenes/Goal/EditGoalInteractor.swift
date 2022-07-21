@@ -42,6 +42,7 @@ final class EditGoalInteractor: PresentableInteractor<EditGoalPresentable>, Edit
     weak var listener: EditGoalListener?
     /// WriteCell
     var insideLimit: PublishSubject<Bool> = .init()
+    var goal: Onboarding.Goal?
     private let disposeBag: DisposeBag = .init()
     private let useCase: OnboardingUseCase
 
@@ -59,7 +60,17 @@ final class EditGoalInteractor: PresentableInteractor<EditGoalPresentable>, Edit
             }
             .map { [weak self] in
                 var cells: [CellModel] = $0.map { OnboardingGoalSelectCellModel(title: $0.goal) }
-                cells.append(OnboardingGoalWriteCellModel(limit: Self.Constant.WriteLimit, delegate: self))
+                let write = OnboardingGoalWriteCellModel(limit: Self.Constant.WriteLimit, delegate: self)
+                cells.append(write)
+                if let goal = self?.goal {
+                    if let index = goal.index {
+                        cells[index - 1].selected = true
+                    } else {
+                        write.selected = true
+                        write.title = goal.goal
+                    }
+                }
+                
                 return cells
             }
         
@@ -78,7 +89,7 @@ final class EditGoalInteractor: PresentableInteractor<EditGoalPresentable>, Edit
         input.prevStep
             .asDriver(onErrorJustReturn: ())
             .drive(onNext: { [weak self] in
-                self?.listener?.prevStep(.goal)
+                self?.listener?.prevStep(.goal(nil))
             })
             .disposed(by: disposeBag)
         
@@ -89,7 +100,7 @@ final class EditGoalInteractor: PresentableInteractor<EditGoalPresentable>, Edit
             }
             .asDriver(onErrorJustReturn: ())
             .drive(onNext: { [weak self] in
-                self?.listener?.prevStep(.goal)
+                self?.listener?.prevStep(.goal(nil))
             })
             .disposed(by: disposeBag)
             

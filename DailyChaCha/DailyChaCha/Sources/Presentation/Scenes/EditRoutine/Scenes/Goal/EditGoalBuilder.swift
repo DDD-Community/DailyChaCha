@@ -21,7 +21,7 @@ final class EditGoalComponent: Component<EditGoalDependency> {
 // MARK: - Builder
 
 protocol EditGoalBuildable: Buildable {
-    func build(withListener listener: EditGoalListener) -> EditGoalRouting
+    func build(withListener listener: EditGoalListener, goal: Onboarding.Goal?) -> EditGoalRouting
 }
 
 final class EditGoalBuilder: Builder<EditGoalDependency>, EditGoalBuildable {
@@ -30,10 +30,11 @@ final class EditGoalBuilder: Builder<EditGoalDependency>, EditGoalBuildable {
         super.init(dependency: dependency)
     }
 
-    func build(withListener listener: EditGoalListener) -> EditGoalRouting {
+    func build(withListener listener: EditGoalListener, goal: Onboarding.Goal?) -> EditGoalRouting {
         _ = EditGoalComponent(dependency: dependency)
         let viewController = EditGoalViewController.create("EditRoutine")
         let interactor = EditGoalInteractor(presenter: viewController, useCase: OnboardingUseCase())
+        interactor.goal = goal
         interactor.listener = listener
         return EditGoalRouter(interactor: interactor, viewController: viewController)
     }

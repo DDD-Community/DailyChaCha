@@ -33,7 +33,7 @@ final class EditDateInteractor: PresentableInteractor<EditDatePresentable>, Edit
     }
     
     struct Output {
-        let cells: Observable<[CellModel]>
+        let cells: Observable<[OnboardingDateSelectCellModel]>
         let isEnabledNextButton: Observable<Bool>
     }
 
@@ -49,14 +49,14 @@ final class EditDateInteractor: PresentableInteractor<EditDatePresentable>, Edit
     }
 
     func transform(input: Input) -> Output {
-        let cells: Observable<[CellModel]> = input.loadData
+        let cells: Observable<[OnboardingDateSelectCellModel]> = input.loadData
             .withUnretained(self)
             .flatMap { (owner, _ ) in owner.useCase.dates() }
             .compactMap { [weak self] in
                 let selectedWeekday = $0.weekday
                 return self?.getWeekDays().map {
                     let selected = selectedWeekday.contains($0.index)
-                    return OnboardingDateSelectCellModel(title: $0.weekday, selected: selected, day: $0.index)
+                    return .init(title: $0.weekday, selected: selected, day: $0.index)
                 }
             }
         
@@ -68,6 +68,9 @@ final class EditDateInteractor: PresentableInteractor<EditDatePresentable>, Edit
             .disposed(by: disposeBag)
         
         input.nextStep
+            .withLatestFrom(cells) { rows, cells in
+                rows.map { cells[$0].day }
+            }
             .withUnretained(self)
             .flatMap { owner, days in
                 owner.useCase.dates(days: days)

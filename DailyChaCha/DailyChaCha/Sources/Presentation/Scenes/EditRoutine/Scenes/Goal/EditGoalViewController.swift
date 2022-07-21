@@ -14,7 +14,7 @@ import RxKeyboard
 protocol EditGoalPresentableListener: AnyObject {
     typealias Input = EditGoalInteractor.Input
     typealias Output = EditGoalInteractor.Output
-    
+    var goal: Onboarding.Goal? { get }
     func transform(input: Input) -> Output
 }
 

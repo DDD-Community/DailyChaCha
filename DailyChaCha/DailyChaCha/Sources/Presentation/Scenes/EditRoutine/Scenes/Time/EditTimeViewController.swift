@@ -55,7 +55,7 @@ final class EditTimeViewController: UIViewController, EditTimePresentable, EditT
             }
         
         let input: EditTimeInteractor.Input = .init(
-            loadData: rx.viewWillAppear.take(1).map { _ in },
+            loadData: rx.viewWillAppear.map { _ in },
             prevStep: naviBar.backButton.rx.tap.asObservable(),
             nextStep: nextStep,
             selectedRows: stackView.rxResultForSelectedRows
