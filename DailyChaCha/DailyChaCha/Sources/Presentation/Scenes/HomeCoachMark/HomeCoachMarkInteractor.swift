@@ -38,6 +38,7 @@ final class HomeCoachMarkInteractor:
     case ruleThree
     case brokenTower
     case brokenCharacter
+    case ended
     
     var nextCoachMark: CoachMarkType? {
       switch self {
@@ -46,10 +47,12 @@ final class HomeCoachMarkInteractor:
       case .ruleTwo:
         return .ruleThree
       case .ruleThree:
-        return nil
+        return .ended
       case .brokenTower:
-        return nil
+        return .ended
       case .brokenCharacter:
+        return .ended
+      case .ended:
         return nil
       }
     }
@@ -67,6 +70,8 @@ final class HomeCoachMarkInteractor:
         subTitle = "보상이 망가졌어요!"
       case .brokenCharacter:
         subTitle = "차근이가 아파요!"
+      case .ended:
+        break
       }
       
       return subTitle?.styled(
@@ -95,6 +100,8 @@ final class HomeCoachMarkInteractor:
         title = "운동을 2회 놓칠 때마다 아이템이 하나씩 망가져요. 다시 운동하면 원래대로 돌아올 거에요."
       case .brokenCharacter:
         title = "운동을 1회 놓칠 때마다 차근이가 아파해요. 다시 운동하면 원래대로 돌아올 거에요."
+      case .ended:
+        break
       }
       return title?.styled(
         with: .color(.black),
@@ -104,13 +111,17 @@ final class HomeCoachMarkInteractor:
           )
         ),
         .minimumLineHeight(16),
+        .alignment(.center),
         .maximumLineHeight(16)
       )
     }
     
     var buttonTitle: String? {
       switch self {
-      case .ruleOne, .ruleTwo, .ruleThree:
+      case .ruleOne,
+          .ruleTwo,
+          .ruleThree,
+          .ended:
         return "다음"
       case .brokenTower, .brokenCharacter:
         return "확인"
@@ -121,7 +132,8 @@ final class HomeCoachMarkInteractor:
       switch self {
       case .ruleOne:
         return .bottomLeft
-      case .ruleTwo, .brokenTower, .brokenCharacter:
+      case .ruleTwo, .brokenTower, .brokenCharacter,
+        .ended:
         return .topMiddle
       case .ruleThree:
         return .topRight
