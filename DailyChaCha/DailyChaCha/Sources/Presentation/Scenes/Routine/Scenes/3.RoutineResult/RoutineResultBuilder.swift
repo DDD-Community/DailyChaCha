@@ -33,7 +33,7 @@ final class RoutineResultBuilder: Builder<RoutineResultDependency>, RoutineResul
     func build(withListener listener: RoutineResultListener) -> RoutineResultRouting {
         _ = RoutineResultComponent(dependency: dependency)
         let viewController = RoutineResultViewController.create("Routine")
-        let interactor = RoutineResultInteractor(presenter: viewController)
+        let interactor = RoutineResultInteractor(presenter: viewController, useCase: RoutineUseCase())
         interactor.listener = listener
         return RoutineResultRouter(interactor: interactor, viewController: viewController)
     }

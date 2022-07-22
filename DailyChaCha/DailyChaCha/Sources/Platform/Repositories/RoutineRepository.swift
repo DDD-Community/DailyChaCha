@@ -13,9 +13,13 @@ import RxMoya
 
 protocol RoutineRepository {
     /// GET : 유저의 당일 운동정보를 가져오는 API, 유저의 운동 시점을 가져옵니다.
-    func today() -> Single<Void>
+    func today() -> Single<Routine.TodayInfo>
+    /// DELETE : 당일 운동 삭제 API, 유저의 운동데이터를 삭제하는 API
+    func deleteToday() -> Single<Void>
     /// POST : 당일 운동시작, 종료 API, 유저의 운동의 시작과 종료 시간을 기록하는 API
-    func today(state: Routine.State) -> Single<Void>
+    func start() -> Single<Result<Routine.StartInfo, Network.Fail>>
+    /// POST : 당일 운동시작, 종료 API, 유저의 운동의 시작과 종료 시간을 기록하는 API
+    func complete() -> Single<Routine.CompleteInfo>
 }
 
 final class RoutineRepositoryImpl: RoutineRepository {
@@ -26,19 +30,23 @@ final class RoutineRepositoryImpl: RoutineRepository {
         provider = .init(plugins: plugin)
     }
     
-    func today() -> Single<Void> {
+    func today() -> Single<Routine.TodayInfo> {
         provider.rx.request(.getToday)
-            .map {
-                print($0)
-                return ()
-            }
+            .map(Routine.TodayInfo.self)
     }
     
-    func today(state: Routine.State) -> Single<Void> {
-        provider.rx.request(.setToday(state))
-            .map {
-                print($0)
-                return ()
-            }
+    func deleteToday() -> Single<Void> {
+        provider.rx.request(.deleteToday)
+            .map { _ in }
+    }
+    
+    func start() -> Single<Result<Routine.StartInfo, Network.Fail>> {
+        provider.rx.request(.start)
+            .mapToResult(Routine.StartInfo.self)
+    }
+    
+    func complete() -> Single<Routine.CompleteInfo> {
+        provider.rx.request(.complete)
+            .map(Routine.CompleteInfo.self)
     }
 }
