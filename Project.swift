@@ -27,7 +27,8 @@ class BaseProjectFactory: ProjectFactory {
         .package(product: "RxKeyboard"),
         .package(product: "Lottie"),
         .package(product: "BonMot"),
-        .package(product: "Kingfisher")
+        .package(product: "Kingfisher"),
+		.package(product: "RxAlert")
     ]
     
     let packages: [Package] = [
@@ -42,7 +43,8 @@ class BaseProjectFactory: ProjectFactory {
         .remote(url: "https://github.com/RxSwiftCommunity/RxKeyboard.git", requirement: .upToNextMinor(from: "2.0.0")),
         .remote(url: "https://github.com/airbnb/lottie-ios.git", requirement: .upToNextMinor(from: "3.3.0")),
         .remote(url: "https://github.com/Rightpoint/BonMot.git", requirement: .upToNextMinor(from: "6.1.1")),
-        .remote(url: "https://github.com/onevcat/Kingfisher.git", requirement: .upToNextMinor(from: "7.3.0"))
+        .remote(url: "https://github.com/onevcat/Kingfisher.git", requirement: .upToNextMinor(from: "7.3.0")),
+		.local(path: .relativeToRoot("vendor/RxAlert"))
     ]
 
     func generate() -> [Target] {
