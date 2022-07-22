@@ -32,7 +32,6 @@ final class RoutineWaitViewController: UIViewController, RoutineWaitPresentable,
     }
     
     func setupLayout() {
-        circleView.layer.cornerRadius = circleView.frame.width / 2
     }
     
     func bind(listener: RoutineWaitPresentableListener?) {

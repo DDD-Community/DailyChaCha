@@ -63,6 +63,8 @@ final class RoutineResultViewController: UIViewController, RoutineResultPresenta
                 let day = calender.component(.day, from: endAt)
                 owner.dateLabel.text = "\(year)년 \(month)월 \(day)일"
                 owner.timeLabel.text = totalSeconds.toTimeString
+                let url = URL(string: info.object.imageURL)
+                owner.objectImageView.kf.setImage(with: url)
             })
             .disposed(by: disposeBag)
     }
