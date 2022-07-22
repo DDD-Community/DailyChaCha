@@ -9,30 +9,35 @@
 import RIBs
 
 protocol HomeCoachMarkInteractable: Interactable {
-    var router: HomeCoachMarkRouting? { get set }
-    var listener: HomeCoachMarkListener? { get set }
+  var router: HomeCoachMarkRouting? { get set }
+  var listener: HomeCoachMarkListener? { get set }
 }
 
 protocol HomeCoachMarkViewControllable: ViewControllable {
-    func present(viewController: ViewControllable)
-    func push(
-        viewControllable: ViewControllable,
-        animated: Bool
-    )
+  func present(viewController: ViewControllable)
+  func push(
+    viewControllable: ViewControllable,
+    animated: Bool
+  )
+  func displayCoachMark()
 }
 
 final class HomeCoachMarkRouter: ViewableRouter<HomeCoachMarkInteractable, HomeCoachMarkViewControllable>,
-  HomeCoachMarkRouting
+                                 HomeCoachMarkRouting
 {
-    // MARK: - Properties
-
-    // MARK: - Con(De)structor
-
-    override init(
-        interactor: HomeCoachMarkInteractable,
-        viewController: HomeCoachMarkViewControllable
-    ) {
-        super.init(interactor: interactor, viewController: viewController)
-        interactor.router = self
-    }
+  // MARK: - Properties
+  
+  // MARK: - Con(De)structor
+  
+  override init(
+    interactor: HomeCoachMarkInteractable,
+    viewController: HomeCoachMarkViewControllable
+  ) {
+    super.init(interactor: interactor, viewController: viewController)
+    interactor.router = self
+  }
+  
+  func setupInitialCoachMarkStep() {
+    
+  }
 }

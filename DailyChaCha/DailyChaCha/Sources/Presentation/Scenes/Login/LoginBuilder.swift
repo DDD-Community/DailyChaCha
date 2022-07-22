@@ -49,7 +49,7 @@ final class LoginBuilder:
     
     let viewController = LoginViewController()
     
-    let interactor = LoginInteractor(presenter: viewController, useCase: LoginUseCaseImpl())
+    let interactor = LoginInteractor(presenter: viewController, useCase: LoginUseCaseImpl(repository: LoginRepositoryImpl()))
     interactor.listener = listener
     
     let onboardingBuilder = OnboardingBuilder(dependency: component)

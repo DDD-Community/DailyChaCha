@@ -28,7 +28,10 @@ final class CoachMarkTooltipView: UIView {
   
   private let subTitleLabel = UILabel()
   
-  private let titleLabel = UILabel()
+  private let titleLabel = UILabel().then {
+    $0.numberOfLines = 0
+    $0.textAlignment = .center
+  }
   
   private let button = UIButton().then {
     $0.backgroundColor = UIColor.orange
@@ -154,6 +157,7 @@ extension CoachMarkTooltipView {
         button,
         arrowImageView
       )
+      $0.backgroundColor = .white
     }
     
     subTitleLabel.snp.makeConstraints {
@@ -168,6 +172,7 @@ extension CoachMarkTooltipView {
     
     button.snp.makeConstraints {
       $0.top.equalTo(titleLabel.snp.bottom).offset(16)
+      $0.centerX.equalToSuperview()
       $0.height.equalTo(32)
       $0.width.equalTo(79)
     }

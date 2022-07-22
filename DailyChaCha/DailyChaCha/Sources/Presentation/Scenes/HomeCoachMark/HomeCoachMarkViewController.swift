@@ -47,7 +47,9 @@ final class HomeCoachMarkViewController:
     arrowPosition: .bottomLeft
   )
   
-  private let magnifiedImageView = UIImageView()
+  private let magnifiedImageView = UIImageView().then {
+    $0.backgroundColor = .white
+  }
   
   func present(viewController: ViewControllable) {
     
@@ -69,6 +71,14 @@ final class HomeCoachMarkViewController:
     bind(listener: listener)
     viewDidLoadRelay.accept(())
   }
+  
+  override func viewDidLayoutSubviews() {
+    super.viewDidLayoutSubviews()
+    
+    let width = magnifiedImageView.bounds.width
+    
+    magnifiedImageView.layer.cornerRadius = width / 2
+  }
 }
 
 extension HomeCoachMarkViewController {
@@ -85,6 +95,11 @@ extension HomeCoachMarkViewController {
     // Rx + ViewDidLoad 중복으로 넣을 것 같아서 다른 PR RxViewController 추가되면 수정 예정
     viewDidLoadRelay
       .map { HomeCoachMarkAction.setCoachMarkType(.ruleOne)}
+      .bind(to: listener.action)
+      .disposed(by: disposeBag)
+    
+    tooltipView.buttonTapped
+      .map { HomeCoachMarkAction.tooltipButtonTapped }
       .bind(to: listener.action)
       .disposed(by: disposeBag)
   }
@@ -125,31 +140,31 @@ extension HomeCoachMarkViewController {
       tooltipView.setBubbleArrow(position: .topLeft)
       
       tooltipView.snp.makeConstraints {
-        $0.leading.equalToSuperview().inset(20)
-        $0.top.equalToSuperview().inset(342)
+        $0.centerX.equalToSuperview()
+        $0.top.equalToSuperview().inset(367)
         $0.width.equalTo(275)
         $0.height.equalTo(170)
       }
       
       magnifiedImageView.snp.makeConstraints {
-        $0.leading.equalToSuperview().inset(20)
-        $0.top.equalTo(tooltipView.snp.bottom).offset(29)
-        $0.size.equalTo(201)
+        $0.centerX.equalToSuperview()
+        $0.top.equalToSuperview().offset(100)
+        $0.size.equalTo(238)
       }
       
     case .ruleThree:
       
       tooltipView.snp.makeConstraints {
-        $0.leading.equalToSuperview().inset(20)
-        $0.top.equalToSuperview().inset(342)
+        $0.trailing.equalToSuperview().inset(20)
+        $0.top.equalToSuperview().inset(200)
         $0.width.equalTo(275)
-        $0.height.equalTo(170)
+        $0.height.equalTo(144)
       }
       
       magnifiedImageView.snp.makeConstraints {
-        $0.leading.equalToSuperview().inset(20)
-        $0.top.equalTo(tooltipView.snp.bottom).offset(29)
-        $0.size.equalTo(201)
+        $0.trailing.equalToSuperview().inset(20)
+        $0.top.equalToSuperview().offset(30)
+        $0.size.equalTo(141)
       }
     case .brokenTower:
       
@@ -161,7 +176,7 @@ extension HomeCoachMarkViewController {
       }
       
       magnifiedImageView.snp.makeConstraints {
-        $0.leading.equalToSuperview().inset(20)
+        $0.trailing.equalToSuperview().inset(20)
         $0.top.equalTo(tooltipView.snp.bottom).offset(29)
         $0.size.equalTo(201)
       }
@@ -178,17 +193,25 @@ extension HomeCoachMarkViewController {
         $0.top.equalTo(tooltipView.snp.bottom).offset(29)
         $0.size.equalTo(201)
       }
+    case .ended:
+      view.removeFromSuperview()
     }
     setupTooltipView(with: type)
   }
   
   private func setupTooltipView(with type: HomeCoachMarkInteractor.CoachMarkType) {
+    guard type != .ended else { return }
     
     tooltipView
       .setBubbleArrow(position: type.arrowDirection)
       .setButtonTitle(with: type.buttonTitle)
       .setTitleLabel(with: type.title)
       .setSubTitleLabel(with: type.subTitle)
+  }
+  
+  func displayCoachMark() {
+    
+    UIApplication.shared.windows.last?.rootViewController?.view.addSubview(self.view)
   }
 }
 

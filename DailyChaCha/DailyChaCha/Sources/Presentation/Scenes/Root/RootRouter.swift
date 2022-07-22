@@ -11,7 +11,8 @@ import UIKit
 import RIBs
 
 protocol RootInteractable: Interactable,
-  LoginListener
+  LoginListener,
+  MainTabListener
 {
   var router: RootRouting? { get set }
   var listener: RootListener? { get set }
@@ -26,12 +27,16 @@ final class RootRouter: LaunchRouter<RootInteractable, RootViewControllable>, Ro
   
   private let loginBuilder: LoginBuildable
   
+  private let mainTabBuilder: MainTabBuildable
+  
   init(
     interactor: RootInteractable,
     viewController: RootViewControllable,
-    loginBuilder: LoginBuildable
+    loginBuilder: LoginBuildable,
+    mainTabBuilder: MainTabBuildable
   ) {
     self.loginBuilder = loginBuilder
+    self.mainTabBuilder = mainTabBuilder
     super.init(interactor: interactor, viewController: viewController)
     interactor.router = self
   }
@@ -48,5 +53,14 @@ final class RootRouter: LaunchRouter<RootInteractable, RootViewControllable>, Ro
       
       viewController.present(viewController: loginRouter.viewControllable)
     }
+  }
+  
+  func routeToMainTabRIBs() {
+    
+    let mainTabRouter = mainTabBuilder.build(withListener: interactor)
+    
+    attachChild(mainTabRouter)
+    
+    viewController.present(viewController: mainTabRouter.viewControllable)
   }
 }

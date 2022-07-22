@@ -10,7 +10,9 @@ import RIBs
 import UIKit
 import RxSwift
 
-protocol RootRouting: ViewableRouting { }
+protocol RootRouting: ViewableRouting {
+  func routeToMainTabRIBs()
+}
 
 protocol RootPresentable: Presentable {
   var listener: RootPresentableListener? { get set }
@@ -29,5 +31,9 @@ final class RootInteractor: PresentableInteractor<RootPresentable>, RootInteract
   override init(presenter: RootPresentable) {
     super.init(presenter: presenter)
     presenter.listener = self
+  }
+  
+  func routeToMainTabRIBs() {
+    router?.routeToMainTabRIBs()
   }
 }

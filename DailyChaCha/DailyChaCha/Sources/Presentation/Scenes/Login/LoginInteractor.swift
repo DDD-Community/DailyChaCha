@@ -14,13 +14,16 @@ import AuthenticationServices
 protocol LoginRouting: ViewableRouting {
   func routeToOnboarding()
   func routeToProperOnboardingStep(viewController: UIViewController)
+  func detachLoginRIBs()
 }
 
 protocol LoginPresentable: Presentable {
   var listener: LoginPresentableListener? { get set }
 }
 
-protocol LoginListener: AnyObject { }
+protocol LoginListener: AnyObject {
+  func routeToMainTabRIBs()
+}
 
 final class LoginInteractor:
   PresentableInteractor<LoginPresentable>,
@@ -97,13 +100,20 @@ extension LoginInteractor {
       })
       .withUnretained(self)
       .flatMap { owner, _ in
-        owner.routeToOnboardingMutation()
+        owner.routeToMainTabMutation()
       }
   }
   
   func routeToOnboardingMutation() -> Observable<Mutation> {
     
     router?.routeToOnboarding()
+    
+    return Observable<Mutation>.empty()
+  }
+  
+  func routeToMainTabMutation() -> Observable<Mutation> {
+    router?.detachLoginRIBs()
+    listener?.routeToMainTabRIBs()
     
     return Observable<Mutation>.empty()
   }

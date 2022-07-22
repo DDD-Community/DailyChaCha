@@ -9,12 +9,19 @@
 import RxSwift
 
 protocol LoginUseCase {
+  
+  var loginRepository:  LoginRepository { get }
+  
   func requestLogin(token: String) -> Single<TokenInfo>
 }
 
 final class LoginUseCaseImpl: LoginUseCase {
   
-  let loginRepository = LoginRepositoryImpl()
+  let loginRepository:  LoginRepository
+  
+  init(repository: LoginRepository) {
+    self.loginRepository = repository
+  }
   
   func requestLogin(token: String) -> Single<TokenInfo> {
     loginRepository.requestLogin(token: token)
