@@ -13,7 +13,7 @@ struct Onboarding { }
 extension Onboarding {
     
     enum Step: String, Decodable {
-        case goal, date, time, alert, welcome
+        case goal, date, time, alert, welcome, done
     }
     
     struct Goal: Codable {
