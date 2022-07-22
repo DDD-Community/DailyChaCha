@@ -128,7 +128,7 @@ final class HomeTransformableBottomView: UIView {
   
   func configure(with info: NextExerciseInfo) {
     
-    rewardImageView.image = UIImage(named: "img_default_empty_object")
+    rewardImageView.image = UIImage(named: "img_next_exercise_empty")
     
     let title = "운동 시작까지 21일 7시간".styled(with: .font(.systemFont(ofSize: 18, weight: .medium)))
     
