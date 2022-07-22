@@ -58,13 +58,14 @@ final class OnboardingRouter: Router<OnboardingInteractable>, OnboardingRouting 
   
   private var currentChild: ViewableRouting?
   
-  private func parseBuild(_ step: Onboarding.Step, isNewbie: Bool) -> ViewableRouting {
+  private func parseBuild(_ step: Onboarding.Step, isNewbie: Bool) -> ViewableRouting? {
     switch step {
     case .goal: return goalBuilder.build(withListener: interactor)
     case .date: return dateBuilder.build(withListener: interactor, isNewbie: isNewbie)
     case .time: return timeBuilder.build(withListener: interactor, isNewbie: isNewbie)
     case .alert: return alertBuilder.build(withListener: interactor)
     case .welcome: return welcomeBuilder.build(withListener: interactor)
+    case .done: return nil
     }
   }
   
@@ -73,7 +74,9 @@ final class OnboardingRouter: Router<OnboardingInteractable>, OnboardingRouting 
   }
   
   func startStep(_ step: Onboarding.Step) {
-    let build = parseBuild(step, isNewbie: true)
+    guard let build = parseBuild(step, isNewbie: true) else {
+      return completedStep(step)
+    }
     attachChild(build)
     navigationViewController.viewControllers = [build.viewControllable.uiviewController]
   
@@ -83,7 +86,9 @@ final class OnboardingRouter: Router<OnboardingInteractable>, OnboardingRouting 
   }
   
   func routeNextStep(_ step: Onboarding.Step) {
-    let build = parseBuild(step, isNewbie: false)
+    guard let build = parseBuild(step, isNewbie: false) else {
+      return completedStep(step)
+    }
     attachChild(build)
     navigationViewController.pushViewController(build.viewControllable.uiviewController, animated: true)
     currentChild = build
