@@ -25,31 +25,40 @@ protocol RoutineResultListener: RoutineStepable {
 final class RoutineResultInteractor: PresentableInteractor<RoutineResultPresentable>, RoutineResultInteractable, RoutineResultPresentableListener {
     
     struct Input {
+        let loadData: Observable<Void>
         let tapCompleted: Observable<Void>
     }
     
     struct Output {
-        
+        let completeInfo: Observable<Routine.CompleteInfo>
     }
 
     weak var router: RoutineResultRouting?
     weak var listener: RoutineResultListener?
+    private let useCase: RoutineUseCase
     private let disposeBag: DisposeBag = .init()
 
     // TODO: Add additional dependencies to constructor. Do not perform any logic
     // in constructor.
-    override init(presenter: RoutineResultPresentable) {
+    init(presenter: RoutineResultPresentable, useCase: RoutineUseCase) {
+        self.useCase = useCase
         super.init(presenter: presenter)
         presenter.listener = self
     }
 
     func transform(input: Input) -> Output {
+        let completeInfo = input.loadData
+            .withUnretained(self)
+            .flatMap { owner, _ in
+                owner.useCase.complete()
+            }
+        
         input.tapCompleted
             .subscribe(onNext: { [listener] in
                 listener?.completeStep(.result)
             })
             .disposed(by: disposeBag)
         
-        return .init()
+        return .init(completeInfo: completeInfo)
     }
 }

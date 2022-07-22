@@ -26,6 +26,7 @@ final class RoutineResultViewController: UIViewController, RoutineResultPresenta
     @IBOutlet private weak var expLabel: UILabel!
     @IBOutlet private weak var completeButton: UIButton!
 
+    private let disposeBag: DisposeBag = .init()
     weak var listener: RoutineResultPresentableListener?
     
     override func viewDidLoad() {
@@ -46,8 +47,23 @@ final class RoutineResultViewController: UIViewController, RoutineResultPresenta
         }
         
         let input: RoutineResultInteractor.Input = .init(
+            loadData: rx.viewWillAppear.map { _ in },
             tapCompleted: completeButton.rx.tap.asObservable()
         )
         let output = listener.transform(input: input)
+        
+        output.completeInfo
+            .withUnretained(self)
+            .subscribe(onNext: { owner, info in
+                let endAt = info.completedAt ?? .init()
+                let totalSeconds = info.totalSeconds ?? 0
+                let calender = Calendar.current
+                let year = calender.component(.year, from: endAt)
+                let month = calender.component(.month, from: endAt)
+                let day = calender.component(.day, from: endAt)
+                owner.dateLabel.text = "\(year)년 \(month)월 \(day)일"
+                owner.timeLabel.text = totalSeconds.toTimeString
+            })
+            .disposed(by: disposeBag)
     }
 }

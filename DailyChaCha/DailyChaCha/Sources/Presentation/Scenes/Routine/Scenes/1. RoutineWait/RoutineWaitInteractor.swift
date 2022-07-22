@@ -35,11 +35,13 @@ final class RoutineWaitInteractor: PresentableInteractor<RoutineWaitPresentable>
 
     weak var router: RoutineWaitRouting?
     weak var listener: RoutineWaitListener?
+    private let useCase: RoutineUseCase
     private let disposeBag: DisposeBag = .init()
 
     // TODO: Add additional dependencies to constructor. Do not perform any logic
     // in constructor.
-    override init(presenter: RoutineWaitPresentable) {
+    init(presenter: RoutineWaitPresentable, useCase: RoutineUseCase) {
+        self.useCase = useCase
         super.init(presenter: presenter)
         presenter.listener = self
     }

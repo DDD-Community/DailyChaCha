@@ -10,15 +10,21 @@ import Moya
 
 enum RoutineService {
     case getToday
-    case setToday(Routine.State)
+    case deleteToday
+    case start
+    case complete
 }
 
 extension RoutineService: BaseService {
     
     var path: String {
         switch self {
-        case .getToday, .setToday:
+        case .getToday, .deleteToday:
             return "exercises/today"
+        case .start:
+            return "exercises/today/start"
+        case .complete:
+            return "exercises/today/complete"
         }
     }
     
@@ -26,21 +32,13 @@ extension RoutineService: BaseService {
         switch self {
         case .getToday:
             return .get
-        case .setToday:
+        case .deleteToday:
+            return .delete
+        case .start, .complete:
             return .post
         }
     }
     
-    var task: Task {
-        switch self {
-        case .getToday:
-            return .requestPlain
-        case .setToday(let state):
-            return .requestParameters(
-                parameters: ["code": state.rawValue],
-                encoding: JSONEncoding.default
-            )
-        }
-    }
+    var task: Task { .requestPlain }
 }
 

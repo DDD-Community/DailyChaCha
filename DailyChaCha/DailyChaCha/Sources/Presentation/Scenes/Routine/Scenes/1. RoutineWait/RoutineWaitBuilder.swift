@@ -33,7 +33,7 @@ final class RoutineWaitBuilder: Builder<RoutineWaitDependency>, RoutineWaitBuild
     func build(withListener listener: RoutineWaitListener) -> RoutineWaitRouting {
         _ = RoutineWaitComponent(dependency: dependency)
         let viewController = RoutineWaitViewController.create("Routine")
-        let interactor = RoutineWaitInteractor(presenter: viewController)
+        let interactor = RoutineWaitInteractor(presenter: viewController, useCase: RoutineUseCase())
         interactor.listener = listener
         return RoutineWaitRouter(interactor: interactor, viewController: viewController)
     }

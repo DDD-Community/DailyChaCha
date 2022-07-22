@@ -33,7 +33,7 @@ final class RoutineStartBuilder: Builder<RoutineStartDependency>, RoutineStartBu
     func build(withListener listener: RoutineStartListener) -> RoutineStartRouting {
         _ = RoutineStartComponent(dependency: dependency)
         let viewController = RoutineStartViewController.create("Routine")
-        let interactor = RoutineStartInteractor(presenter: viewController)
+        let interactor = RoutineStartInteractor(presenter: viewController, useCase: RoutineUseCase())
         interactor.listener = listener
         return RoutineStartRouter(interactor: interactor, viewController: viewController)
     }

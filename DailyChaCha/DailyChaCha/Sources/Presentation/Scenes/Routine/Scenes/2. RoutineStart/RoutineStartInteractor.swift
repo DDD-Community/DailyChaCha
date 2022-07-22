@@ -39,11 +39,13 @@ final class RoutineStartInteractor: PresentableInteractor<RoutineStartPresentabl
 
     weak var router: RoutineStartRouting?
     weak var listener: RoutineStartListener?
+    private let useCase: RoutineUseCase
     private let disposeBag: DisposeBag = .init()
 
     // TODO: Add additional dependencies to constructor. Do not perform any logic
     // in constructor.
-    override init(presenter: RoutineStartPresentable) {
+    init(presenter: RoutineStartPresentable, useCase: RoutineUseCase) {
+        self.useCase = useCase
         super.init(presenter: presenter)
         presenter.listener = self
     }
@@ -62,23 +64,25 @@ final class RoutineStartInteractor: PresentableInteractor<RoutineStartPresentabl
             .disposed(by: disposeBag)
         
         input.loadData
-            .map { Date(timeIntervalSinceNow: -10000) } // useCase에서 가져온다.
-            .map { Date() - $0 }
+            .withUnretained(self)
+            .flatMap { owner, _ in owner.useCase.start() }
             .subscribe(onNext: {
+                let distance = Date() - $0
                 isRunning.accept(true)
-                timer.onNext($0)
+                timer.onNext(distance)
             })
             .disposed(by: disposeBag)
         
         input.tapCompleted
             .withLatestFrom(timer)
-            .subscribe(onNext: { [listener] in
-                // 5분이 안되었다면 팝업, 아니면 완료
-                if $0 >= 300 {
-                    listener?.nextStep(.result)
-                } else {
-                    showPopup.onNext(())
-                }
+            .subscribe(onNext: { [listener] _ in
+//                 5분이 안되었다면 팝업, 아니면 완료
+//                if $0 >= 300 {
+//                    listener?.nextStep(.result)
+//                } else {
+//                    showPopup.onNext(())
+//                }
+                listener?.nextStep(.result)
             })
             .disposed(by: disposeBag)
         
